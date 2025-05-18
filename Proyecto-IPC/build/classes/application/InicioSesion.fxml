@@ -10,16 +10,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.InicioSesionController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label alignment="CENTER" prefHeight="84.0" prefWidth="602.0" text="Inicio Sesión" textAlignment="CENTER">
-               <font>
-                  <Font size="35.0" />
-               </font></Label>
+            <Label alignment="CENTER" prefHeight="84.0" prefWidth="602.0" text="Inicio Sesión" textAlignment="CENTER" />
          </children>
       </HBox>
       <GridPane VBox.vgrow="ALWAYS">
@@ -37,11 +33,11 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Label alignment="CENTER" text="Usuario:" textAlignment="CENTER" />
+                        <Label alignment="CENTER" text="User:" textAlignment="CENTER" />
                         <TextField fx:id="user_id" promptText="user123" />
                      </children>
                   </VBox>
-                  <Label fx:id="userError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" text="Usuario no válido" textAlignment="CENTER" textFill="RED" />
+                  <Label fx:id="userError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" text="Invalid User" textAlignment="CENTER" textFill="RED" />
                   <ImageView fx:id="userErrorImg" fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </HBox>
@@ -49,11 +45,11 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Label alignment="CENTER" text="Contraseña:" textAlignment="CENTER" />
+                        <Label alignment="CENTER" text="Password:" textAlignment="CENTER" />
                         <TextField fx:id="pswrd_id" promptText="password123" />
                      </children>
                   </VBox>
-                  <Label fx:id="pswrdError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" text="Contraseña no válida" textAlignment="CENTER" textFill="RED" />
+                  <Label fx:id="pswrdError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" text="Invalid Password" textAlignment="CENTER" textFill="RED" />
                   <ImageView fx:id="pswrdErrorImg" fitHeight="32.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </HBox>
@@ -61,14 +57,8 @@
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Hyperlink onAction="#register" text="Registrate">
-                     <font>
-                        <Font size="20.0" />
-                     </font></Hyperlink>
-                  <Button mnemonicParsing="false" onAction="#log_in" text="Registro">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Button>
+                  <Hyperlink onAction="#register" text="Hyperlink" />
+                  <Button mnemonicParsing="false" onAction="#log_in" text="Log In" />
                </children>
             </HBox>
          </children>
