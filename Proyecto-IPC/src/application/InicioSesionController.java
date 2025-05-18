@@ -24,6 +24,7 @@ public class InicioSesionController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    private String dest;
     Navigation nav;
     @FXML
     private TextField user_id;
@@ -144,6 +145,14 @@ public class InicioSesionController implements Initializable {
         pswrdError.setStyle("-fx-text-fill: #ffffff;");
         //registriarse.setStyle("-fx-text-fill: #ffffff");
     }
+    
+    public void setDst(String s) {
+        dest = s;
+    }
+    
+    public void setFocus() {
+        user_id.requestFocus();
+    }
 
     @FXML
     private void log_in(ActionEvent event) {
@@ -182,9 +191,9 @@ public class InicioSesionController implements Initializable {
     @FXML
     private void register(ActionEvent event) {
         blanc();
-        //Registro controller = (Registro) ProyAplication.getController("Registro");
-        //controller.setDst("IniciarSesion");
-        //ProyAplication.setRoot("Registro");
-        //controller.setFocus();
+        RegistroController controller = (RegistroController) JavaFXMLApplication.getController("Registro");
+        controller.setDst("IniciarSesion");
+        JavaFXMLApplication.setRoot("Registro");
+        controller.setFocus();
     }
 }    

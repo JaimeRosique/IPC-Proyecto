@@ -23,6 +23,7 @@ import model.*;
  */
 public class RegistroController implements Initializable {
 
+    private String dest;
     private Navigation nav;
     @FXML
     private TextField nickname;
@@ -115,9 +116,21 @@ public class RegistroController implements Initializable {
         
         return validUser && validEmail && nickNoUsado && pwd1Valida && pwd2Valida;
     }
+    
+    public void setDst(String s) {
+        dest = s;
+    }
+    
+    public void setFocus() {
+        nickname.requestFocus();
+    }
 
     @FXML
     private void cancelar(ActionEvent event) {
+        //limpiarCampos();
+        InicioSesionController controller = (InicioSesionController) JavaFXMLApplication.getController("IniciarSesion");
+        JavaFXMLApplication.setRoot("IniciarSesion");
+        controller.setFocus();
     }
 
     @FXML
