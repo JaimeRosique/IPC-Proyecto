@@ -6,9 +6,11 @@ package application;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -36,6 +38,16 @@ public class RegistroController implements Initializable {
     private ImageView avatar_img;
     @FXML
     private ImageView avatar_der;
+    @FXML
+    private PasswordField pswrd_check;
+    @FXML
+    private Label user_error;
+    @FXML
+    private Label pswrd_error;
+    @FXML
+    private Label pswrd_check_error;
+    @FXML
+    private Label email_error;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,6 +84,7 @@ public class RegistroController implements Initializable {
     }
     
     //Método para comprobar los campos
+    //TODO-- CAMBIAR CAMPOS PARA QUE SEAN VALIDOS (CONTRASEÑA USER)
     private boolean checkCampos() {
         boolean mandado = false;
         
@@ -81,33 +94,47 @@ public class RegistroController implements Initializable {
         boolean validUser = !user_name.isEmpty();
         boolean validEmail = !emailText.isEmpty() && !emailText.contains(" ");
         boolean nickNoUsado = !nav.exitsNickName(nickname.getText());
-        boolean pwd1Valida = passwrd1.getText().length() >= 6;
-        boolean pwd2Valida = passwrd2.getText().equals(passwrd1.getText());
+        boolean pwd1Valida = pswrd.getText().length() >= 6;
+        boolean pwd2Valida = pswrd_check.getText().equals(pswrd.getText());
         
-        nombreErrImg.setVisible(!nombreValido);
-        nombreErr.setStyle(nombreValido ? "-fx-text-fill: #7c7c7c;" : "-fx-text-fill: #fc0000;");
-        if(!mandado && !nombreValido){nombre.requestFocus(); mandado = true;}
+        //user_errorImg.setVisible(!validUser);
+        user_error.setStyle(validUser ? "-fx-text-fill: #7c7c7c;" : "-fx-text-fill: #fc0000;");
+        if(!mandado && !validUser){nickname.requestFocus(); mandado = true;}
         
-        apellidosErrImg.setVisible(!apellidosValidos);
-        apellidoErr.setStyle(apellidosValidos ? "-fx-text-fill: #7c7c7c;" : "-fx-text-fill: #fc0000;");
-        if(!mandado && !apellidosValidos){apellidos.requestFocus(); mandado = true;}
+        //pswrdErrorImg.setVisible(pswrd.getText().isEmpty());
+        pswrd_error.setStyle(pswrd.getText().isEmpty() ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
+        if(!mandado && !pwd1Valida){pswrd.requestFocus(); mandado = true;}
         
-        nikErrImg.setVisible(nick.getText().isEmpty());
-        nikErr.setStyle(nick.getText().isEmpty() ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
-        if(!mandado && !nickValido){nick.requestFocus(); mandado = true;}
+        //pswrd_check_ErrorImg.setVisible(!pswrd_check.getText().equals(pswrd.getText()));
+        pswrd_check_error.setStyle(pswrd_check.getText().equals(pswrd.getText()) ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
+        if(!mandado && !pwd2Valida){pswrd_check.requestFocus(); mandado = true;}
         
-        passwrdErrImg1.setVisible(passwrd1.getText().isEmpty());
-        passwrdErr1.setStyle(passwrd1.getText().isEmpty() ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
-        if(!mandado && !pwd1Valida){passwrd1.requestFocus(); mandado = true;}
+        //email_errorImg.setVisible(email.getText().isEmpty());
+        email_error.setStyle(email.getText().isEmpty() ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
+        if(!mandado && !validEmail){email.requestFocus(); mandado = true;}
         
-        passwrdErrImg2.setVisible(!passwrd2.getText().equals(passwrd1.getText()));
-        passwrdErr2.setStyle(passwrd2.getText().equals(passwrd1.getText()) ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
-        if(!mandado && !pwd2Valida){passwrd2.requestFocus(); mandado = true;}
+        return validUser && validEmail && nickNoUsado && pwd1Valida && pwd2Valida;
+    }
+
+    @FXML
+    private void cancelar(ActionEvent event) {
+    }
+
+    @FXML
+    private void aceptar(ActionEvent event) {
+        //TODO -- Verificar todos los campos + ampliaciones necesarias
+        boolean camposValidos = checkCampos();
+        //boolean contrValida = checkPassWrd() && eqPassWrd();
         
-        emailErrImg.setVisible(email.getText().isEmpty());
-        emailErr.setStyle(email.getText().isEmpty() ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
-        if(!mandado && !emailValido){email.requestFocus(); mandado = true;}
-        
-        return nombreValido && apellidosValidos && emailValido && nickValido && nickNoUsado && pwd1Valida && pwd2Valida;
+        if (camposValidos /*&& contrValida*/) {
+            try{
+                nav.registerUser(nickname.getText(), email.getText(), pswrd.getText(), avatar_img.getImage(), bdate.getValue());
+                //mostrarAlert();
+                //limpiarCampos();
+                //ProyAplication.setRoot(dest);
+            }catch(Exception e){
+                System.err.println(e.toString());
+            }
+        }
     }
 }
