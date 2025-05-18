@@ -16,9 +16,9 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RegistroController">
    <children>
-      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="800.0" VBox.vgrow="SOMETIMES">
+      <HBox alignment="CENTER" prefHeight="98.0" prefWidth="797.0" VBox.vgrow="SOMETIMES">
          <children>
-            <Label text="Registro" HBox.hgrow="SOMETIMES">
+            <Label prefHeight="67.0" prefWidth="150.0" text="Registro" HBox.hgrow="SOMETIMES">
                <font>
                   <Font size="41.0" />
                </font></Label>
