@@ -13,6 +13,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.*;
 
@@ -24,6 +25,7 @@ import model.*;
 public class RegistroController implements Initializable {
 
     private String dest;
+    private Image[] imgArray = new Image[12];
     private Navigation nav;
     @FXML
     private TextField nickname;
@@ -99,22 +101,60 @@ public class RegistroController implements Initializable {
         boolean pwd2Valida = pswrd_check.getText().equals(pswrd.getText());
         
         //user_errorImg.setVisible(!validUser);
+        user_error.setVisible(true);
         user_error.setStyle(validUser ? "-fx-text-fill: #7c7c7c;" : "-fx-text-fill: #fc0000;");
         if(!mandado && !validUser){nickname.requestFocus(); mandado = true;}
         
         //pswrdErrorImg.setVisible(pswrd.getText().isEmpty());
+        pswrd_error.setVisible(true);
         pswrd_error.setStyle(pswrd.getText().isEmpty() ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
         if(!mandado && !pwd1Valida){pswrd.requestFocus(); mandado = true;}
         
         //pswrd_check_ErrorImg.setVisible(!pswrd_check.getText().equals(pswrd.getText()));
+        pswrd_check_error.setVisible(true);
         pswrd_check_error.setStyle(pswrd_check.getText().equals(pswrd.getText()) ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
         if(!mandado && !pwd2Valida){pswrd_check.requestFocus(); mandado = true;}
         
         //email_errorImg.setVisible(email.getText().isEmpty());
+        email_error.setVisible(true);
         email_error.setStyle(email.getText().isEmpty() ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
         if(!mandado && !validEmail){email.requestFocus(); mandado = true;}
         
         return validUser && validEmail && nickNoUsado && pwd1Valida && pwd2Valida;
+    }
+    
+    // Metodo que limpia todos los datos 
+    private void limpiarCampos() {
+        nickname.clear();
+        bdate.setValue(null);
+        email.clear();
+        pswrd.clear();
+        pswrd_check.clear();
+
+        avatar_img.setImage(imgArray[0]);
+
+        //user_errorImg.setVisible(false);
+        user_error.setVisible(false);
+        user_error.setStyle("-fx-text-fill: #7c7c7c;");
+        //emailErrImg.setVisible(false);
+        email_error.setVisible(false);
+        email_error.setStyle("-fx-text-fill: #7c7c7c;");
+        //passwrdErrImg.setVisible(false);
+        pswrd_error.setVisible(false);
+        pswrd_error.setStyle("-fx-text-fill: #7c7c7c;");
+        pswrd_check_error.setVisible(false);
+        pswrd_check_error.setStyle("-fx-text-fill: #7c7c7c;");
+    }
+    
+    //Método para crear una alerta
+    private void mostrarAlert(){ //REVISAR
+        //Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        //alert.setTitle("Registro completado");
+        //alert.setHeaderText(null);
+        //alert.setContentText("Inicia sesión para usar la aplicación");
+        //alert.getDialogPane().setStyle("-fx-background-color: #a4dc8c");
+        //alert.getDialogPane().getStylesheets().add("styles/EstilosFondo.css");
+        //alert.showAndWait();
     }
     
     public void setDst(String s) {
@@ -142,9 +182,9 @@ public class RegistroController implements Initializable {
         if (camposValidos /*&& contrValida*/) {
             try{
                 nav.registerUser(nickname.getText(), email.getText(), pswrd.getText(), avatar_img.getImage(), bdate.getValue());
-                //mostrarAlert();
-                //limpiarCampos();
-                //ProyAplication.setRoot(dest);
+                mostrarAlert();
+                limpiarCampos();
+                JavaFXMLApplication.setRoot(dest);
             }catch(Exception e){
                 System.err.println(e.toString());
             }
