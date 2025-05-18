@@ -1,67 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.InicioSesionController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="377.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.InicioSesionController">
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <AnchorPane prefHeight="63.0" prefWidth="340.0">
          <children>
-            <Label alignment="CENTER" prefHeight="84.0" prefWidth="602.0" text="Inicio Sesión" textAlignment="CENTER" />
+            <ImageView fitHeight="77.0" fitWidth="85.0" layoutX="44.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="44.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <image>
+                  <Image url="@../resources/icon%20login.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" prefHeight="110.0" prefWidth="318.0" text="Inicio Sesión" textAlignment="CENTER" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="33.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="66.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" text="Usuario:" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="user_id" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" promptText="user123" />
+                  <ImageView fx:id="userErrorImg" fitHeight="25.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </VBox>
+            <Label fx:id="userError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" textAlignment="CENTER" textFill="RED" />
          </children>
       </HBox>
-      <GridPane VBox.vgrow="ALWAYS">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label alignment="CENTER" text="User:" textAlignment="CENTER" />
-                        <TextField fx:id="user_id" promptText="user123" />
-                     </children>
-                  </VBox>
-                  <Label fx:id="userError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" text="Invalid User" textAlignment="CENTER" textFill="RED" />
-                  <ImageView fx:id="userErrorImg" fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label alignment="CENTER" text="Password:" textAlignment="CENTER" />
-                        <TextField fx:id="pswrd_id" promptText="password123" />
-                     </children>
-                  </VBox>
-                  <Label fx:id="pswrdError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" text="Invalid Password" textAlignment="CENTER" textFill="RED" />
+                  <Label alignment="CENTER" text="Contraseña:" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="pswrd_id" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" promptText="password123" VBox.vgrow="SOMETIMES" />
                   <ImageView fx:id="pswrdErrorImg" fitHeight="32.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" />
                </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" />
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-                  <Hyperlink onAction="#register" text="Hyperlink" />
-                  <Button mnemonicParsing="false" onAction="#log_in" text="Log In" />
-               </children>
-            </HBox>
+            </VBox>
+            <Label fx:id="pswrdError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" textAlignment="CENTER" textFill="RED" />
          </children>
-      </GridPane>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Hyperlink onAction="#register" text="Registro" HBox.hgrow="SOMETIMES">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Hyperlink>
+            <Button mnemonicParsing="false" onAction="#log_in" text="Iniciar">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </VBox>

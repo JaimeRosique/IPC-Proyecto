@@ -39,10 +39,7 @@ public class JavaFXMLApplication extends Application {
         //scene.getStylesheets().add(css);
 
         // Configuración de la ventana principal
-        stage.setMinWidth(500);
-        stage.setMinHeight(400);
         stage.setScene(scene);
-        stage.setTitle("Inicio de sesión");
         stage.show();
     }
 
