@@ -24,7 +24,7 @@
                </font></Label>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="518.0" prefWidth="800.0" style="-fx-background-color: skyblue;" VBox.vgrow="SOMETIMES">
+      <HBox alignment="CENTER" prefHeight="546.0" prefWidth="800.0" style="-fx-background-color: skyblue;" VBox.vgrow="SOMETIMES">
          <children>
             <GridPane alignment="CENTER" prefHeight="446.0" prefWidth="722.0" style="-fx-background-color: lightgreen;" HBox.hgrow="SOMETIMES">
               <columnConstraints>
