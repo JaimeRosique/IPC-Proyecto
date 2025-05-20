@@ -4,6 +4,7 @@
  */
 package application;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -15,6 +16,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import model.*;
 
 /**
@@ -27,6 +30,7 @@ public class RegistroController implements Initializable {
     private String dest;
     private Image[] imgArray = new Image[12];
     private Navigation nav;
+    private int i;
     @FXML
     private TextField nickname;
     @FXML
@@ -60,7 +64,198 @@ public class RegistroController implements Initializable {
             System.err.println(e.toString());
         }
         imgSetUp();
-    }    
+        
+        // Cambia el tamaño de las flechas cuando pones el cursor encima
+        avatar_der.setOnMouseEntered(event -> {
+            avatar_der.setFitWidth(40); avatar_der.setFitHeight(40);
+        });
+        
+        // Cambia el tamaño de las flechas cuando pones el cursor encima
+        avatar_izq.setOnMouseEntered(event -> {
+            avatar_izq.setFitWidth(40); avatar_izq.setFitHeight(40);
+        });
+        
+        // Cambia el tamaño de las flechas cuando pones el cursor encima
+        avatar_der.setOnMouseExited(event -> {
+            avatar_der.setFitWidth(35); avatar_der.setFitHeight(35);
+        });
+        
+        // Cambia el tamaño de las flechas cuando pones el cursor encima
+        avatar_izq.setOnMouseExited(event -> {
+            avatar_izq.setFitWidth(35); avatar_izq.setFitHeight(35);
+        });
+        
+        // Permitir solo letras y espaciado en el nickname
+        nickname.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.contains(" ")) {
+                nickname.setText(oldValue);
+            }
+        });
+        
+        // Errores en nickname usado
+        nickname.setOnKeyTyped(event -> errNick());
+        
+        // Errores en nickname usado
+        nickname.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                errNick();
+            }
+        });
+        
+        // Permitir solo letras sin espaciado en el correo
+        email.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("[a-zA-Z\\s'\\-áéíúóàèìòùÁÉÍÓÚÀÈÌÒÙäëïöüÄËÏÖÜñÑ@.]*")) {
+                email.setText(oldValue);
+            }
+        });    
+        
+        // Errores en nombre
+        email.setOnKeyTyped(event -> errEmail());
+        
+        // Errores en nombre cuando cambias de campo y está vacío
+        email.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                errEmail();
+            }
+        });
+        
+        // Permitir solo números y letras en el campo de contraseña
+        pswrd.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("[a-zA-Z0-9]*")) {
+                pswrd.setText(oldValue);
+            }
+            checkPassWrd();
+        });
+        
+        // Errores cen pwd cuando se cambie de textField
+        pswrd.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue && checkPassWrd()) {
+                errPasswrd1();
+            }
+        });
+        
+        // Errores en pwd
+        pswrd.setOnKeyTyped(event -> errPasswrd1());
+        
+        // Permitir solo números y letras en el campo de confirmar contraseña
+        pswrd_check.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("[a-zA-Z0-9]*")) {
+                pswrd_check.setText(oldValue);
+            }
+            eqPassWrd();
+        });
+        
+        // Errores cen pwd1 cuando se cambie de textField
+        pswrd_check.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue && checkPassWrd()) {
+                errPasswrd2();
+            }
+        });
+        
+        // Errores en pwd1
+        pswrd_check.setOnKeyTyped(event -> errPasswrd2());
+        
+    }  
+    
+    // Mostrar errores en nickname cuando está usado
+    private void errNick() {
+        String nickText = nickname.getText();
+        boolean nickValido = !nav.exitsNickName(nickText); 
+        boolean nickNoVacio = !nickText.isEmpty();
+
+        if (!nickNoVacio) {
+            //nikErrImg.setVisible(true);
+            user_error.setStyle("-fx-text-fill: #fc0000; -fx-effect: dropshadow(gaussian, rgba(173, 216, 230, 0.5), 2, 1, 0, 1);");
+            user_error.setText("No debería estar vacio");
+        } else if (!nickValido) {
+            //nikErrImg.setVisible(true);
+            user_error.setStyle("-fx-text-fill: #fc0000;");
+            user_error.setText("Usuario repetido");
+        }  else {
+            //nikErrImg.setVisible(false);
+            user_error.setStyle("-fx-text-fill: #FFFFFF;");
+            user_error.setText("No debe tener espacios");
+        }
+    }
+    
+    // Mostrar errores en el correo 
+    private void errEmail() { 
+        String emailText = email.getText();
+        boolean emailValido = !emailText.isEmpty() && emailText.contains(" ");
+
+        if (!emailValido) {
+            //emailErrImg.setVisible(true);
+            email_error.setStyle("-fx-text-fill: #fc0000;");
+        } else {
+            //emailErrImg.setVisible(false);
+            email_error.setStyle("-fx-text-fill: #FFFFFF;");
+        }
+    }
+    
+    // Mostrar errores en la contraseña
+    private void errPasswrd1() {
+        String pwdText = pswrd.getText();
+        boolean pwdValida = pwdText.length() >= 6;
+
+        if (!pwdValida) {
+            //passwrdErrImg1.setVisible(true);
+            pswrd_error.setStyle("-fx-text-fill: #fc0000;");
+        } else {
+            //passwrdErrImg1.setVisible(false);
+            pswrd_error.setStyle("-fx-text-fill: #FFFFFF;");
+        }
+    }
+    
+    // Mostrar errores en la contraseña
+    private void errPasswrd2() {
+        String pwdText = pswrd_check.getText();
+        boolean pwdValida = pwdText.length() >= 6;
+
+        if (!pwdValida) {
+            //passwrdErrImg2.setVisible(true);
+            pswrd_check_error.setStyle("-fx-text-fill: #fc0000;");
+        } else {
+            //passwrdErrImg2.setVisible(false);
+            pswrd_check_error.setStyle("-fx-text-fill: #FFFFFF;");
+        }
+    }
+    
+    // Método para verificar las condiciones de la contraseña
+    private boolean checkPassWrd() {
+        boolean hasLetter = false;
+        boolean hasNumber = false;
+        String password = pswrd.getText();
+
+        for (char c : password.toCharArray()) {
+            if (Character.isLetter(c)) {
+                hasLetter = true;
+            } else if (Character.isDigit(c)) {
+                hasNumber = true;
+            }
+
+            // Si se cumple ambas condiciones, se sale del ciclo
+            if (hasLetter && hasNumber) {
+                break;
+            }
+        }
+
+        //passwrdErrImg1.setVisible(!hasLetter || !hasNumber);
+        pswrd_error.setStyle((hasLetter && hasNumber) ? "-fx-text-fill: #7c7c7c;" : "-fx-text-fill: #fc0000;");
+        if (hasLetter && hasNumber){return true;}
+        else{return false;}
+    }
+    
+    // Método para comprobar que tanto la primera como la segunda contraseñas son iguales
+    private boolean eqPassWrd() {
+        if (pswrd.getText().equals(pswrd_check.getText())) {
+            return true;
+        }
+        else {
+            //passwrdErrImg2.setVisible(true);
+            pswrd_check_error.setStyle("-fx-text-fill: #7c7c7c;");
+            return false;
+        }
+    }
     
     // Metodo que inicializa las 12 imagenes de imgArray 
     private void imgSetUp() {
@@ -188,6 +383,43 @@ public class RegistroController implements Initializable {
             }catch(Exception e){
                 System.err.println(e.toString());
             }
+        }
+    }
+
+    @FXML
+    private void img_izq(MouseEvent event) {
+        i--;
+        if(i < 0){i = 11;}
+        avatar_img.setImage(imgArray[i]);
+    }
+
+    @FXML
+    private void img_der(MouseEvent event) {
+        i++;
+        if(i >= 12){i = 0;}
+        avatar_img.setImage(imgArray[i]);
+    }
+
+    @FXML
+    private void getImg(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Buscar Imagen");
+        
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("All Images", "*.*"),
+            new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+            new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if(selectedFile != null){
+            Image image = null;
+            try{
+                image = new Image("file:" + selectedFile.getAbsolutePath(), 140, 150, false, true);
+            }catch(Exception e){
+                System.err.println(e.toString());
+            }
+            
+            avatar_img.setImage(image);
         }
     }
 }
