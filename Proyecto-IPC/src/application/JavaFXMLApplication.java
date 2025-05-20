@@ -19,7 +19,7 @@ public class JavaFXMLApplication extends Application {
         // Cargar todas las escenas
         cargarEscena("InicioSesion.fxml", "IniciarSesion");
         cargarEscena("Registro.fxml", "Registro");
-
+        cargarEscena("Problema.fxml", "Problema");
         /*
         cargarEscena("Menu.fxml", "Menu");
         cargarEscena("ActualizarDatos.fxml", "ActualizarDatos");
@@ -71,7 +71,7 @@ public class JavaFXMLApplication extends Application {
                     stage.setMinHeight(830);
                     stage.setTitle("Registro");
                     break;
-                case "Menu":
+                case "Problema":
                     stage.setMinWidth(922);
                     stage.setMinHeight(830);
                     stage.setTitle("Menu");
