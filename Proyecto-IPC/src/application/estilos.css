@@ -6,7 +6,101 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Created on : 18 may 2025, 23:38:38
     Author     : brise
 */
-.button {
-    -fx-background-color: #8098ea;
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #e0f2ff; /* azul claro tipo carta náutica */
 }
 
+/* Título y encabezados */
+#titulo {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #003366; /* azul marino */
+}
+
+/* Etiquetas generales */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #002244;
+}
+
+/* Botones */
+.button {
+    -fx-background-color: #006699;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 16 8 16;
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+}
+
+#perfilregistro {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-border-color: #6699cc;
+    -fx-border-radius: 10;
+    -fx-padding: 2;
+}
+
+.button:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-cursor: hand;
+}
+
+.button:pressed {
+    -fx-background-color: #004466;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 16 8 16;
+}
+
+/* Campos de entrada */
+.text-field, .text-area {
+    -fx-background-color: white;
+    -fx-border-color: #99ccff;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 6;
+    -fx-font-size: 13px;
+}
+
+/* Cuadro de dibujo (simulación de carta náutica) */
+.canvas {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #336699;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+}
+
+/* Paneles */
+.pane, .anchor-pane, .grid-pane, .vbox, .hbox {
+    -fx-background-color: #f7fbff;
+    -fx-padding: 10;
+}
+
+/* Tabla de resultados */
+.table-view {
+    -fx-background-color: white;
+    -fx-table-cell-border-color: #cce0ff;
+    -fx-border-color: #6699cc;
+    -fx-border-radius: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #cce5ff;
+}
+
+.table-view .table-row-cell:filled:selected {
+    -fx-background-color: #99c2ff;
+}
+
+/* Líneas y separadores */
+.separator {
+    -fx-background-color: #6699cc;
+}
