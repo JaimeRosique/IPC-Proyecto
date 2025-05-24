@@ -1,4 +1,4 @@
-# IPC-Proyecto
+![image](https://github.com/user-attachments/assets/9325c580-0ddf-43d6-b485-db1e68e2d625)# IPC-Proyecto
 Trabajo de IPC 2025 TOPOLOGÍA
 ###
 # ✅ To-Do List del Proyecto IPC 2025
@@ -25,12 +25,12 @@ Trabajo de IPC 2025 TOPOLOGÍA
 
 | Tarea                                                             | Estado |
 |------------------------------------------------------------------|--------|
-| Zoom (acercar/alejar)                                            | [ ]    |
-| Marcar puntos                                                    | [ ]    |
-| Trazar líneas entre puntos                                       | [ ]    |
-| Trazar arcos (radio libre o fijo)                                | [ ]    |
-| Añadir texto                                                     | [ ]    |
-| Cambiar color y grosor de marcas                                 | [ ]    |
+| Zoom (acercar/alejar)                                            | [✔]    |
+| Marcar puntos                                                    | [✔] Es necesario solucionar problema   |
+| Trazar líneas entre puntos                                       | [✔]    |
+| Trazar arcos (radio libre o fijo)                                | [✔] Falta libre   |
+| Añadir texto                                                     | [✔]    |
+| Cambiar color y grosor de marcas                                 | [ ]  Medio hecho  |
 | Eliminar marcas individuales                                     | [ ]    |
 | Limpiar toda la carta                                            | [ ]    |
 | Mover transportador para medir ángulos                           | [ ]    |
