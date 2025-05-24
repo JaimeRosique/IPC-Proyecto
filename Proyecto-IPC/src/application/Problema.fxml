@@ -33,6 +33,11 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Herramientas">
                   <items>
+                        <MenuItem fx:id="punto" mnemonicParsing="false" onAction="#crearPunto" text="Punto" />
+                        <MenuItem mnemonicParsing="false" onAction="#crearLinea" text="Crear Linea" />
+                        <MenuItem mnemonicParsing="false" onAction="#crearArco" text="Crear Arco" />
+                        <MenuItem mnemonicParsing="false" onAction="#crearTexto" text="Crear Texto" />
+                        <MenuItem mnemonicParsing="false" onAction="#cambiarColor" text="Cambiar Color" />
                     <MenuItem mnemonicParsing="false" text="Close" />
                   </items>
                 </Menu>
@@ -58,7 +63,7 @@
             <ListView fx:id="map_listview" onMouseClicked="#listClicked" prefHeight="399.0" prefWidth="87.0" />
             <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" onMouseMoved="#showPosition" onMousePressed="#addPoi" pannable="true" prefHeight="398.0" prefWidth="358.0" vbarPolicy="ALWAYS">
                <content>
-                  <Pane>
+                  <Pane fx:id="cartaPane">
                      <children>
                         <ImageView pickOnBounds="true">
                            <image>
@@ -129,6 +134,7 @@
                               </Button>
                            </children>
                         </StackPane>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="178.0" layoutY="294.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </Pane>
                </content>
