@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class JavaFXMLApplication extends Application {
@@ -72,6 +73,7 @@ public class JavaFXMLApplication extends Application {
                     stage.setTitle("Registro");
                     break;
                 case "Problema":
+                    stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
                     stage.setMinWidth(922);
                     stage.setMinHeight(830);
                     stage.setTitle("Menu");
