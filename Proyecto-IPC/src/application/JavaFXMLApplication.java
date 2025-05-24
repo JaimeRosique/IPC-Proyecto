@@ -73,7 +73,7 @@ public class JavaFXMLApplication extends Application {
                     stage.setTitle("Registro");
                     break;
                 case "Problema":
-                    stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
+                    //stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
                     stage.setMinWidth(922);
                     stage.setMinHeight(830);
                     stage.setTitle("Menu");
