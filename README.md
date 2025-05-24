@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/9325c580-0ddf-43d6-b485-db1e68e2d625)# IPC-Proyecto
+# IPC-Proyecto
 Trabajo de IPC 2025 TOPOLOGÍA
 ###
 # ✅ To-Do List del Proyecto IPC 2025
