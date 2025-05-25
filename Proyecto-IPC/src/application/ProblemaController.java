@@ -46,12 +46,15 @@ import javafx.scene.ImageCursor;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.QuadCurve;
 
 /**
  *
@@ -59,7 +62,8 @@ import javafx.scene.shape.Line;
  */
 public class ProblemaController implements Initializable {
     
-    private Node marcaSeleccionada = null;
+    private List<Point2D> puntosArcoLibre = new ArrayList<>();
+    private final List<Node> marcasSeleccionadas = new ArrayList<>();
     private boolean creandoTexto = false;
     private boolean creandoArco = false;
     private Point2D centroArco = null;
@@ -128,22 +132,36 @@ public class ProblemaController implements Initializable {
         arc.setStroke(javafx.scene.paint.Color.BLUE); // usa tu color predefinido
         arc.setStrokeWidth(grosorLinea); // usa tu grosor predefinido
         arc.setFill(null); // sin relleno
+        
+        arc.setOnMouseClicked(e -> {
+            if (e.getButton() == MouseButton.SECONDARY) {
+                e.consume();
+                if (!e.isShiftDown()) {
+                    limpiarSeleccion();
+                }
+                seleccionarMarca(arc);
+            }
+        });
 
         cartaPane.getChildren().add(arc);
     }
     
     private void seleccionarMarca(Node nodo) {
-        // Opcional: quita efecto de selección anterior
-        if (marcaSeleccionada != null) {
-            marcaSeleccionada.setEffect(null);
+        if (!marcasSeleccionadas.contains(nodo)) {
+            javafx.scene.effect.DropShadow efecto = new javafx.scene.effect.DropShadow();
+            efecto.setColor(Color.GOLD);
+            efecto.setRadius(20);
+            efecto.setSpread(0.6);
+            nodo.setEffect(efecto);
+            marcasSeleccionadas.add(nodo);
         }
-        marcaSeleccionada = nodo;
-
-        // Efecto visual simple para la selección (por ejemplo un resplandor)
-        javafx.scene.effect.DropShadow efecto = new javafx.scene.effect.DropShadow();
-        efecto.setColor(javafx.scene.paint.Color.YELLOW);
-        efecto.setRadius(10);
-        marcaSeleccionada.setEffect(efecto);
+    }
+    
+    private void limpiarSeleccion() {
+        for (Node n : marcasSeleccionadas) {
+            n.setEffect(null);
+        }
+        marcasSeleccionadas.clear();
     }
     
     // esta funcion es invocada al cambiar el value del slider zoom_slider
@@ -204,7 +222,22 @@ public class ProblemaController implements Initializable {
         zoom_slider.setMax(1.5);
         zoom_slider.setValue(1.0);
         zoom_slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
+        
+        splitPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+            if (event.isControlDown()) {
+                event.consume();  // Prevenir cualquier otro scroll
 
+                double delta = event.getDeltaY();
+                double currentZoom = zoom_slider.getValue();
+                double zoomFactor = 0.1; // Ajusta la sensibilidad si quieres
+
+                if (delta > 0) {
+                    zoom_slider.setValue(Math.min(zoom_slider.getMax(), currentZoom + zoomFactor));
+                } else {
+                    zoom_slider.setValue(Math.max(zoom_slider.getMin(), currentZoom - zoomFactor));
+                }
+            }
+        });
         //=========================================================================
         //Envuelva el contenido de scrollpane en un grupo para que 
         //ScrollPane vuelva a calcular las barras de desplazamiento tras el escalado
@@ -221,34 +254,84 @@ public class ProblemaController implements Initializable {
         // Manejar clicks en el pane
         cartaPane.setOnMouseClicked(event -> {
             if (creandoPunto) {
-                Circle punto = new Circle(8, javafx.scene.paint.Color.BLUE); // Radio 8, color azul por defecto
-                punto.setLayoutX(event.getX());
-                punto.setLayoutY(event.getY());
+                double x = event.getX();
+                double y = event.getY();
+
+                // Círculo externo
+                Circle externo = new Circle(x, y, 12); // Radio mayor
+                externo.setStroke(Color.BLACK);
+                externo.setStrokeWidth(3);
+                externo.setFill(Color.TRANSPARENT);
+
+                // Círculo interno
+                Circle interno = new Circle(x, y, 5); // Radio menor
+                interno.setFill(Color.BLACK);
+
+                // Agrupar los dos círculos como un solo nodo
+                Group punto = new Group(externo, interno);
                 punto.setCursor(Cursor.HAND);
-
+                
                 punto.setOnMouseClicked(e -> {
-                    e.consume(); // para que no se propague el evento
-                    seleccionarMarca(punto); // método que debes tener para manejar la selección
+                    if (e.getButton() == MouseButton.SECONDARY) {
+                        e.consume();
+                        if (!e.isShiftDown()) {
+                            limpiarSeleccion();
+                        }
+                        seleccionarMarca(punto); // o grupo, label, etc.
+                    }
                 });
-
+ 
                 cartaPane.getChildren().add(punto);
 
-                // Restaurar estado normal
+                // Restaurar estado
                 cartaPane.setCursor(Cursor.DEFAULT);
                 creandoPunto = false;
             } else if (creandoLinea) {
-                // Guardar punto actual
-                Point2D punto = new Point2D(event.getX(), event.getY());
-                puntosLinea.add(punto);
+                // Coordenadas del clic
+                double clickX = event.getX();
+                double clickY = event.getY();
+                Point2D puntoClic = new Point2D(clickX, clickY);
 
-                // Cuando hay 2 puntos, trazar línea
+                // Buscar el punto más cercano (dentro de un umbral)
+                Point2D puntoAjustado = null;
+                double umbral = 15.0; // distancia en píxeles
+                for (Node nodo : cartaPane.getChildren()) {
+                    if (nodo instanceof Group) {
+                        Group grupo = (Group) nodo;
+                        if (grupo.getChildren().size() == 2 &&
+                            grupo.getChildren().get(0) instanceof Circle &&
+                            grupo.getChildren().get(1) instanceof Circle) {
+                            Circle c = (Circle) grupo.getChildren().get(0);
+                            Point2D centro = new Point2D(c.getCenterX(), c.getCenterY());
+                            if (centro.distance(puntoClic) < umbral) {
+                                puntoAjustado = centro;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Si encontró un punto cercano, usar ese
+                Point2D puntoFinal = (puntoAjustado != null) ? puntoAjustado : puntoClic;
+                puntosLinea.add(puntoFinal);
+
                 if (puntosLinea.size() == 2) {
                     Point2D p1 = puntosLinea.get(0);
                     Point2D p2 = puntosLinea.get(1);
 
                     Line linea = new Line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-                    linea.setStroke(javafx.scene.paint.Color.BLUE);  // corregido el color para JavaFX
+                    linea.setStroke(Color.BLUE);
                     linea.setStrokeWidth(grosorLinea);
+                    
+                    linea.setOnMouseClicked(e -> {
+                        if (e.getButton() == MouseButton.SECONDARY) {
+                            e.consume();
+                            if (!e.isShiftDown()) {
+                                limpiarSeleccion();
+                            }
+                            seleccionarMarca(linea);
+                        }
+                    });
 
                     cartaPane.getChildren().add(linea);
 
@@ -259,37 +342,47 @@ public class ProblemaController implements Initializable {
                 }
             } else if (creandoArco) {
                 if (centroArco == null) {
-                    // Guardar el centro del arco
+                    // Primer clic: seleccionar centro del arco
                     centroArco = new Point2D(event.getX(), event.getY());
 
-                    // Aquí puedes pedir el radio al usuario con un diálogo o usar uno predefinido
-                    TextInputDialog dialog = new TextInputDialog("50"); // 50 es valor por defecto
-                    dialog.setTitle("Radio del Arco");
-                    dialog.setHeaderText("Introduce el radio del arco");
+                    // Marca visual opcional del centro
+                    Circle marcaCentro = new Circle(centroArco.getX(), centroArco.getY(), 4, Color.RED);
+                    cartaPane.getChildren().add(marcaCentro);
+                    
+                    // PUEDE CAMBIARSE
+                    marcaCentro.setOnMouseClicked(e -> {
+                        if (e.getButton() == MouseButton.SECONDARY) {
+                            e.consume();
+                            if (!e.isShiftDown()) {
+                                limpiarSeleccion();
+                            }
+                            seleccionarMarca(marcaCentro);
+                        }
+                    });
+
+                } else {
+                    // Solicita al usuario un radio manualmente
+                    TextInputDialog dialog = new TextInputDialog("50");
+                    dialog.setTitle("Definir radio");
+                    dialog.setHeaderText("Introduce el radio del arco:");
                     dialog.setContentText("Radio:");
 
-                    Optional<String> result = dialog.showAndWait();
-                    if (result.isPresent()) {
+                    Optional<String> resultado = dialog.showAndWait();
+                    if (resultado.isPresent()) {
                         try {
-                            radioArco = Double.parseDouble(result.get());
-                        } catch (NumberFormatException e) {
-                            radioArco = 50; // fallback si no es válido
+                            radioArco = Double.parseDouble(resultado.get());
+                            drawArc(centroArco, radioArco);
+                        } catch (NumberFormatException ex) {
+                            Alert alerta = new Alert(Alert.AlertType.ERROR, "Radio inválido. Introduce un número válido.");
+                            alerta.showAndWait();
                         }
-                    } else {
-                        // Si cancela el diálogo, salir del modo arco
-                        creandoArco = false;
-                        cartaPane.setCursor(Cursor.DEFAULT);
-                        centroArco = null;
-                        return;
                     }
 
-                    // Una vez definido el radio, dibujamos el arco
-                    drawArc(centroArco, radioArco);
-
-                    // Salir del modo arco
+                    // Resetear estado
                     creandoArco = false;
-                    cartaPane.setCursor(Cursor.DEFAULT);
                     centroArco = null;
+                    radioArco = 0;
+                    cartaPane.setCursor(Cursor.DEFAULT);
                 }
             } else if (creandoTexto) {
                 // Pedir texto con diálogo
@@ -306,13 +399,25 @@ public class ProblemaController implements Initializable {
                     label.setLayoutX(event.getX());
                     label.setLayoutY(event.getY());
                     label.setStyle("-fx-font-size: 14px; -fx-text-fill: black;"); // estilo básico, personalízalo
-
+                    
+                    label.setOnMouseClicked(e -> {
+                        if (e.getButton() == MouseButton.SECONDARY) {
+                            e.consume();
+                            if (!e.isShiftDown()) {
+                                limpiarSeleccion();
+                            }
+                            seleccionarMarca(label);
+                        }
+                    });
                     cartaPane.getChildren().add(label);
                 }
 
                 // Salir del modo texto
                 creandoTexto = false;
                 cartaPane.setCursor(Cursor.DEFAULT);
+            }
+            if (event.getButton() == MouseButton.SECONDARY && !event.isConsumed()) {
+                limpiarSeleccion();
             }
         });
         
@@ -412,13 +517,21 @@ public class ProblemaController implements Initializable {
 
     @FXML
     private void cambiarColor(ActionEvent event) {
-        if (marcaSeleccionada == null) {
+        if (marcasSeleccionadas.isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.WARNING, "No hay ninguna marca seleccionada");
             alerta.showAndWait();
             return;
         }
 
-        // Mostrar un selector de color
+        // Preguntar si el usuario quiere cambiar el color (opcionalidad explícita)
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION, "¿Deseas cambiar el color de las marcas seleccionadas?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> respuesta = confirmacion.showAndWait();
+
+        if (respuesta.isEmpty() || respuesta.get() != ButtonType.YES) {
+            return; // El usuario no desea cambiar el color
+        }
+
+        // Mostrar el selector de color
         ColorPicker colorPicker = new ColorPicker();
         Dialog<Color> dialog = new Dialog<>();
         dialog.setTitle("Seleccionar color");
@@ -432,25 +545,78 @@ public class ProblemaController implements Initializable {
         });
 
         Optional<Color> resultado = dialog.showAndWait();
+
         resultado.ifPresent(color -> {
-            // Cambiar color según tipo nodo
-            if (marcaSeleccionada instanceof ImageView) {
-                // Para puntos: puedes aplicar un efecto de color o cambiar la imagen si tienes versiones tintadas
-                // Aquí un filtro simple (no es ideal para cambiar imagen, pero es una idea)
-                marcaSeleccionada.setEffect(new javafx.scene.effect.ColorAdjust(0, 0, 0, 0));
-                // Para cambiar el color real necesitarías una imagen diferente o crear un círculo en vez de imagen
-                // Mejor usar Circle para puntos si quieres cambiar color
-                Alert alerta = new Alert(Alert.AlertType.INFORMATION, "Cambiar color de puntos requiere usar círculos en vez de imagen.");
-                alerta.showAndWait();
-            } else if (marcaSeleccionada instanceof Line) {
-                ((Line) marcaSeleccionada).setStroke(color);
-            } else if (marcaSeleccionada instanceof Arc) {
-                ((Arc) marcaSeleccionada).setStroke(color);
-            } else if (marcaSeleccionada instanceof Label) {
-                ((Label) marcaSeleccionada).setTextFill(color);
+            for (Node marca : marcasSeleccionadas) {
+                if (marca instanceof ImageView) {
+                    Alert alerta = new Alert(Alert.AlertType.INFORMATION, "Cambiar color de puntos requiere usar círculos en vez de imágenes.");
+                    alerta.showAndWait();
+                } else if (marca instanceof Line) {
+                    ((Line) marca).setStroke(color);
+                } else if (marca instanceof Arc) {
+                    ((Arc) marca).setStroke(color);
+                } else if (marca instanceof Label) {
+                    ((Label) marca).setTextFill(color);
+                } else if (marca instanceof Group) {
+                    // Si la marca es un Group (por ejemplo un punto compuesto),
+                    // puedes decidir cómo cambiar el color, por ejemplo cambiar el color del círculo interno:
+                    Group grupo = (Group) marca;
+                    for (Node child : grupo.getChildren()) {
+                        if (child instanceof Circle) {
+                            ((Circle) child).setFill(color);
+                            ((Circle) child).setStroke(color);
+                        }
+                    }
+                }
             }
         });
     }
 
+    @FXML
+    private void eliminarMarca(ActionEvent event) {
+        if (marcasSeleccionadas.isEmpty()) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING, "No hay ninguna marca seleccionada para eliminar.");
+            alerta.showAndWait();
+            return;
+        }
 
+        // Confirmar la eliminación con el usuario (opcional)
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION, 
+                "¿Deseas eliminar las marcas seleccionadas?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> respuesta = confirmacion.showAndWait();
+
+        if (respuesta.isPresent() && respuesta.get() == ButtonType.YES) {
+            for (Node marca : marcasSeleccionadas) {
+                cartaPane.getChildren().remove(marca);
+            }
+            marcasSeleccionadas.clear();
+        }
+    }
+
+    @FXML
+    private void limpiarCarta(ActionEvent event) {
+        // Limpiamos la selección primero
+        limpiarSeleccion();
+        Node mapaBase = null;
+        for (Node nodo : cartaPane.getChildren()) {
+            if ("mapa".equals(nodo.getId())) {
+                mapaBase = nodo;
+                break;
+            }
+        }
+
+        // Creamos una lista temporal para eliminar nodos no deseados sin modificar la lista durante la iteración
+        List<Node> nodosAEliminar = new ArrayList<>();
+
+        for (Node nodo : cartaPane.getChildren()) {
+            if (nodo != mapaBase) {
+                // Solo eliminar si es Group (punto), Arc, Line o Label
+                if (nodo instanceof Group || nodo instanceof Arc || nodo instanceof Line || nodo instanceof Label || nodo instanceof Circle) {
+                    nodosAEliminar.add(nodo);
+                }
+            }
+        }
+
+        cartaPane.getChildren().removeAll(nodosAEliminar);
+    }
 }
