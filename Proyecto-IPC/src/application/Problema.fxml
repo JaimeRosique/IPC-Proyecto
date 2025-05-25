@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="556.0" prefWidth="853.0" stylesheets="@problemas%20css.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProblemaController">
+<VBox prefHeight="556.0" prefWidth="853.0" stylesheets="@../resources/protractor.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProblemaController">
    <children>
       <HBox alignment="CENTER_RIGHT" fillHeight="false" spacing="5.0" VBox.vgrow="NEVER">
          <children>
@@ -92,61 +92,57 @@
                   </ScrollPane>
                   <StackPane layoutX="14.0" layoutY="14.0" prefHeight="478.0" prefWidth="79.0">
                      <children>
-                        <Button mnemonicParsing="false" styleClass="limpiar carta" text="limpiar carta">
+                        <Button fx:id="limpiarCartaButton" mnemonicParsing="false" styleClass="limpiar carta" text="limpiar carta">
                            <StackPane.margin>
                               <Insets top="400.0" />
                            </StackPane.margin>
                         </Button>
-                        <Button mnemonicParsing="false" styleClass="punto" text="punto">
-                           <StackPane.margin>
-                              <Insets top="-270.0" />
-                           </StackPane.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" styleClass="medir" text="medir">
-                           <StackPane.margin>
-                              <Insets top="210.0" />
-                           </StackPane.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" styleClass="transportador" text="transportador">
-                           <StackPane.margin>
-                              <Insets top="130.0" />
-                           </StackPane.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" styleClass="texto" text="texto">
-                           <StackPane.margin>
-                              <Insets top="-30.0" />
-                           </StackPane.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" styleClass="arco" text="arco" StackPane.alignment="CENTER">
-                           <StackPane.margin>
-                              <Insets top="-110.0" />
-                           </StackPane.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" styleClass="goma" text="goma">
-                           <StackPane.margin>
-                              <Insets top="50.0" />
-                           </StackPane.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" styleClass="linea" text="linea">
-                           <StackPane.margin>
-                              <Insets top="-190.0" />
-                           </StackPane.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" styleClass="colores" text="colores">
-                           <StackPane.margin>
-                              <Insets top="290.0" />
-                           </StackPane.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" styleClass="angulos" text="angulos">
-                           <StackPane.margin>
-                              <Insets top="-350.0" />
-                           </StackPane.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" styleClass="coordenadas" text="coordenadas">
+                        <ToggleButton fx:id="coordenadasButton" mnemonicParsing="false" text="coordenadas">
                            <StackPane.margin>
                               <Insets top="-430.0" />
                            </StackPane.margin>
-                        </Button>
+                        </ToggleButton>
+                        <ToggleButton fx:id="arcoButton" mnemonicParsing="false" text="arco">
+                           <StackPane.margin>
+                              <Insets top="-110.0" />
+                           </StackPane.margin>
+                        </ToggleButton>
+                        <ToggleButton fx:id="lineaButton" mnemonicParsing="false" text="linea">
+                           <StackPane.margin>
+                              <Insets top="-190.0" />
+                           </StackPane.margin>
+                        </ToggleButton>
+                        <ToggleButton fx:id="puntoButton" mnemonicParsing="false" text="punto">
+                           <StackPane.margin>
+                              <Insets top="-270.0" />
+                           </StackPane.margin>
+                        </ToggleButton>
+                        <ToggleButton fx:id="lineaAnguloButton" mnemonicParsing="false" text="angulos">
+                           <StackPane.margin>
+                              <Insets top="-350.0" />
+                           </StackPane.margin>
+                        </ToggleButton>
+                        <ToggleButton fx:id="coloresGrosorButton" mnemonicParsing="false" text="colores">
+                           <StackPane.margin>
+                              <Insets top="290.0" />
+                           </StackPane.margin></ToggleButton>
+                        <ToggleButton fx:id="reglaButton" mnemonicParsing="false" text="regla">
+                           <StackPane.margin>
+                              <Insets top="210.0" />
+                           </StackPane.margin></ToggleButton>
+                        <ToggleButton fx:id="transportadorButton" mnemonicParsing="false" text="transportador">
+                           <StackPane.margin>
+                              <Insets top="130.0" />
+                           </StackPane.margin></ToggleButton>
+                        <ToggleButton fx:id="gomaButton" mnemonicParsing="false" text="goma">
+                           <StackPane.margin>
+                              <Insets top="50.0" />
+                           </StackPane.margin></ToggleButton>
+                        <ToggleButton fx:id="textoButton" mnemonicParsing="false" text="texto">
+                           <StackPane.margin>
+                              <Insets top="-30.0" />
+                           </StackPane.margin>
+                        </ToggleButton>
                      </children>
                   </StackPane>
                </children>

@@ -45,6 +45,7 @@ import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextInputDialog;
@@ -111,6 +112,28 @@ public class ProblemaController implements Initializable {
     private ImageView image_map;
     @FXML
     private ToggleButton toggleThemeButton;
+    @FXML
+    private Button limpiarCartaButton;
+    @FXML
+    private ToggleButton coordenadasButton;
+    @FXML
+    private ToggleButton arcoButton;
+    @FXML
+    private ToggleButton lineaButton;
+    @FXML
+    private ToggleButton puntoButton;
+    @FXML
+    private ToggleButton lineaAnguloButton;
+    @FXML
+    private ToggleButton coloresGrosorButton;
+    @FXML
+    private ToggleButton reglaButton;
+    @FXML
+    private ToggleButton transportadorButton;
+    @FXML
+    private ToggleButton gomaButton;
+    @FXML
+    private ToggleButton textoButton;
     
     @FXML
     void zoomIn(ActionEvent event) {

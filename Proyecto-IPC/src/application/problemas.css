@@ -19,49 +19,93 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-padding: 10;
 }
 
-/* === BARRA DE MENÚ === */
-.menu-bar {
-    -fx-background-color: #b3d9f2;
-    -fx-border-color: #99cce0;
-    -fx-border-width: 0 0 1 0;
-}
-
+/* === MENÚ === */
 .menu {
     -fx-text-fill: #003366;
+    -fx-padding: 6 14;
+    -fx-background-radius: 6;
+}
+
+.menu-bar {
+    -fx-background-color: #b3d9f2;
+    -fx-text-fill: #003366;
+    -fx-background-radius: 6;
 }
 
 .menu-item {
-    -fx-background-color: transparent;
+    -fx-padding: 6 14;
     -fx-text-fill: #003366;
+    -fx-font-size: 14px;
+    -fx-background-color: transparent;
 }
 
 .menu-item:hover {
-    -fx-background-color: #cceaff;
+    -fx-background-color: #94c6f2;
+}
+
+.menu-item:focused {
+    -fx-background-color: #cce5ff;
 }
 
 /* === BOTONES === */
 .button {
     -fx-background-color: #99cce0;
-    -fx-text-fill: white;
+    -fx-text-fill: #003366;
     -fx-font-weight: bold;
-    -fx-padding: 10 20;
     -fx-background-radius: 6;
+    -fx-padding: 10 20;
     -fx-scale-x: 1.0;
     -fx-scale-y: 1.0;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0, 0, 1);
 }
 
-.button:hover {
+#btnIniciarSesion:hover, #btnIniciarSesion:focused {
+    -fx-font-size: 16;
+}
+
+.button:hover, .button:focused {
     -fx-background-color: #6699cc;
+    -fx-font-weight: bold;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
     -fx-cursor: hand;
+}
+
+.button:pressed {
+    -fx-background-color: #99c2ff;
+}
+
+.toggle-button {
+    -fx-background-color: #b3d9f2;       
+    -fx-text-fill: #003366;                     
+    -fx-background-radius: 6;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0, 0, 1);
+}
+
+.toggle-button:hover {
+    -fx-background-color: #cceaff;
+}
+
+/* Selected: más oscuro pero en la misma gama */
+.toggle-button:selected {
+    -fx-background-color: #99c2ff;
+    -fx-text-fill: #002244;
+    -fx-font-weight: bold;
 }
 
 /* === TEXTOS Y LABELS === */
 .label {
     -fx-text-fill: #002244;
     -fx-font-size: 14px;
+}
+
+#titulo {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #002244;
 }
 
 .label.title {
@@ -83,6 +127,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 /* === CAMPOS DE TEXTO === */
 .text-field, .text-area {
     -fx-background-color: white;
+    -fx-text-fill: #003366;
     -fx-border-color: #99ccff;
     -fx-border-radius: 4;
     -fx-background-radius: 4;
@@ -104,13 +149,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-text-fill: #003366;
 }
 
+.list-cell:odd {
+    -fx-background-color: #cfe9fc;
+}
+
+.list-cell:even {
+    -fx-background-color: tranparent;
+}
+
+.list-cell:hover {
+    -fx-background-color: #94c6f2;
+    -fx-text-fill: #003366;
+}
+
+.list-cell:selected {
+    -fx-background-color: #99c2ff;
+    -fx-text-fill: #002244;
+}
+
 /* === SPLITPANE === */
 .split-pane {
     -fx-background-color: #e0f2ff;
 }
 
 .split-pane-divider {
-    -fx-background-color: #b3d9f2;
+    -fx-background-color: transparent;
     -fx-padding: 0.5;
 }
 
@@ -121,16 +184,70 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-border-width: 2;
 }
 
+/* === SCROLLPANE === */
+.scroll-pane {
+    -fx-background: #e0f2ff;
+    -fx-border-color: #99cce0;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-padding: 8;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Estilo de las barras de desplazamiento */
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #99cce0;
+    -fx-background-radius: 4;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #6699cc;
+}
+
+.scroll-bar .increment-button:hover,
+.scroll-bar .decrement-button:hover {
+    -fx-background-color: #94c6f2;
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 1, 0, 0, 1);
+}
+
+.scroll-bar .increment-button .increment-arrow,
+.scroll-bar .decrement-button .decrement-arrow {
+    -fx-background-color: #003366;
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 1, 0, 0, 1);
+}
+
+.scroll-bar .increment-button:hover .increment-arrow,
+.scroll-bar .decrement-button:hover .decrement-arrow {
+    -fx-background-color: #254a99;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 1, 0, 0, 1);
+    -fx-background-radius: 6;
+}
+
+.scroll-pane .corner {
+    -fx-background-color: #e0f2ff; 
+}
+
 /* === TABLAS === */
 .table-view {
     -fx-background-color: white;
-    -fx-table-cell-border-color: #cce0ff;
     -fx-border-color: #6699cc;
     -fx-border-radius: 5;
+    -fx-text-fill: #003366;
 }
 
 .table-view .column-header-background {
     -fx-background-color: #cce5ff;
+    -fx-text-fill: #003366;
 }
 
 .table-view .table-row-cell:filled:selected {
@@ -142,7 +259,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: #6699cc;
 }
 
-/* === IMÁGENES CON BORDES REDONDEADOS === */
+/* === IMÁGENES CON BORDES === */
 .image-view {
     -fx-border-color: #6699cc;
     -fx-border-radius: 10;
@@ -163,7 +280,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .slider .thumb {
     -fx-background-color: #99cce0;
     -fx-background-radius: 50%;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
 }
 
 .slider .thumb:hover {
@@ -171,66 +288,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-cursor: hand;
 }
 
-/* === SCROLLPANE === */
-.scroll-pane {
-    -fx-background: #e0f2ff;
-    -fx-border-color: #99cce0;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
-    -fx-padding: 8;
-}
-
-.scroll-pane .viewport {
-    -fx-background-color: transparent;
-}
-
-/* Estilo de las barras de desplazamiento */
-.scroll-bar:vertical, .scroll-bar:horizontal {
-    -fx-background-color: transparent;
-}
-
-.scroll-bar .thumb {
-    -fx-background-color: #99cce0;
-    -fx-background-radius: 4;
-}
-
-.scroll-bar .thumb:hover {
-    -fx-background-color: #6699cc;
-}
-
-/* === MENU ITEM === */
-.menu-item {
-    -fx-padding: 6 14;
-    -fx-text-fill: #003366;
-    -fx-font-size: 14px;
-    -fx-background-color: transparent;
-}
-
-.menu-item:hover {
-    -fx-background-color: #d6ecff;
-    -fx-text-fill: #002244;
-}
-
-/* Opcional: subrayado o fondo más claro al enfocar con teclado */
-.menu-item:focused {
-    -fx-background-color: #cce5ff;
-}
-
 /* Estilo general del cuadro de diálogo */
 .dialog-pane {
     -fx-background-color: #f4f6fa;
     -fx-border-radius: 8px;
+    -fx-border-color: transparent;
     -fx-background-radius: 8px;
     -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #003366;
     -fx-font-size: 14px;
 }
 
-/* Botones */
 .dialog-pane .button {
     -fx-background-color: #99cce0;
     -fx-text-fill: white;
-    -fx-background-radius: 5px;
-    -fx-padding: 6px 12px;
+    -fx-background-radius: 5;
+    -fx-padding: 6 12;
 }
 
 .dialog-pane .button:hover {
@@ -238,57 +311,95 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-cursor: hand;
 }
 
-/* Texto del contenido */
 .dialog-pane .content.label {
     -fx-text-fill: #333;
 }
-
-/* Información */
-.dialog-pane {
-    -fx-border-color: #4a90e2;
+/* === DATE PICKER === */
+.date-picker {
+    -fx-background-color: transparent;
+    -fx-background-radius: 6;
+    -fx-text-fill: #003366;
+    -fx-font-size: 13px;
+    -fx-padding: 6;
 }
 
-.toggle-button {
-    -fx-background-color: #b3d9f2;       /* Igual que .menu-bar */
-    -fx-text-fill: #003366;             /* Igual que .menu y .menu-item */
-    -fx-border-color: #99cce0;          /* Igual que .menu-bar */
-    -fx-border-width: 1;
+/* Estilo del texto en el campo del DatePicker */
+.date-picker .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: #003366;
+    -fx-border-color: #99ccff;
+    -fx-border-radius: 4;
     -fx-background-radius: 4;
-    -fx-font-weight: bold;
-    -fx-padding: 8 16;
+    -fx-padding: 6;
+}
+
+/* Botón del calendario */
+.date-picker .arrow-button {
+    -fx-background-color: #99cce0;
+    -fx-background-radius: 4;
     -fx-cursor: hand;
 }
 
-/* Hover: similar al hover de .menu-item */
-.toggle-button:hover {
-    -fx-background-color: #cceaff;
+.date-picker .arrow-button:hover {
+    -fx-background-color: #6699cc;
 }
 
-/* Selected: más oscuro pero en la misma gama */
-.toggle-button:selected {
-    -fx-background-color: #99cce0;
-    -fx-text-fill: #002244;
-    -fx-border-color: #6699bb;
+/* Flecha del botón */
+.date-picker .arrow-button .arrow {
+    -fx-background-color: #003366;
+}
+
+/* Ventana emergente del calendario */
+.date-picker-popup {
+    -fx-background-color: #f4f6fa;
+    -fx-border-color: #6699cc;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+/* Cabecera del calendario (mes y año) */
+.date-picker-popup .month-year-label {
+    -fx-text-fill: #003366;
     -fx-font-weight: bold;
 }
 
-.scroll-pane .corner {
-    -fx-background-color: #e0f2ff; /* Usa el mismo color que el fondo del scroll-pane */
+/* Navegación entre meses */
+.date-picker-popup .left-button,
+.date-picker-popup .right-button {
+    -fx-background-color: #99cce0;
+    -fx-background-radius: 4;
 }
 
-.list-cell:odd {
-    -fx-background-color: #cfe9fc;
+.date-picker-popup .left-button:hover,
+.date-picker-popup .right-button:hover {
+    -fx-background-color: #6699cc;
 }
 
-.list-cell:even {
-    -fx-background-color: tranparent;
+/* Días del calendario */
+.date-picker-popup .calendar-day-button {
+    -fx-text-fill: #003366;
+    -fx-background-color: transparent;
+    -fx-font-size: 13px;
 }
 
-.list-cell:hover {
-    -fx-background-color: #d6ecff;
+.date-picker-popup .calendar-day-button:hover {
+    -fx-background-color: #cce5ff;
+    -fx-background-radius: 4;
 }
 
-.list-cell:selected {
+.date-picker-popup .calendar-day-button:focused {
     -fx-background-color: #99c2ff;
-    -fx-text-fill: #002244;
+    -fx-background-radius: 4;
+}
+
+/* Día seleccionado */
+.date-picker-popup .calendar-day-button:selected {
+    -fx-background-color: #6699cc;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+}
+
+/* Días de otro mes (no seleccionables) */
+.date-picker-popup .day-cell:disabled {
+    -fx-opacity: 0.3;
 }

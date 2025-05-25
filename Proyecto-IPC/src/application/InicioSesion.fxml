@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="377.0" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.InicioSesionController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="377.0" stylesheets="@problemas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.InicioSesionController">
    <children>
       <AnchorPane prefHeight="63.0" prefWidth="340.0">
          <children>
-            <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="99.0" prefWidth="378.0" style="-fx-background-color: #b3d9f2;" text="Inicio Sesión" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="99.0" prefWidth="377.0" style="-fx-background-color: #b3d9f2;" text="Inicio Sesión" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font size="33.0" />
                </font>
@@ -71,7 +71,7 @@
                   <Font size="19.0" />
                </font>
             </Hyperlink>
-            <Button mnemonicParsing="false" onAction="#log_in" text="Iniciar">
+            <Button id="btnIniciarSesion" mnemonicParsing="false" onAction="#log_in" text="Iniciar">
                <font>
                   <Font size="16.0" />
                </font>
