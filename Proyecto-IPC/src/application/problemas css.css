@@ -224,3 +224,34 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: #cce5ff;
 }
 
+/* Estilo general del cuadro de diálogo */
+.dialog-pane {
+    -fx-background-color: #f4f6fa;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* Botones */
+.dialog-pane .button {
+    -fx-background-color: #3366cc;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 6px 12px;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #254a99;
+    -fx-cursor: hand;
+}
+
+/* Texto del contenido */
+.dialog-pane .content.label {
+    -fx-text-fill: #333;
+}
+
+/* Información */
+.dialog-pane {
+    -fx-border-color: #4a90e2;
+}

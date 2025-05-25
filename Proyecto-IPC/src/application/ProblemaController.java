@@ -45,6 +45,7 @@ import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -529,7 +530,7 @@ public class ProblemaController implements Initializable {
             alerta.showAndWait();
             return;
         }
-
+                
         // Preguntar si el usuario quiere cambiar el color (opcionalidad explícita)
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION, "¿Deseas cambiar el color de las marcas seleccionadas?", ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> respuesta = confirmacion.showAndWait();
