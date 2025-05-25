@@ -165,15 +165,15 @@ public class RegistroController implements Initializable {
 
         if (!nickNoVacio) {
             //nikErrImg.setVisible(true);
-            user_error.setStyle("-fx-text-fill: #fc0000; -fx-effect: dropshadow(gaussian, rgba(173, 216, 230, 0.5), 2, 1, 0, 1);");
+            user_error.setStyle("-fx-text-fill: #cc3333; -fx-effect: dropshadow(gaussian, rgba(173, 216, 230, 0.5), 2, 1, 0, 1);");
             user_error.setText("No debería estar vacio");
         } else if (!nickValido) {
             //nikErrImg.setVisible(true);
-            user_error.setStyle("-fx-text-fill: #fc0000;");
+            user_error.setStyle("-fx-text-fill: #cc3333;");
             user_error.setText("Usuario repetido");
         }  else {
             //nikErrImg.setVisible(false);
-            user_error.setStyle("-fx-text-fill: #FFFFFF;");
+            user_error.setStyle("-fx-text-fill: #cc3333;");
             user_error.setText("No debe tener espacios");
         }
     }
@@ -185,7 +185,7 @@ public class RegistroController implements Initializable {
 
         if (!emailValido) {
             //emailErrImg.setVisible(true);
-            email_error.setStyle("-fx-text-fill: #fc0000;");
+            email_error.setStyle("-fx-text-fill: #cc3333;");
         } else {
             //emailErrImg.setVisible(false);
             email_error.setStyle("-fx-text-fill: #FFFFFF;");
@@ -199,7 +199,7 @@ public class RegistroController implements Initializable {
 
         if (!pwdValida) {
             //passwrdErrImg1.setVisible(true);
-            pswrd_error.setStyle("-fx-text-fill: #fc0000;");
+            pswrd_error.setStyle("-fx-text-fill: #cc3333;");
         } else {
             //passwrdErrImg1.setVisible(false);
             pswrd_error.setStyle("-fx-text-fill: #FFFFFF;");
@@ -213,7 +213,7 @@ public class RegistroController implements Initializable {
 
         if (!pwdValida) {
             //passwrdErrImg2.setVisible(true);
-            pswrd_check_error.setStyle("-fx-text-fill: #fc0000;");
+            pswrd_check_error.setStyle("-fx-text-fill: #cc3333;");
         } else {
             //passwrdErrImg2.setVisible(false);
             pswrd_check_error.setStyle("-fx-text-fill: #FFFFFF;");

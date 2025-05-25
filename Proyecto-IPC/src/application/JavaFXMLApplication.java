@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class JavaFXMLApplication extends Application {
@@ -74,9 +76,15 @@ public class JavaFXMLApplication extends Application {
                     break;
                 case "Problema":
                     //stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
+                    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                    stage.setX(screenBounds.getMinX());
+                    stage.setY(screenBounds.getMinY());
+                    stage.setWidth(screenBounds.getWidth());
+                    stage.setHeight(screenBounds.getHeight());
                     stage.setMinWidth(922);
                     stage.setMinHeight(830);
                     stage.setTitle("Menu");
+                    stage.setMaximized(true); // PANTALLA GRANDE
                     break;
                 case "ActualizarDatos":
                     stage.setMinWidth(922);

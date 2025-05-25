@@ -86,11 +86,11 @@ public class InicioSesionController implements Initializable {
 
         if (!nickVal) {
             userErrorImg.setVisible(true);
-            userError.setStyle("-fx-text-fill: #fc0000;");
+            userError.setStyle("-fx-text-fill: #cc3333;");
             userError.setText("No existe usuario con ese nombre");
         } else {
             userErrorImg.setVisible(false);
-            userError.setStyle("-fx-text-fill: #FFFFFF;");
+            userError.setStyle("-fx-text-fill: #4d88b3;");
             userError.setText("Inicia con tus credenciales");
         }
     }
@@ -102,11 +102,11 @@ public class InicioSesionController implements Initializable {
 
         if (!nickVal) {
             userErrorImg.setVisible(true);
-            userError.setStyle("-fx-text-fill: #fc0000;");
+            userError.setStyle("-fx-text-fill: #cc3333;");
             userError.setText("Campo usuario vacío");
         } else {
             userErrorImg.setVisible(false);
-            userError.setStyle("-fx-text-fill: #FFFFFF;");
+            userError.setStyle("-fx-text-fill: #4d88b3;");
             userError.setText("Inicia con tus credenciales");
         }
     }
@@ -118,11 +118,11 @@ public class InicioSesionController implements Initializable {
 
         if (!pwdVal) {
             pswrdErrorImg.setVisible(true);
-            pswrdError.setStyle("-fx-text-fill: #fc0000;");
+            pswrdError.setStyle("-fx-text-fill: #cc3333;");
             pswrdError.setText("Campo contraseña vacío");
         } else {
             pswrdErrorImg.setVisible(false);
-            pswrdError.setStyle("-fx-text-fill: #ffffff;");
+            pswrdError.setStyle("-fx-text-fill: #4d88b3;");
             pswrdError.setText("Inicia con tus credenciales");
         }
     }
@@ -133,7 +133,7 @@ public class InicioSesionController implements Initializable {
         pswrd_id.setText("");
         userErrorImg.setVisible(false);
         userError.setText("Inicia con tus credenciales");
-        userError.setStyle("-fx-text-fill: #ffffff;");
+        userError.setStyle("-fx-text-fill: #4d88b3;");
     }
     
     // Metodo para dejar todos los datos en blanco de nuevo
@@ -142,7 +142,7 @@ public class InicioSesionController implements Initializable {
         pswrd_id.setText("");
         pswrdErrorImg.setVisible(false);
         pswrdError.setText("Inicia con tus credenciales");
-        pswrdError.setStyle("-fx-text-fill: #ffffff;");
+        pswrdError.setStyle("-fx-text-fill: #4d88b3;");
         //registriarse.setStyle("-fx-text-fill: #ffffff");
     }
     
@@ -167,20 +167,20 @@ public class InicioSesionController implements Initializable {
                     //controller.cambiarUser(finanza);
                 }else{
                     pswrdErrorImg.setVisible(true);
-                    pswrdError.setStyle("-fx-text-fill: #fc0000;");
+                    pswrdError.setStyle("-fx-text-fill: #cc3333;");
                     pswrdError.setText("Contraseña incorrecta para el usuario");
                     pswrd_id.requestFocus();
                 }
             }else{
                 userErrorImg.setVisible(true);
-                userError.setStyle("-fx-text-fill: #fc0000;");
+                userError.setStyle("-fx-text-fill: #cc3333;");
                 userError.setText("No existe usuario con ese nombre");
                 user_id.requestFocus();
             }
                 
         }else{
             userErrorImg.setVisible(true);
-            userError.setStyle("-fx-text-fill: #fc0000;");
+            userError.setStyle("-fx-text-fill: #cc3333;");
             if(user_id.getText().isEmpty()){userError.setText("Campo usuario vacío");}
             else{pswrdError.setText("Campo contraseña vacío");}
             if(user_id.getText().isBlank()){ user_id.requestFocus();}

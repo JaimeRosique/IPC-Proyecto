@@ -16,24 +16,25 @@
    <children>
       <AnchorPane prefHeight="63.0" prefWidth="340.0">
          <children>
-            <ImageView fitHeight="77.0" fitWidth="85.0" layoutX="21.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="21.0">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-               <image>
-                  <Image url="@../resources/icon%20login.png" />
-               </image>
-            </ImageView>
-            <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" layoutX="0.8" prefHeight="110.0" prefWidth="377.0" text="Inicio Sesión" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="99.0" prefWidth="378.0" style="-fx-background-color: #b3d9f2;" text="Inicio Sesión" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font size="33.0" />
                </font>
             </Label>
+            <ImageView fitHeight="77.0" fitWidth="81.0" layoutX="40.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <image>
+                  <Image url="@../resources/inicio%20imagen.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
+      <AnchorPane prefHeight="11.0" prefWidth="378.0" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="66.0" prefWidth="100.0">
+            <VBox alignment="BOTTOM_CENTER" prefHeight="84.0" prefWidth="378.0">
                <children>
                   <Label alignment="CENTER" text="Usuario:" textAlignment="CENTER">
                      <font>
@@ -41,26 +42,26 @@
                      </font>
                   </Label>
                   <TextField fx:id="user_id" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" promptText="usuario12345" />
-                  <ImageView fx:id="userErrorImg" fitHeight="25.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="userError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="300.0" textAlignment="CENTER" textFill="RED" />
+                  <ImageView fx:id="userErrorImg" fitHeight="25.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </VBox>
-            <Label fx:id="userError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" textAlignment="CENTER" textFill="RED" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <VBox alignment="BOTTOM_CENTER" prefHeight="99.0" prefWidth="396.0">
                <children>
                   <Label alignment="CENTER" text="Contraseña:" textAlignment="CENTER">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="pswrd_id" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" promptText="contraseña123" VBox.vgrow="SOMETIMES" />
-                  <ImageView fx:id="pswrdErrorImg" fitHeight="32.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" />
+                  <TextField fx:id="pswrd_id" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" promptText="contraseña123" VBox.vgrow="SOMETIMES" />
+                  <Label fx:id="pswrdError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="300.0" textAlignment="CENTER" textFill="RED" />
+                  <ImageView fx:id="pswrdErrorImg" fitHeight="32.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </VBox>
-            <Label fx:id="pswrdError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" textAlignment="CENTER" textFill="RED" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">

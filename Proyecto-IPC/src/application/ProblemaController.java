@@ -41,6 +41,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import application.Poi;
+import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.ColorPicker;
@@ -103,7 +104,7 @@ public class ProblemaController implements Initializable {
     private MenuItem punto;
     @FXML
     private Pane cartaPane;
-
+    
     @FXML
     void zoomIn(ActionEvent event) {
         //================================================
@@ -222,6 +223,10 @@ public class ProblemaController implements Initializable {
         zoom_slider.setMax(1.5);
         zoom_slider.setValue(1.0);
         zoom_slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
+        
+        Platform.runLater(() -> {
+            splitPane.setDividerPositions(0.23);
+        });
         
         splitPane.addEventFilter(ScrollEvent.SCROLL, event -> {
             if (event.isControlDown()) {

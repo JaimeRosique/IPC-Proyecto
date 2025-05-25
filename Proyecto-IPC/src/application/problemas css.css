@@ -1,0 +1,226 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 25 may 2025, 15:45:13
+    Author     : brise
+*/
+
+/* === ESTILO GLOBAL === */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #e0f2ff;
+}
+
+/* === CONTENEDORES === */
+.pane, .anchor-pane, .vbox, .hbox, .grid-pane, .stack-pane, .border-pane {
+    -fx-background-color: #e0f2ff;
+    -fx-padding: 10;
+}
+
+/* === BARRA DE MENÚ === */
+.menu-bar {
+    -fx-background-color: #b3d9f2;
+    -fx-border-color: #99cce0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.menu {
+    -fx-text-fill: #003366;
+}
+
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #003366;
+}
+
+.menu-item:hover {
+    -fx-background-color: #cceaff;
+}
+
+/* === BOTONES === */
+.button {
+    -fx-background-color: #006699;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 6;
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0, 0, 1);
+}
+
+.button:hover {
+    -fx-background-color: #00557a;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-cursor: hand;
+}
+
+/* === TEXTOS Y LABELS === */
+.label {
+    -fx-text-fill: #002244;
+    -fx-font-size: 14px;
+}
+
+.label.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #003366;
+}
+
+.sugerencia {
+    -fx-text-fill: #4d88b3;
+    -fx-font-style: italic;
+}
+
+.error {
+    -fx-text-fill: #cc3333;
+    -fx-font-weight: bold;
+}
+
+/* === CAMPOS DE TEXTO === */
+.text-field, .text-area {
+    -fx-background-color: white;
+    -fx-border-color: #99ccff;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 6;
+    -fx-font-size: 13px;
+}
+
+/* === LISTVIEW === */
+.list-view {
+    -fx-background-color: white;
+    -fx-border-color: #6699cc;
+    -fx-border-radius: 6;
+    -fx-padding: 4;
+}
+
+.list-cell {
+    -fx-padding: 8 10;
+    -fx-text-fill: #003366;
+}
+
+.list-cell:hover {
+    -fx-background-color: #d6ecff;
+}
+
+.list-cell:selected {
+    -fx-background-color: #99c2ff;
+    -fx-text-fill: #002244;
+}
+
+/* === SPLITPANE === */
+.split-pane {
+    -fx-background-color: #e0f2ff;
+}
+
+.split-pane-divider {
+    -fx-background-color: #b3d9f2;
+    -fx-padding: 0.5;
+}
+
+/* === CANVAS Y ÁREAS DE DIBUJO === */
+.canvas {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #336699;
+    -fx-border-width: 2;
+}
+
+/* === TABLAS === */
+.table-view {
+    -fx-background-color: white;
+    -fx-table-cell-border-color: #cce0ff;
+    -fx-border-color: #6699cc;
+    -fx-border-radius: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #cce5ff;
+}
+
+.table-view .table-row-cell:filled:selected {
+    -fx-background-color: #99c2ff;
+}
+
+/* === SEPARADORES === */
+.separator {
+    -fx-background-color: #6699cc;
+}
+
+/* === IMÁGENES CON BORDES REDONDEADOS === */
+.image-view {
+    -fx-border-color: #6699cc;
+    -fx-border-radius: 10;
+    -fx-padding: 2;
+}
+
+/* === SLIDER === */
+.slider {
+    -fx-padding: 10;
+}
+
+.slider .track {
+    -fx-background-color: #b3d9f2;
+    -fx-background-radius: 5;
+    -fx-pref-height: 6;
+}
+
+.slider .thumb {
+    -fx-background-color: #006699;
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+}
+
+.slider .thumb:hover {
+    -fx-background-color: #004d66;
+    -fx-cursor: hand;
+}
+
+/* === SCROLLPANE === */
+.scroll-pane {
+    -fx-background: #e0f2ff;
+    -fx-border-color: #99cce0;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 8;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Estilo de las barras de desplazamiento */
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #99cce0;
+    -fx-background-radius: 4;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #6699cc;
+}
+
+/* === MENU ITEM === */
+.menu-item {
+    -fx-padding: 6 14;
+    -fx-text-fill: #003366;
+    -fx-font-size: 14px;
+    -fx-background-color: transparent;
+}
+
+.menu-item:hover {
+    -fx-background-color: #d6ecff;
+    -fx-text-fill: #002244;
+}
+
+/* Opcional: subrayado o fondo más claro al enfocar con teclado */
+.menu-item:focused {
+    -fx-background-color: #cce5ff;
+}
+
