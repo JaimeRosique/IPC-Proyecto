@@ -26,13 +26,13 @@ Trabajo de IPC 2025 TOPOLOGÍA
 | Tarea                                                             | Estado |
 |------------------------------------------------------------------|--------|
 | Zoom (acercar/alejar)                                            | [✔]    |
-| Marcar puntos                                                    | [✔] Es necesario solucionar problema   |
+| Marcar puntos                                                    | [✔]    |
 | Trazar líneas entre puntos                                       | [✔]    |
 | Trazar arcos (radio libre o fijo)                                | [✔] Falta libre   |
 | Añadir texto                                                     | [✔]    |
-| Cambiar color y grosor de marcas                                 | [ ]  Medio hecho  |
-| Eliminar marcas individuales                                     | [ ]    |
-| Limpiar toda la carta                                            | [ ]    |
+| Cambiar color y grosor de marcas                                 | [✔]    |
+| Eliminar marcas individuales                                     | [✔]    |
+| Limpiar toda la carta                                            | [✔]    |
 | Mover transportador para medir ángulos                           | [ ]    |
 | Trazar línea con ángulo                                          | [ ]    |
 | Medir distancias y convertir a millas náuticas                   | [ ]    |
