@@ -1,0 +1,281 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 25 may 2025, 19:00:16
+    Author     : brise
+*/
+
+/* === ESTILO GLOBAL === */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #081826; /* Azul marino profundo */
+}
+
+/* === CONTENEDORES === */
+.pane, .anchor-pane, .vbox, .hbox, .grid-pane, .stack-pane, .border-pane {
+    -fx-background-color: #081826;
+    -fx-padding: 12;
+}
+
+/* === MENÚ === */
+.menu {
+    -fx-text-fill: #b5eaff;
+}
+
+.menu-bar {
+    -fx-background-color: #102b40;
+    -fx-border-color: #1c4a6e;
+    -fx-border-width: 0 0 2 0;
+    -fx-text-fill: #b5eaff;
+}
+
+.menu, .menu-item {
+    -fx-text-fill: #b5eaff; /* Blanco azulado */
+    -fx-font-size: 14px;
+    -fx-padding: 6 14;
+    -fx-background-color: transparent;
+}
+
+.menu-item:hover {
+    -fx-background-color: #204d6d;
+    /*-fx-text-fill: ;*/
+}
+
+/* Opcional: subrayado o fondo más claro al enfocar con teclado */
+.menu-item:focused {
+    -fx-background-color: #cce5ff;
+}
+
+/* === BOTONES === */
+.button {
+    -fx-background-color: #355e8c;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-padding: 10 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 0, 1);
+}
+
+.button:hover {
+    -fx-background-color: #5a9bd8;
+    -fx-cursor: hand;
+}
+
+.button:pressed {
+    -fx-background-color: #0d47a1;
+}
+
+/* === LABELS Y TEXTOS === */
+.label {
+    -fx-text-fill: #e0eefa;
+    -fx-font-size: 14px;
+}
+
+.label.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.error {
+    -fx-text-fill: #ff4d4d;
+    -fx-font-weight: bold;
+}
+
+.sugerencia {
+    -fx-text-fill: #87c4ff;
+    -fx-font-style: italic;
+}
+
+/* === CAMPOS DE TEXTO === */
+.text-field, .text-area {
+    -fx-background-color: #102b40;
+    -fx-text-fill: #f0f6ff;
+    -fx-border-color: #1c4a6e;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 6;
+    -fx-font-size: 13px;
+}
+
+/* === LISTVIEW === */
+.list-view {
+    -fx-background-color: #0c2233;
+    -fx-border-color: #1c4a6e;
+    -fx-border-radius: 6;
+    -fx-padding: 6;
+}
+
+/* === TABLAS === */
+.table-view {
+    -fx-background-color: #0e1f2c;
+    -fx-border-color: #1c4a6e;
+    -fx-border-radius: 5;
+    -fx-text-fill: #f0f6ff;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #102b40;
+    -fx-text-fill: #ffffff;
+}
+
+.table-view .table-row-cell:filled:selected {
+    -fx-background-color: #2e5984;
+}
+
+/* === SPLITPANE === */
+.split-pane {
+    -fx-background-color: #081826;
+}
+
+.split-pane-divider {
+    -fx-background-color: #1c4a6e;
+    -fx-padding: 0.5;
+}
+
+/* === SCROLLPANE === */
+.scroll-pane {
+    -fx-background: #081826;
+    -fx-border-color: #1c4a6e;
+    -fx-border-radius: 6;
+    -fx-padding: 8;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* === DIALOGOS === */
+.dialog-pane {
+    -fx-background-color: #102b40;
+    -fx-border-color: #3a6a99;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #f0f6ff;
+}
+
+.dialog-pane .button {
+    -fx-background-color: #2e5984;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-padding: 6 12;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #3c77ab;
+    -fx-cursor: hand;
+}
+
+.dialog-pane .content.label {
+    -fx-text-fill: #f0f6ff;
+}
+
+/* === IMÁGENES CON BORDES === */
+.image-view {
+    -fx-border-color: #3a6a99;
+    -fx-border-radius: 10;
+    -fx-padding: 2;
+}
+
+/* === SLIDER === */
+.slider {
+    -fx-padding: 10;
+}
+
+.slider .track {
+    -fx-background-color: #245a80;
+    -fx-background-radius: 5;
+    -fx-pref-height: 6;
+}
+
+.slider .thumb {
+    -fx-background-color: #5a9bd8;
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+.slider .thumb:hover {
+    -fx-background-color: #8ecaff;
+    -fx-cursor: hand;
+}
+
+/* === TOGGLE BUTTON === */
+.toggle-button {
+    -fx-background-color: #204d6d;
+    -fx-text-fill: #f0f6ff;
+    -fx-border-color: #3a6a99;
+    -fx-border-width: 1;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+}
+
+.toggle-button:hover {
+    -fx-background-color: #2e5984;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #5a9bd8;
+    -fx-text-fill: #000c1a;
+    -fx-border-color: #8ecaff;
+}
+
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-padding: 2;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #0e1f2c;
+    -fx-background-radius: 5;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #355e8c;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #5a9bd8;
+}
+
+/* === LISTVIEW PERSONALIZADA === */
+.list-view {
+    -fx-background-color: #0c2233;
+    -fx-border-color: #1c4a6e;
+    -fx-border-radius: 6;
+    -fx-padding: 6;
+}
+
+.list-cell {
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
+    -fx-text-fill: #b5eaff;
+}
+
+.list-cell:selected {
+    -fx-background-color: #3880b0;
+    -fx-text-fill: #ffffff;
+}
+
+.scroll-pane .corner {
+    -fx-background-color: #0a1a2f; /* Usa el mismo color que el fondo del scroll-pane */
+}
+
+.list-cell:odd {
+    -fx-background-color: #0a2b45;
+}
+
+.list-cell:even {
+    -fx-background-color: tranparent;
+}
+
+.list-cell:hover {
+    -fx-background-color: #245a80;
+    -fx-text-fill: #ffffff;
+}

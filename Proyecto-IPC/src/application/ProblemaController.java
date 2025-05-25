@@ -44,9 +44,11 @@ import application.Poi;
 import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
+import javafx.scene.Scene;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.ScrollEvent;
@@ -107,7 +109,9 @@ public class ProblemaController implements Initializable {
     private Pane cartaPane;
     @FXML
     private ImageView image_map;
-      
+    @FXML
+    private ToggleButton toggleThemeButton;
+    
     @FXML
     void zoomIn(ActionEvent event) {
         //================================================
@@ -227,6 +231,30 @@ public class ProblemaController implements Initializable {
         zoom_slider.setValue(1.0);
         zoom_slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
              
+        // Escucha cuando el botón tenga Scene (garantiza que la vista ya está cargada)
+        toggleThemeButton.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                // Aplica estilo claro al inicio
+                newScene.getStylesheets().add(getClass().getResource("/application/problemas.css").toExternalForm());
+                toggleThemeButton.setSelected(false); // No seleccionado = modo claro
+                toggleThemeButton.setText("Modo oscuro");
+
+                // Ahora sí, configurar acción del botón
+                toggleThemeButton.setOnAction(event -> {
+                    newScene.getStylesheets().clear();
+                    if (toggleThemeButton.isSelected()) {
+                        // Modo oscuro
+                        newScene.getStylesheets().add(getClass().getResource("/application/modoNocturno.css").toExternalForm());
+                        toggleThemeButton.setText("Modo claro");
+                    } else {
+                        // Modo claro
+                        newScene.getStylesheets().add(getClass().getResource("/application/problemas.css").toExternalForm());
+                        toggleThemeButton.setText("Modo oscuro");
+                    }
+                });
+            }
+        });
+        
         Platform.runLater(() -> {
             splitPane.setDividerPositions(0.23);
         });

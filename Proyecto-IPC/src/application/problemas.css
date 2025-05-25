@@ -41,7 +41,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 /* === BOTONES === */
 .button {
-    -fx-background-color: #006699;
+    -fx-background-color: #99cce0;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 10 20;
@@ -52,7 +52,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .button:hover {
-    -fx-background-color: #00557a;
+    -fx-background-color: #6699cc;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
     -fx-cursor: hand;
@@ -92,24 +92,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 /* === LISTVIEW === */
 .list-view {
-    -fx-background-color: white;
+    -fx-background-color: #e0f2ff;
     -fx-border-color: #6699cc;
     -fx-border-radius: 6;
-    -fx-padding: 4;
+    -fx-padding: 6;
 }
 
 .list-cell {
-    -fx-padding: 8 10;
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
     -fx-text-fill: #003366;
-}
-
-.list-cell:hover {
-    -fx-background-color: #d6ecff;
-}
-
-.list-cell:selected {
-    -fx-background-color: #99c2ff;
-    -fx-text-fill: #002244;
 }
 
 /* === SPLITPANE === */
@@ -169,13 +161,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .slider .thumb {
-    -fx-background-color: #006699;
+    -fx-background-color: #99cce0;
     -fx-background-radius: 50%;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
 }
 
 .slider .thumb:hover {
-    -fx-background-color: #004d66;
+    -fx-background-color: #6699cc;
     -fx-cursor: hand;
 }
 
@@ -235,7 +227,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 /* Botones */
 .dialog-pane .button {
-    -fx-background-color: #3366cc;
+    -fx-background-color: #99cce0;
     -fx-text-fill: white;
     -fx-background-radius: 5px;
     -fx-padding: 6px 12px;
@@ -254,4 +246,49 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 /* Información */
 .dialog-pane {
     -fx-border-color: #4a90e2;
+}
+
+.toggle-button {
+    -fx-background-color: #b3d9f2;       /* Igual que .menu-bar */
+    -fx-text-fill: #003366;             /* Igual que .menu y .menu-item */
+    -fx-border-color: #99cce0;          /* Igual que .menu-bar */
+    -fx-border-width: 1;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+}
+
+/* Hover: similar al hover de .menu-item */
+.toggle-button:hover {
+    -fx-background-color: #cceaff;
+}
+
+/* Selected: más oscuro pero en la misma gama */
+.toggle-button:selected {
+    -fx-background-color: #99cce0;
+    -fx-text-fill: #002244;
+    -fx-border-color: #6699bb;
+    -fx-font-weight: bold;
+}
+
+.scroll-pane .corner {
+    -fx-background-color: #e0f2ff; /* Usa el mismo color que el fondo del scroll-pane */
+}
+
+.list-cell:odd {
+    -fx-background-color: #cfe9fc;
+}
+
+.list-cell:even {
+    -fx-background-color: tranparent;
+}
+
+.list-cell:hover {
+    -fx-background-color: #d6ecff;
+}
+
+.list-cell:selected {
+    -fx-background-color: #99c2ff;
+    -fx-text-fill: #002244;
 }
