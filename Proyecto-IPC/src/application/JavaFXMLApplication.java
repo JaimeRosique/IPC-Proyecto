@@ -68,11 +68,13 @@ public class JavaFXMLApplication extends Application {
                     stage.setMinWidth(500);
                     stage.setMinHeight(400);
                     stage.setTitle("Inicio Sesion");
+                    stage.centerOnScreen();
                     break;
                 case "Registro":
                     stage.setMinWidth(922);
                     stage.setMinHeight(830);
                     stage.setTitle("Registro");
+                    stage.centerOnScreen();
                     break;
                 case "Problema":
                     //stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
@@ -90,16 +92,19 @@ public class JavaFXMLApplication extends Application {
                     stage.setMinWidth(922);
                     stage.setMinHeight(830);
                     stage.setTitle("Actualizar Datos");
+                    stage.centerOnScreen();
                     break;
                 case "AddGastos":
                     stage.setMinWidth(922);
                     stage.setMinHeight(830);
                     stage.setTitle("Añadir Gastos");
+                    stage.centerOnScreen();
                     break;
                 case "AddCat":
                     stage.setMinWidth(400);
                     stage.setMinHeight(300);
                     stage.setTitle("Añadir Categoria");
+                    stage.centerOnScreen();
                     break;
                 case "VerCuenta":
                 case "VerCuentaAño":
@@ -107,11 +112,13 @@ public class JavaFXMLApplication extends Application {
                     stage.setMinWidth(922);
                     stage.setMinHeight(830);
                     stage.setTitle("Ver Cuenta");
+                    stage.centerOnScreen();
                     break;
                 case "ListaCargos":
                     stage.setMinWidth(922);
                     stage.setMinHeight(830);
                     stage.setTitle("Lista Cargos");
+                    stage.centerOnScreen();
                     break;
             }
         } else {

@@ -104,7 +104,9 @@ public class ProblemaController implements Initializable {
     private MenuItem punto;
     @FXML
     private Pane cartaPane;
-    
+    @FXML
+    private ImageView image_map;
+      
     @FXML
     void zoomIn(ActionEvent event) {
         //================================================
@@ -223,7 +225,7 @@ public class ProblemaController implements Initializable {
         zoom_slider.setMax(1.5);
         zoom_slider.setValue(1.0);
         zoom_slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
-        
+             
         Platform.runLater(() -> {
             splitPane.setDividerPositions(0.23);
         });

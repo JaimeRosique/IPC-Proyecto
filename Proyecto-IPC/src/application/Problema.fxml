@@ -67,21 +67,12 @@
                <content>
                   <Pane fx:id="cartaPane">
                      <children>
-                        <ImageView pickOnBounds="true">
+                        <ImageView fx:id="image_map" pickOnBounds="true">
                            <image>
-                              <Image url="@../resources/upv.jpg" />
+                              <Image url="@../resources/carta_nautica.jpg" />
                            </image>
                         </ImageView>
-                        <MenuButton fx:id="map_pin" mnemonicParsing="false" prefHeight="60.0" prefWidth="48.0" visible="false">
-                           <items>
-                              <MenuItem fx:id="pin_info" mnemonicParsing="false" text="Action 1" />
-                           </items>
-                           <styleClass>
-                              <String fx:value="menu-button" />
-                              <String fx:value="map-pin" />
-                           </styleClass>
-                        </MenuButton>
-                        <StackPane prefHeight="478.0" prefWidth="79.0">
+                        <StackPane layoutX="9.0" prefHeight="478.0" prefWidth="79.0">
                            <children>
                               <Button mnemonicParsing="false" styleClass="limpiar carta" text="limpiar carta">
                                  <StackPane.margin>
@@ -139,6 +130,15 @@
                               </Button>
                            </children>
                         </StackPane>
+                        <MenuButton fx:id="map_pin" mnemonicParsing="false" prefHeight="60.0" prefWidth="48.0" visible="false">
+                           <items>
+                              <MenuItem fx:id="pin_info" mnemonicParsing="false" text="Action 1" />
+                           </items>
+                           <styleClass>
+                              <String fx:value="menu-button" />
+                              <String fx:value="map-pin" />
+                           </styleClass>
+                        </MenuButton>
                         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="178.0" layoutY="294.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </Pane>

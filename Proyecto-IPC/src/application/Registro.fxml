@@ -45,7 +45,7 @@
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="SOMETIMES">
                                  <children>
                                     <Label text="Nombre de usuario" />
-                                    <TextField fx:id="nickname" promptText="manuel" />
+                                    <TextField fx:id="nickname" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="manuel" />
                                     <Label fx:id="user_error" prefHeight="18.0" prefWidth="492.0" text="Error" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
@@ -74,7 +74,7 @@
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="SOMETIMES">
                                  <children>
                                     <Label text="Correo electronico" />
-                                    <TextField fx:id="email" promptText="manuel12@gmail.com" />
+                                    <TextField fx:id="email" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="manuel12@gmail.com" />
                                     <Label fx:id="email_error" prefHeight="18.0" prefWidth="506.0" text="Error" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
@@ -85,7 +85,7 @@
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="SOMETIMES">
                                  <children>
                                     <Label text="Contraseña" />
-                                    <PasswordField fx:id="pswrd" promptText="contraseña123" />
+                                    <PasswordField fx:id="pswrd" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
                                     <Label fx:id="pswrd_error" prefHeight="18.0" prefWidth="490.0" text="Error" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
@@ -96,7 +96,7 @@
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="SOMETIMES">
                                  <children>
                                     <Label text="Confirmar Contraseña *" />
-                                    <PasswordField fx:id="pswrd_check" promptText="contraseña123" />
+                                    <PasswordField fx:id="pswrd_check" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
                                     <Label fx:id="pswrd_check_error" prefHeight="18.0" prefWidth="462.0" text="Error" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
