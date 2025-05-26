@@ -75,7 +75,7 @@
                                  <children>
                                     <Label text="Correo electronico" />
                                     <TextField fx:id="email" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="manuel12@gmail.com" />
-                                    <Label fx:id="email_error" prefHeight="18.0" prefWidth="506.0" text="Error" textFill="RED" visible="false" />
+                                    <Label fx:id="email_error" prefHeight="18.0" prefWidth="506.0" text="Correo no válido" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
                            </children>
