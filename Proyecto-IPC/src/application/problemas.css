@@ -315,6 +315,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-text-fill: #333;
 }
 
+hyperlink {
+    -fx-text-fill: #0db6ff;
+    -fx-underline: true;
+    -fx-font-size: 19;
+    -fx-cursor: hand;
+    -fx-padding: 2 4;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #fc8187;        
+    -fx-underline: true;
+}
+
 /* === DATE PICKER === */
 .date-picker {
     -fx-background-color: transparent;

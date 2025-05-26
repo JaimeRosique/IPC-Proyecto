@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -38,6 +39,8 @@ public class InicioSesionController implements Initializable {
     private ImageView userErrorImg;
     @FXML
     private ImageView pswrdErrorImg;
+    @FXML
+    private Hyperlink hyperlink;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try{
@@ -195,5 +198,6 @@ public class InicioSesionController implements Initializable {
         controller.setDst("IniciarSesion");
         JavaFXMLApplication.setRoot("Registro");
         controller.setFocus();
+        hyperlink.setVisited(false); // mantiene estilo intacto
     }
 }    
