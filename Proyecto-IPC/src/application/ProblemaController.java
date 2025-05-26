@@ -67,6 +67,7 @@ import javafx.scene.shape.QuadCurve;
  */
 public class ProblemaController implements Initializable {
     
+    private Line lineaTemporal;
     private List<Point2D> puntosArcoLibre = new ArrayList<>();
     private final List<Node> marcasSeleccionadas = new ArrayList<>();
     private boolean creandoTexto = false;
@@ -193,6 +194,30 @@ public class ProblemaController implements Initializable {
             n.setEffect(null);
         }
         marcasSeleccionadas.clear();
+    }
+    
+    private Point2D buscarPuntoCercano(Point2D puntoClic) {
+        double umbral = 15.0;
+
+        for (Node nodo : cartaPane.getChildren()) {
+            if (nodo instanceof Group) {
+                Group grupo = (Group) nodo;
+
+                if (grupo.getChildren().size() == 2 &&
+                    grupo.getChildren().get(0) instanceof Circle &&
+                    grupo.getChildren().get(1) instanceof Circle) {
+
+                    Circle c1 = (Circle) grupo.getChildren().get(0);
+                    Point2D centro = new Point2D(c1.getCenterX(), c1.getCenterY());
+
+                    if (centro.distance(puntoClic) < umbral) {
+                        return centro;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
     
     // esta funcion es invocada al cambiar el value del slider zoom_slider
@@ -346,58 +371,47 @@ public class ProblemaController implements Initializable {
                 cartaPane.setCursor(Cursor.DEFAULT);
                 creandoPunto = false;
             } else if (creandoLinea) {
-                // Coordenadas del clic
                 double clickX = event.getX();
                 double clickY = event.getY();
                 Point2D puntoClic = new Point2D(clickX, clickY);
 
-                // Buscar el punto más cercano (dentro de un umbral)
-                Point2D puntoAjustado = null;
-                double umbral = 15.0; // distancia en píxeles
-                for (Node nodo : cartaPane.getChildren()) {
-                    if (nodo instanceof Group) {
-                        Group grupo = (Group) nodo;
-                        if (grupo.getChildren().size() == 2 &&
-                            grupo.getChildren().get(0) instanceof Circle &&
-                            grupo.getChildren().get(1) instanceof Circle) {
-                            Circle c = (Circle) grupo.getChildren().get(0);
-                            Point2D centro = new Point2D(c.getCenterX(), c.getCenterY());
-                            if (centro.distance(puntoClic) < umbral) {
-                                puntoAjustado = centro;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                // Si encontró un punto cercano, usar ese
+                // Ajuste al punto más cercano si hay
+                Point2D puntoAjustado = buscarPuntoCercano(puntoClic);
                 Point2D puntoFinal = (puntoAjustado != null) ? puntoAjustado : puntoClic;
                 puntosLinea.add(puntoFinal);
 
-                if (puntosLinea.size() == 2) {
-                    Point2D p1 = puntosLinea.get(0);
-                    Point2D p2 = puntosLinea.get(1);
+                if (puntosLinea.size() == 1) {
+                    // Primer punto: crear línea provisional
+                    lineaTemporal = new Line();
+                    lineaTemporal.setStartX(puntoFinal.getX());
+                    lineaTemporal.setStartY(puntoFinal.getY());
+                    lineaTemporal.setEndX(puntoFinal.getX());
+                    lineaTemporal.setEndY(puntoFinal.getY());
+                    lineaTemporal.setStroke(colorLinea);
+                    lineaTemporal.setStrokeWidth(grosorLinea);
+                    cartaPane.getChildren().add(lineaTemporal);
+                } else if (puntosLinea.size() == 2) {
+                    // Segundo punto: fijar la línea
+                    cartaPane.setCursor(Cursor.DEFAULT);
+                    creandoLinea = false;
 
-                    Line linea = new Line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-                    linea.setStroke(Color.BLUE);
-                    linea.setStrokeWidth(grosorLinea);
-                    
-                    linea.setOnMouseClicked(e -> {
+                    // Usar la línea temporal y fijar su posición final
+                    lineaTemporal.setEndX(puntoFinal.getX());
+                    lineaTemporal.setEndY(puntoFinal.getY());
+
+                    // Agregar comportamiento de selección
+                    lineaTemporal.setOnMouseClicked(e -> {
                         if (e.getButton() == MouseButton.SECONDARY) {
                             e.consume();
                             if (!e.isShiftDown()) {
                                 limpiarSeleccion();
                             }
-                            seleccionarMarca(linea);
+                            seleccionarMarca(lineaTemporal);
                         }
                     });
 
-                    cartaPane.getChildren().add(linea);
-
-                    // Finalizar modo línea
-                    creandoLinea = false;
+                    lineaTemporal = null;
                     puntosLinea.clear();
-                    cartaPane.setCursor(Cursor.DEFAULT);
                 }
             } else if (creandoArco) {
                 if (centroArco == null) {
@@ -480,6 +494,13 @@ public class ProblemaController implements Initializable {
             }
         });
         
+        cartaPane.setOnMouseMoved(event -> {
+            if (creandoLinea && puntosLinea.size() == 1 && lineaTemporal != null) {
+                lineaTemporal.setEndX(event.getX());
+                lineaTemporal.setEndY(event.getY());
+            }
+        }); 
+        
         punto.setOnAction(e -> {
             crearPunto(null); // o la acción que defina el modo de crear punto
         });
@@ -557,7 +578,11 @@ public class ProblemaController implements Initializable {
     private void crearLinea(ActionEvent event) {
         creandoLinea = true;
         puntosLinea.clear();
-        cartaPane.setCursor(Cursor.CROSSHAIR); // cursor de precisión
+        if (lineaTemporal != null) {
+            cartaPane.getChildren().remove(lineaTemporal);
+            lineaTemporal = null;
+        }
+        cartaPane.setCursor(Cursor.CROSSHAIR);
     }
 
     @FXML
