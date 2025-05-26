@@ -274,9 +274,9 @@ public class ProblemaController implements Initializable {
         initData();
         //==========================================================
         // inicializamos el slider y enlazamos con el zoom
-        zoom_slider.setMin(0.5);
+        zoom_slider.setMin(0.125);
         zoom_slider.setMax(1.5);
-        zoom_slider.setValue(1.0);
+        zoom_slider.setValue(0.6);
         zoom_slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
              
         // Escucha cuando el botón tenga Scene (garantiza que la vista ya está cargada)
@@ -500,6 +500,18 @@ public class ProblemaController implements Initializable {
                 ghostPunto.setLayoutY(event.getY());
             }
         }); 
+        
+        zoom_slider.valueProperty().addListener((o, oldVal, newVal) -> {
+            zoom(newVal.doubleValue());
+
+            if (newVal.doubleValue() == zoom_slider.getMin()) {
+                // Centrar el mapa cuando se aleja al máximo
+                Platform.runLater(() -> {
+                    map_scrollpane.setHvalue(0.5);
+                    map_scrollpane.setVvalue(0.5);
+                });
+            }
+        });
         
         punto.setOnAction(e -> {
             crearPunto(null); // o la acción que defina el modo de crear punto
