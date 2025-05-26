@@ -67,6 +67,7 @@ import javafx.scene.shape.QuadCurve;
  */
 public class ProblemaController implements Initializable {
     
+    private Group ghostPunto;
     private Line lineaTemporal;
     private List<Point2D> puntosArcoLibre = new ArrayList<>();
     private final List<Node> marcasSeleccionadas = new ArrayList<>();
@@ -82,7 +83,6 @@ public class ProblemaController implements Initializable {
     private final double grosorLinea = 3.0;
     
     private boolean creandoPunto = false;
-    private ImageCursor cursorPunto;    
 
     //=======================================
     // hashmap para guardar los puntos de interes POI
@@ -331,45 +331,42 @@ public class ProblemaController implements Initializable {
         zoomGroup.getChildren().add(map_scrollpane.getContent());
         map_scrollpane.setContent(contentGroup);
         
-        // Cargar el cursor personalizado solo una vez
-        Image puntoImg = new Image(getClass().getResource("/resources/punto.jpeg").toExternalForm());
-        cursorPunto = new ImageCursor(puntoImg, puntoImg.getWidth() / 2, puntoImg.getHeight() / 2);
-        
         // Manejar clicks en el pane
         cartaPane.setOnMouseClicked(event -> {
             if (creandoPunto) {
                 double x = event.getX();
                 double y = event.getY();
 
-                // Círculo externo
-                Circle externo = new Circle(x, y, 12); // Radio mayor
+                // Crear el punto final (idéntico al ghost)
+                Circle externo = new Circle(x, y, 12);
                 externo.setStroke(Color.BLACK);
                 externo.setStrokeWidth(3);
                 externo.setFill(Color.TRANSPARENT);
 
-                // Círculo interno
-                Circle interno = new Circle(x, y, 5); // Radio menor
+                Circle interno = new Circle(x, y, 5);
                 interno.setFill(Color.BLACK);
 
-                // Agrupar los dos círculos como un solo nodo
                 Group punto = new Group(externo, interno);
                 punto.setCursor(Cursor.HAND);
-                
                 punto.setOnMouseClicked(e -> {
                     if (e.getButton() == MouseButton.SECONDARY) {
                         e.consume();
                         if (!e.isShiftDown()) {
                             limpiarSeleccion();
                         }
-                        seleccionarMarca(punto); // o grupo, label, etc.
+                        seleccionarMarca(punto);
                     }
                 });
- 
+
                 cartaPane.getChildren().add(punto);
 
-                // Restaurar estado
-                cartaPane.setCursor(Cursor.DEFAULT);
+                // Limpiar estado
                 creandoPunto = false;
+                cartaPane.setCursor(Cursor.DEFAULT);
+                if (ghostPunto != null) {
+                    cartaPane.getChildren().remove(ghostPunto);
+                    ghostPunto = null;
+                }
             } else if (creandoLinea) {
                 double clickX = event.getX();
                 double clickY = event.getY();
@@ -498,6 +495,9 @@ public class ProblemaController implements Initializable {
             if (creandoLinea && puntosLinea.size() == 1 && lineaTemporal != null) {
                 lineaTemporal.setEndX(event.getX());
                 lineaTemporal.setEndY(event.getY());
+            } else if (creandoPunto && ghostPunto != null) {
+                ghostPunto.setLayoutX(event.getX());
+                ghostPunto.setLayoutY(event.getY());
             }
         }); 
         
@@ -571,7 +571,23 @@ public class ProblemaController implements Initializable {
     @FXML
     private void crearPunto(ActionEvent event) {
         creandoPunto = true;
-        cartaPane.setCursor(cursorPunto);
+        
+        if (ghostPunto != null) {
+            cartaPane.getChildren().remove(ghostPunto);
+        }
+
+        // Crear la "previsualización" del punto
+        Circle externo = new Circle(0, 0, 12);
+        externo.setStroke(Color.GRAY);
+        externo.setStrokeWidth(3);
+        externo.setFill(Color.TRANSPARENT);
+
+        Circle interno = new Circle(0, 0, 5);
+        interno.setFill(Color.GRAY);
+
+        ghostPunto = new Group(externo, interno);
+        ghostPunto.setMouseTransparent(true); // para que no interfiera con clics
+        cartaPane.getChildren().add(ghostPunto);
     }
 
     @FXML
