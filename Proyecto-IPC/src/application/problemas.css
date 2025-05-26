@@ -314,6 +314,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .dialog-pane .content.label {
     -fx-text-fill: #333;
 }
+
+hyperlink {
+    -fx-text-fill: #0db6ff;
+    -fx-underline: true;
+    -fx-font-size: 19;
+    -fx-cursor: hand;
+    -fx-padding: 2 4;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #fc8187;        
+    -fx-underline: true;
+}
+
 /* === DATE PICKER === */
 .date-picker {
     -fx-background-color: transparent;
@@ -329,14 +345,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-text-fill: #003366;
     -fx-border-color: #99ccff;
     -fx-border-radius: 4;
-    -fx-background-radius: 4;
+    -fx-background-radius: 6;
     -fx-padding: 6;
 }
 
 /* Botón del calendario */
 .date-picker .arrow-button {
     -fx-background-color: #99cce0;
-    -fx-background-radius: 4;
+    -fx-background-radius: 6;
     -fx-cursor: hand;
 }
 
@@ -351,28 +367,102 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 /* Ventana emergente del calendario */
 .date-picker-popup {
-    -fx-background-color: #f4f6fa;
-    -fx-border-color: #6699cc;
-    -fx-border-radius: 6;
     -fx-background-radius: 6;
+    -fx-borderradius: 0;
+    -fx-background-color: #b3d9f2;
 }
 
 /* Cabecera del calendario (mes y año) */
-.date-picker-popup .month-year-label {
+.date-picker-popup .month-year-label,
+.date-picker-popup .calendar-header {
     -fx-text-fill: #003366;
     -fx-font-weight: bold;
+    -fx-padding: 5 10 5 10;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+    -fx-background-radius: 6;
+    -fx-borderradius: 0;
 }
 
-/* Navegación entre meses */
-.date-picker-popup .left-button,
-.date-picker-popup .right-button {
-    -fx-background-color: #99cce0;
-    -fx-background-radius: 4;
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #94c6f2;
+    -fx-background-radius: 6;
 }
 
-.date-picker-popup .left-button:hover,
-.date-picker-popup .right-button:hover {
+.date-picker-popup .calendar-grid {
+    -fx-padding: 0;
+    -fx-hgap: 0;
+    -fx-vgap: 0;
+    -fx-translate-x: 0;
+    -fx-translate-y: 0;
+    -fx-background-color: #b3d9f2;
+}
+
+.date-picker-popup .calendar-grid .label {
+    -fx-alignment: center;
+}
+
+.date-picker-popup .spinner {
+    -fx-alignment: center;
+    -fx-spacing: 8;
+    -fx-padding: 0 20 0 20; 
+}
+
+.date-picker-popup .spinner-label {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-font-size: 18px;
+}
+
+.date-picker-popup .spinner .left-button .left-arrow,
+.date-picker-popup .spinner .right-button .right-arrow {
+    -fx-background-color: #003366;
+    -fx-background-insets: 0;
+}
+
+.date-picker-popup .spinner .left-button,
+.date-picker-popup .spinner .right-button {
     -fx-background-color: #6699cc;
+    -fx-background-insets: 0;
+    -fx-padding: 8;
+    -fx-border-color: transparent;
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+}
+
+.date-picker-popup .spinner .left-button:hover,
+.date-picker-popup .spinner .right-button:hover {
+    -fx-background-color: #336699;
+    -fx-background-insets: 0;
+    -fx-padding: 8;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.date-picker-popup .calendar-day-button:selected, 
+.date-picker-popup .spinner .left-button:selected,
+.date-picker-popup .spinner .right-button:selected {
+    -fx-background-color: #6699cc;
+    -fx-background-insets: 0;
+    -fx-padding: 8;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+}
+
+.date-picker-popup .calendar-grid .week-number-cell {
+    -fx-max-width: 0;
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-padding: 0;
+    -fx-opacity: 0;
+}
+
+.date-picker-popup .day-name-cell {
+    -fx-text-fill: #003366;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
 }
 
 /* Días del calendario */
@@ -382,9 +472,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-font-size: 13px;
 }
 
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #99ccff;
+    -fx-cursor: hand;
+}
+
 .date-picker-popup .calendar-day-button:hover {
-    -fx-background-color: #cce5ff;
-    -fx-background-radius: 4;
+    -fx-background-color: #99ccff;
+    -fx-cursor: hand;
 }
 
 .date-picker-popup .calendar-day-button:focused {
@@ -392,14 +487,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-radius: 4;
 }
 
-/* Día seleccionado */
-.date-picker-popup .calendar-day-button:selected {
-    -fx-background-color: #6699cc;
-    -fx-text-fill: white;
-    -fx-background-radius: 4;
+.date-picker-popup .calendar-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #003366;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.date-picker-popup .calendar-cell:hover {
+    -fx-background-color: #99c2ff;
+    -fx-cursor: hand;
+}
+
+.date-picker-popup .day-cell {
+    -fx-background-color: #cce5ff;
+    -fx-background-radius: 6;
+    -fx-border-color: transparent;
+    -fx-padding: 4;
+    -fx-background-insets: 0;
+    -fx-alignment: center;
+    -fx-pref-width: 39px;
+    -fx-pref-height: 39px;
+   
 }
 
 /* Días de otro mes (no seleccionables) */
 .date-picker-popup .day-cell:disabled {
     -fx-opacity: 0.3;
+    -fx-cursor: default;
+    -fx-text-fill: #003366;
 }

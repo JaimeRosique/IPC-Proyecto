@@ -66,7 +66,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Hyperlink onAction="#register" text="Registro" HBox.hgrow="SOMETIMES">
+            <Hyperlink fx:id="hyperlink" onAction="#register" text="Registro" HBox.hgrow="SOMETIMES">
                <font>
                   <Font size="19.0" />
                </font>

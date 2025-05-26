@@ -30,6 +30,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-text-fill: #b5eaff;
 }
 
+.context-menu .menu-item .label {
+    -fx-text-fill: #003366;
+}
+
 .menu-bar {
     -fx-background-color: #102b40;
     -fx-text-fill: #b5eaff;
