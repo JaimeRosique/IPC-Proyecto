@@ -86,7 +86,7 @@
                                  <children>
                                     <Label text="Contraseña" />
                                     <PasswordField fx:id="pswrd" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
-                                    <Label fx:id="pswrd_error" prefHeight="18.0" prefWidth="490.0" text="Error" textFill="RED" visible="false" />
+                                    <Label fx:id="pswrd_error" prefHeight="18.0" prefWidth="490.0" text="Contraseña no válida" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
                            </children>
@@ -97,7 +97,7 @@
                                  <children>
                                     <Label text="Confirmar Contraseña *" />
                                     <PasswordField fx:id="pswrd_check" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
-                                    <Label fx:id="pswrd_check_error" prefHeight="18.0" prefWidth="462.0" text="Error" textFill="RED" visible="false" />
+                                    <Label fx:id="pswrd_check_error" prefHeight="18.0" prefWidth="462.0" text="Las contraseñas no coinciden" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
                            </children>
