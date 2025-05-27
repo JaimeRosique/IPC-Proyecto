@@ -64,6 +64,8 @@ import javafx.scene.shape.QuadCurve;
 
 public class ProblemaController implements Initializable {
 
+    private ImageView regla;
+    private boolean reglaActiva = false;
     @FXML
     private ToggleButton transportadorButton;
     private ImageView transportador;
@@ -543,7 +545,32 @@ public class ProblemaController implements Initializable {
             }
         });
         
-        
+        // Crear la imagen de la regla
+        regla = new ImageView();
+        Image imgRegla = new Image(getClass().getResourceAsStream("/resources/regla.png")); // asegúrate de que exista
+        regla.setImage(imgRegla);
+        regla.setFitWidth(1000);
+        regla.setFitHeight(200);
+        regla.setVisible(reglaActiva);
+        zoomGroup.getChildren().add(regla);
+
+        // Hacer que la regla se pueda arrastrar
+        regla.setOnMousePressed(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                dragDelta.x = event.getX();
+                dragDelta.y = event.getY();
+                event.consume();
+            }
+        });
+
+        regla.setOnMouseDragged(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                Point2D parentCoords = regla.getParent().sceneToLocal(event.getSceneX(), event.getSceneY());
+                regla.setLayoutX(parentCoords.getX() - dragDelta.x);
+                regla.setLayoutY(parentCoords.getY() - dragDelta.y);
+                event.consume();
+            }
+        });
         
     }
 
@@ -778,6 +805,8 @@ public class ProblemaController implements Initializable {
     
     @FXML
     private void crearRegla(ActionEvent event) {
+        reglaActiva = !reglaActiva;
+        regla.setVisible(reglaActiva);
     }
     
     // Clase auxiliar para almacenar la diferencia al arrastrar
@@ -785,3 +814,4 @@ public class ProblemaController implements Initializable {
         double x, y;
     }
 }
+    
