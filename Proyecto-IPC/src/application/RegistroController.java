@@ -19,6 +19,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import model.*;
+import java.time.LocalDate;
+import java.time.Period;
 
 /**
  * FXML Controller class
@@ -55,6 +57,8 @@ public class RegistroController implements Initializable {
     private Label pswrd_check_error;
     @FXML
     private Label email_error;
+    @FXML
+    private Label edad_error;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -87,22 +91,23 @@ public class RegistroController implements Initializable {
         
         // Permitir solo letras y espaciado en el nickname
         nickname.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("[a-zA-Z0-9_-]{0,15}")) {
+            if ( newValue.length() > 15) {
             nickname.setText(oldValue);
             }
         });
         
+        
         // Errores en nickname usado
-        nickname.setOnKeyTyped(event -> errNick());
+        nickname.setOnKeyTyped(event -> validarNickname());
         
         // Errores en nickname usado
         nickname.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
-                errNick();
+                validarNickname();
             }
         });
         
-        // Permitir solo letras sin espaciado en el correo
+        // Permitir solo letras y numeros  sin espaciado en el correo
         email.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("[a-zA-Z0-9\\s'\\-áéíúóàèìòùÁÉÍÓÚÀÈÌÒÙäëïöüÄËÏÖÜñÑ@.]*")) {
                 email.setText(oldValue);
@@ -121,13 +126,11 @@ public class RegistroController implements Initializable {
         
         // Permitir todo tipo de letras numeros o simbolos en el campo de contraseña
         pswrd.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\S")) {
-                pswrd.setText(oldValue);
-            }
+            
             checkPassWrd();
         });
         
-        // Errores cen pwd cuando se cambie de textField
+        // Errores en pwd cuando se cambie de textField
         pswrd.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue && checkPassWrd()) {
                 errPasswrd1();
@@ -139,23 +142,45 @@ public class RegistroController implements Initializable {
         
         // Permitir todo tipo de simbolos en el campo de confirmar contraseña
         pswrd_check.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\S")) {
-                pswrd_check.setText(oldValue);
-            }
+            
             eqPassWrd();
         });
         
-        // Errores cen pwd1 cuando se cambie de textField
+        // Errores en pwd1 cuando se cambie de textField
         pswrd_check.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue && checkPassWrd()) {
-                errPasswrd2();
+                errPasswrd1();
             }
         });
         
         // Errores en pwd1
-        pswrd_check.setOnKeyTyped(event -> errPasswrd2());
+        pswrd_check.setOnKeyTyped(event -> errPasswrd1());
         
-    }  
+    }
+    
+    private boolean validarNickname() {
+        String nick = nickname.getText();
+        boolean nickValido = !nav.exitsNickName(nick); 
+        boolean nickNoVacio = !nick.isEmpty();
+
+        boolean formatoValido = nick.matches("[a-zA-Z0-9_-]{6,15}");
+        if (!nickNoVacio) {
+            //nikErrImg.setVisible(true);
+            user_error.setStyle("-fx-text-fill: #cc3333; -fx-effect: dropshadow(gaussian, rgba(173, 216, 230, 0.5), 2, 1, 0, 1);");
+            user_error.setText("No debería estar vacio");
+        } else if (!nickValido) {
+            //nikErrImg.setVisible(true);
+            user_error.setStyle("-fx-text-fill: #cc3333;");
+            user_error.setText("Usuario repetido");
+        }  else {
+            //nikErrImg.setVisible(false);
+            user_error.setStyle("-fx-text-fill: #cc3333;");
+            user_error.setText("Nombre de usuario  no válido");
+        }
+        user_error.setText("");
+        return true;
+    }
+    
 
      private boolean validarEmail() {
     String emailInput = email.getText().trim();
@@ -171,26 +196,30 @@ public class RegistroController implements Initializable {
 
         
     }
-    // Mostrar errores en nickname cuando está usado
-    private void errNick() {
-        String nickText = nickname.getText();
-        boolean nickValido = !nav.exitsNickName(nickText); 
-        boolean nickNoVacio = !nickText.isEmpty();
+     private boolean validarEdad() {
+    LocalDate fechaNacimiento = bdate.getValue();
+    LocalDate hoy = LocalDate.now();
 
-        if (!nickNoVacio) {
-            //nikErrImg.setVisible(true);
-            user_error.setStyle("-fx-text-fill: #cc3333; -fx-effect: dropshadow(gaussian, rgba(173, 216, 230, 0.5), 2, 1, 0, 1);");
-            user_error.setText("No debería estar vacio");
-        } else if (!nickValido) {
-            //nikErrImg.setVisible(true);
-            user_error.setStyle("-fx-text-fill: #cc3333;");
-            user_error.setText("Usuario repetido");
-        }  else {
-            //nikErrImg.setVisible(false);
-            user_error.setStyle("-fx-text-fill: #cc3333;");
-            user_error.setText("No debe tener espacios");
-        }
+    if (fechaNacimiento == null) {
+        edad_error.setText("Debes seleccionar tu fecha de nacimiento.");
+        edad_error.setStyle("-fx-text-fill: #cc3333;");
+        return false;
     }
+
+    int edad = Period.between(fechaNacimiento, hoy).getYears();
+
+    if (edad > 16) {
+        edad_error.setText("");  // sin error si pasa
+        return true;
+    } else {
+        edad_error.setVisible(true);
+        edad_error.setText("Debes tener más de 16 años para registrarte.");
+        edad_error.setStyle("-fx-text-fill: #cc3333;");
+        return false;
+    }
+}
+
+    
     
     // Mostrar errores en el correo 
     private void errEmail() { 
@@ -209,7 +238,7 @@ public class RegistroController implements Initializable {
     // Mostrar errores en la contraseña
     private void errPasswrd1() {
         String pwdText = pswrd.getText();
-        boolean pwdValida = pwdText.length() >= 6;
+        boolean pwdValida = pwdText.length() >= 8 && pwdText.length() <= 20;
 
         if (!pwdValida) {
             //passwrdErrImg1.setVisible(true);
@@ -220,19 +249,7 @@ public class RegistroController implements Initializable {
         }
     }
     
-    // Mostrar errores en la contraseña
-    private void errPasswrd2() {
-        String pwdText = pswrd_check.getText();
-        boolean pwdValida = pwdText.length() >= 6;
-
-        if (!pwdValida) {
-            //passwrdErrImg2.setVisible(true);
-            pswrd_check_error.setStyle("-fx-text-fill: #cc3333;");
-        } else {
-            //passwrdErrImg2.setVisible(false);
-            pswrd_check_error.setStyle("-fx-text-fill: #FFFFFF;");
-        }
-    }
+    
     
     // Método para verificar las condiciones de la contraseña
     private boolean checkPassWrd() {
@@ -324,6 +341,11 @@ public class RegistroController implements Initializable {
         boolean nickNoUsado = !nav.exitsNickName(nickname.getText());
         boolean pwd1Valida = pswrd.getText().length() >= 6;
         boolean pwd2Valida = pswrd_check.getText().equals(pswrd.getText());
+        boolean edadValida = validarEdad();
+            if (!mandado && !edadValida) {
+            bdate.requestFocus();
+            mandado = true;
+            }
         
         //user_errorImg.setVisible(!validUser);
         user_error.setVisible(true);

@@ -57,7 +57,7 @@
                                  <children>
                                     <Label text="Fecha de nacimiento" />
                                     <DatePicker fx:id="bdate" prefHeight="32.0" prefWidth="220.0" promptText="14/03/2005" />
-                                    <Label prefHeight="18.0" prefWidth="493.0" text="Error" textFill="RED" visible="false" />
+                                    <Label fx:id="edad_error" prefHeight="18.0" prefWidth="493.0" text="Error" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
                            </children>
