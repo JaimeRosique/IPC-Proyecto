@@ -61,12 +61,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
 
-/**
- *
- * @author jsoler
- */
+
 public class ProblemaController implements Initializable {
-    
+
+    @FXML
+    private ToggleButton transportadorButton;
+    private ImageView transportador;
+    private boolean transportadorActivo = false;
     private Group ghostPunto;
     private Line lineaTemporal;
     private List<Point2D> puntosArcoLibre = new ArrayList<>();
@@ -129,8 +130,6 @@ public class ProblemaController implements Initializable {
     private ToggleButton coloresGrosorButton;
     @FXML
     private ToggleButton reglaButton;
-    @FXML
-    private ToggleButton transportadorButton;
     @FXML
     private ToggleButton gomaButton;
     @FXML
@@ -331,6 +330,15 @@ public class ProblemaController implements Initializable {
         zoomGroup.getChildren().add(map_scrollpane.getContent());
         map_scrollpane.setContent(contentGroup);
         
+        transportador = new ImageView();
+        Image imgTransportador = new Image(getClass().getResourceAsStream("/resources/transportador.png"));
+        transportador.setImage(imgTransportador);
+        transportador.setVisible(transportadorActivo);
+        zoomGroup.getChildren().add(transportador);
+
+        // Configurar arrastre del transportador
+        final Delta dragDelta = new Delta();
+        
         // Manejar clicks en el pane
         cartaPane.setOnMouseClicked(event -> {
             if (creandoPunto) {
@@ -513,9 +521,30 @@ public class ProblemaController implements Initializable {
             }
         });
         
-        punto.setOnAction(e -> {
-            crearPunto(null); // o la acción que defina el modo de crear punto
+        transportador.setOnMousePressed(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                Point2D clicLocal = new Point2D(event.getX(), event.getY());
+                dragDelta.x = event.getX();
+                dragDelta.y = event.getY();
+                event.consume();
+            }
         });
+
+        transportador.setOnMouseDragged(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                // Convertir la posición del puntero a coordenadas del padre del transportador
+                Point2D parentCoords = transportador.getParent().sceneToLocal(event.getSceneX(), event.getSceneY());
+
+                // Restar el delta para mantener el desplazamiento natural
+                transportador.setLayoutX(parentCoords.getX() - dragDelta.x);
+                transportador.setLayoutY(parentCoords.getY() - dragDelta.y);
+
+                event.consume();
+            }
+        });
+        
+        
+        
     }
 
     @FXML
@@ -730,5 +759,29 @@ public class ProblemaController implements Initializable {
         }
 
         cartaPane.getChildren().removeAll(nodosAEliminar);
+    }
+
+    @FXML
+    private void crearTransportador(ActionEvent event) {
+        transportadorActivo = !transportadorActivo;  // Alternar estado
+        transportador.setVisible(transportadorActivo);
+
+        if (transportadorActivo) {
+            // Inicializar posición si quieres (por ejemplo, centro)
+            transportador.setLayoutX(100);
+            transportador.setLayoutY(100);
+            cartaPane.setCursor(Cursor.OPEN_HAND);
+        } else {
+            cartaPane.setCursor(Cursor.DEFAULT);
+        }
+    }
+    
+    @FXML
+    private void crearRegla(ActionEvent event) {
+    }
+    
+    // Clase auxiliar para almacenar la diferencia al arrastrar
+    private static class Delta {
+        double x, y;
     }
 }

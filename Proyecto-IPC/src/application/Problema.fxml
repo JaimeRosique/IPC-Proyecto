@@ -42,6 +42,8 @@
                         <MenuItem mnemonicParsing="false" onAction="#cambiarColor" text="Cambiar Color" />
                         <MenuItem mnemonicParsing="false" onAction="#eliminarMarca" text="Eliminar" />
                         <MenuItem mnemonicParsing="false" onAction="#limpiarCarta" text="Limpiar Carta" />
+                        <MenuItem mnemonicParsing="false" onAction="#crearTransportador" text="Mostrar Transportador" />
+                        <MenuItem mnemonicParsing="false" onAction="#crearRegla" text="Crear Regla" />
                     <MenuItem mnemonicParsing="false" text="Close" />
                   </items>
                 </Menu>
