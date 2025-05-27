@@ -119,9 +119,9 @@ public class RegistroController implements Initializable {
             }
         });
         
-        // Permitir solo números y letras en el campo de contraseña
+        // Permitir todo tipo de letras numeros o simbolos en el campo de contraseña
         pswrd.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("[a-zA-Z0-9]*")) {
+            if (!newValue.matches("\\S")) {
                 pswrd.setText(oldValue);
             }
             checkPassWrd();
@@ -222,27 +222,45 @@ public class RegistroController implements Initializable {
     
     // Método para verificar las condiciones de la contraseña
     private boolean checkPassWrd() {
-        boolean hasLetter = false;
-        boolean hasNumber = false;
-        String password = pswrd.getText();
+        
+    boolean hasLowercase = false;
+    boolean hasUppercase = false;
+    boolean hasNumber = false;
+    boolean hasSymbol = false;
 
-        for (char c : password.toCharArray()) {
-            if (Character.isLetter(c)) {
-                hasLetter = true;
-            } else if (Character.isDigit(c)) {
-                hasNumber = true;
-            }
+    String password = pswrd.getText();
 
-            // Si se cumple ambas condiciones, se sale del ciclo
-            if (hasLetter && hasNumber) {
-                break;
-            }
+    if (password.length() < 8 || password.length() > 20) {
+        pswrd_error.setText("La contraseña debe tener entre 8 y 20 caracteres.");
+        pswrd_error.setStyle("-fx-text-fill: #fc0000;");
+        return false;
+    }
+
+    for (char c : password.toCharArray()) {
+        if (Character.isLowerCase(c)) {
+            hasLowercase = true;
+        } else if (Character.isUpperCase(c)) {
+            hasUppercase = true;
+        } else if (Character.isDigit(c)) {
+            hasNumber = true;
+        } else {
+            hasSymbol = true;
         }
+    }
 
-        //passwrdErrImg1.setVisible(!hasLetter || !hasNumber);
-        pswrd_error.setStyle((hasLetter && hasNumber) ? "-fx-text-fill: #7c7c7c;" : "-fx-text-fill: #fc0000;");
-        if (hasLetter && hasNumber){return true;}
-        else{return false;}
+    if (hasLowercase && hasUppercase && hasNumber && hasSymbol) {
+        pswrd_error.setText("Contraseña válida.");
+        pswrd_error.setStyle("-fx-text-fill: #7c7c7c;");
+        return true;
+    } else {
+        pswrd_error.setText("Debe incluir minúsculas, mayúsculas, números y símbolos.");
+        pswrd_error.setStyle("-fx-text-fill: #fc0000;");
+        return false;
+    }
+}
+
+    private void eqPassWrd() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     // Método para comprobar que tanto la primera como la segunda contraseñas son iguales

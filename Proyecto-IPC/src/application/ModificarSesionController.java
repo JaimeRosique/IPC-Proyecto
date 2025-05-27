@@ -57,7 +57,11 @@ public class ModificarSesionController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        try {
+            nav = Navigation.getInstance();
+        }catch(Exception e) {
+            System.err.println(e.toString());
+        }
     }    
     
 }
