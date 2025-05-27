@@ -172,10 +172,11 @@ public class RegistroController implements Initializable {
             //nikErrImg.setVisible(true);
             user_error.setStyle("-fx-text-fill: #cc3333;");
             user_error.setText("Usuario repetido");
-        }  else {
-            //nikErrImg.setVisible(false);
-            user_error.setStyle("-fx-text-fill: #cc3333;");
-            user_error.setText("Nombre de usuario  no válido");
+        }  else if (nick.contains(" ")){
+             user_error.setVisible(true);
+             user_error.setText("El nombre de usuario no puede contener espacios.");
+             user_error.setStyle("-fx-text-fill: #cc3333;");
+    return false;
         }
         user_error.setText("");
         return true;
@@ -186,9 +187,11 @@ public class RegistroController implements Initializable {
     String emailInput = email.getText().trim();
 
     if (emailInput.toLowerCase().endsWith("@gmail.com")) {
+        email_error.setVisible(false);
         email_error.setText("");  // sin mensaje si es válido
         return true;
     } else {
+        email_error.setVisible(true);
         email_error.setText("Email no  valido");
         email_error.setStyle("-fx-text-fill: #cc3333;");  // rojo
         return false;
@@ -262,6 +265,7 @@ public class RegistroController implements Initializable {
     String password = pswrd.getText();
 
     if (password.length() < 8 || password.length() > 20) {
+        pswrd_error.setVisible(true);
         pswrd_error.setText("La contraseña debe tener entre 8 y 20 caracteres.");
         pswrd_error.setStyle("-fx-text-fill: #fc0000;");
         return false;
@@ -280,11 +284,12 @@ public class RegistroController implements Initializable {
     }
 
     if (hasLowercase && hasUppercase && hasNumber && hasSymbol) {
-        pswrd_error.setText("Contraseña válida.");
-        pswrd_error.setStyle("-fx-text-fill: #7c7c7c;");
+        pswrd_error.setVisible(false);
+        pswrd_error.setText("");
         return true;
     } else {
-        pswrd_error.setText("Debe incluir minúsculas, mayúsculas, números y símbolos.");
+        pswrd_error.setVisible(true);
+        pswrd_error.setText("Debe incluir  alguna minúscula, mayúscula, número y símbolo.");
         pswrd_error.setStyle("-fx-text-fill: #fc0000;");
         return false;
     }
@@ -295,10 +300,13 @@ public class RegistroController implements Initializable {
     // Método para comprobar que tanto la primera como la segunda contraseñas son iguales
     private boolean eqPassWrd() {
         if (pswrd.getText().equals(pswrd_check.getText())) {
+            pswrd_check_error.setVisible(false);
+            pswrd_check_error.setText("");
             return true;
         }
         else {
-            //passwrdErrImg2.setVisible(true);
+            pswrd_check_error.setVisible(true);
+            pswrd_check_error.setText("Las contraseñas no coinciden.");
             pswrd_check_error.setStyle("-fx-text-fill: #7c7c7c;");
             return false;
         }
