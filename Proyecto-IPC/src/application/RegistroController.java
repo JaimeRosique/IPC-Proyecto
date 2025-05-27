@@ -87,8 +87,8 @@ public class RegistroController implements Initializable {
         
         // Permitir solo letras y espaciado en el nickname
         nickname.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.contains(" ")) {
-                nickname.setText(oldValue);
+            if (!newValue.matches("[a-zA-Z0-9_-]{0,15}")) {
+            nickname.setText(oldValue);
             }
         });
         
@@ -104,7 +104,7 @@ public class RegistroController implements Initializable {
         
         // Permitir solo letras sin espaciado en el correo
         email.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("[a-zA-Z\\s'\\-áéíúóàèìòùÁÉÍÓÚÀÈÌÒÙäëïöüÄËÏÖÜñÑ@.]*")) {
+            if (!newValue.matches("[a-zA-Z0-9\\s'\\-áéíúóàèìòùÁÉÍÓÚÀÈÌÒÙäëïöüÄËÏÖÜñÑ@.]*")) {
                 email.setText(oldValue);
             }
         });    
@@ -137,9 +137,9 @@ public class RegistroController implements Initializable {
         // Errores en pwd
         pswrd.setOnKeyTyped(event -> errPasswrd1());
         
-        // Permitir solo números y letras en el campo de confirmar contraseña
+        // Permitir todo tipo de simbolos en el campo de confirmar contraseña
         pswrd_check.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("[a-zA-Z0-9]*")) {
+            if (!newValue.matches("\\S")) {
                 pswrd_check.setText(oldValue);
             }
             eqPassWrd();
@@ -156,7 +156,21 @@ public class RegistroController implements Initializable {
         pswrd_check.setOnKeyTyped(event -> errPasswrd2());
         
     }  
-    
+
+     private boolean validarEmail() {
+    String emailInput = email.getText().trim();
+
+    if (emailInput.toLowerCase().endsWith("@gmail.com")) {
+        email_error.setText("");  // sin mensaje si es válido
+        return true;
+    } else {
+        email_error.setText("Email no  valido");
+        email_error.setStyle("-fx-text-fill: #cc3333;");  // rojo
+        return false;
+    }
+
+        
+    }
     // Mostrar errores en nickname cuando está usado
     private void errNick() {
         String nickText = nickname.getText();
@@ -259,9 +273,7 @@ public class RegistroController implements Initializable {
     }
 }
 
-    private void eqPassWrd() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
     
     // Método para comprobar que tanto la primera como la segunda contraseñas son iguales
     private boolean eqPassWrd() {
