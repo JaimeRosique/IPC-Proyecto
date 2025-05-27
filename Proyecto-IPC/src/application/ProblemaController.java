@@ -63,7 +63,12 @@ import javafx.scene.shape.QuadCurve;
 
 
 public class ProblemaController implements Initializable {
-
+    
+    private boolean midiendoDistancia = false;
+    private List<Point2D> puntosMedicion = new ArrayList<>();
+    private Line lineaMedida;
+    private VBox escalaVertical;
+    private final double TAMANIO_SUBDIVISION = 50.0;
     private ImageView regla;
     private boolean reglaActiva = false;
     @FXML
@@ -495,6 +500,35 @@ public class ProblemaController implements Initializable {
                 // Salir del modo texto
                 creandoTexto = false;
                 cartaPane.setCursor(Cursor.DEFAULT);
+            } else if (midiendoDistancia) {
+                Point2D punto = new Point2D(event.getX(), event.getY());
+                puntosMedicion.add(punto);
+                if (puntosMedicion.size() == 2) {
+                    Point2D p1 = puntosMedicion.get(0);
+                    Point2D p2 = puntosMedicion.get(1);
+
+                    // Dibujar línea
+                    if (lineaMedida != null) cartaPane.getChildren().remove(lineaMedida);
+                    lineaMedida = new Line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+                    lineaMedida.setStroke(Color.RED);
+                    cartaPane.getChildren().add(lineaMedida);
+
+                    // Calcular distancia
+                    double distancia = p1.distance(p2);
+                    double subdivisiones = distancia / TAMANIO_SUBDIVISION;
+
+                    Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                    alerta.setTitle("Medición de distancia");
+                    alerta.setHeaderText("Resultado");
+                    alerta.setContentText("Distancia medida: " + String.format("%.2f", subdivisiones) + " subdivisiones.");
+                    alerta.showAndWait();
+
+                    puntosMedicion.clear();
+                    midiendoDistancia = false;
+                    cartaPane.setCursor(Cursor.DEFAULT);
+                    //medirButton.setSelected(false);
+                }
+                return;
             }
             if (event.getButton() == MouseButton.SECONDARY && !event.isConsumed()) {
                 limpiarSeleccion();
@@ -807,6 +841,22 @@ public class ProblemaController implements Initializable {
     private void crearRegla(ActionEvent event) {
         reglaActiva = !reglaActiva;
         regla.setVisible(reglaActiva);
+    }
+
+    @FXML
+    private void medirDistancia(ActionEvent event) {
+        midiendoDistancia = true;
+        puntosMedicion.clear();
+        if (lineaMedida != null) {
+            cartaPane.getChildren().remove(lineaMedida);
+            lineaMedida = null;
+        }
+
+        if (midiendoDistancia) {
+            cartaPane.setCursor(Cursor.CROSSHAIR);
+        } else {
+            cartaPane.setCursor(Cursor.DEFAULT);
+        }
     }
     
     // Clase auxiliar para almacenar la diferencia al arrastrar
