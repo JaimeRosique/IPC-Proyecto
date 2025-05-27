@@ -328,68 +328,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-text-fill: #f0f6ff;
 }
 
-/* === DATE PICKER === */
-.date-picker {
-    -fx-background-color: #102b40;
-    -fx-text-fill: #f0f6ff;
-    -fx-font-size: 14px;
-    -fx-border-color: #1c4a6e;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
-    -fx-padding: 6;
-}
-
-.date-picker .text-field {
-    -fx-background-color: transparent;
-    -fx-text-fill: #f0f6ff;
-    -fx-border-color: transparent;
-}
-
-.date-picker .arrow-button {
-    -fx-background-color: #355e8c;
-    -fx-background-radius: 6;
-    -fx-cursor: hand;
-}
-
-.date-picker .arrow-button:hover {
-    -fx-background-color: #5a9bd8;
-}
-
-.date-picker .arrow {
-    -fx-background-color: #ffffff; /* Color de la flecha del desplegable */
-}
-
-/* === CALENDARIO DEL DATE PICKER === */
-.date-picker-popup > .month-year-pane {
-    -fx-background-color: #102b40;
-    -fx-text-fill: #f0f6ff;
-}
-
-.date-picker-popup .month-year-pane .label {
-    -fx-text-fill: #f0f6ff;
-    -fx-font-weight: bold;
-}
-
-.date-picker-popup .calendar-grid {
-    -fx-background-color: #0e1f2c;
-}
-
-.date-picker-popup .calendar-grid .day-cell {
-    -fx-background-color: transparent;
-    -fx-text-fill: #e0eefa;
-}
-
-.date-picker-popup .calendar-grid .day-cell:hover {
-    -fx-background-color: #245a80;
-    -fx-text-fill: #ffffff;
-}
-
-.date-picker-popup .calendar-grid .day-cell:selected {
-    -fx-background-color: #3880b0;
-    -fx-text-fill: #ffffff;
-    -fx-font-weight: bold;
-}
-
 .hyperlink {
     -fx-text-fill: #0db6ff;        
     -fx-underline: true;
@@ -403,4 +341,187 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .hyperlink:hover {
     -fx-text-fill: #fc8187;        
     -fx-underline: true;
+}
+
+/* === DATE PICKER === */
+.date-picker {
+    -fx-background-color: transparent;
+    -fx-background-radius: 6;
+    -fx-text-fill: #e0eefa;
+    -fx-font-size: 13px;
+    -fx-padding: 6;
+}
+
+/* Estilo del texto en el campo del DatePicker */
+.date-picker .text-field {
+    -fx-background-color: #102b40;
+    -fx-text-fill: #f0f6ff;
+    -fx-border-color: #1c4a6e;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-padding: 6;
+}
+
+/* Botón del calendario */
+.date-picker .arrow-button {
+    -fx-background-color: #355e8c;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #5a9bd8;
+}
+
+/* Flecha del botón */
+.date-picker .arrow-button .arrow {
+    -fx-background-color: #ffffff;
+}
+
+/* Ventana emergente del calendario */
+.date-picker-popup {
+    -fx-background-radius: 6;
+    -fx-border-radius: 0;
+    -fx-background-color: #102b40;
+}
+
+/* Cabecera del calendario (mes y año) */
+.date-picker-popup .month-year-label,
+.date-picker-popup .calendar-header {
+    -fx-text-fill: #b5eaff;
+    -fx-font-weight: bold;
+    -fx-padding: 5 10 5 10;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+    -fx-background-radius: 6;
+    -fx-border-radius: 0;
+}
+
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #102b40;
+    -fx-background-radius: 6;
+}
+
+.date-picker-popup .calendar-grid {
+    -fx-padding: 0;
+    -fx-hgap: 0;
+    -fx-vgap: 0;
+    -fx-translate-x: 0;
+    -fx-translate-y: 0;
+    -fx-background-color: #204d6d;
+}
+
+.date-picker-popup .calendar-grid .label {
+    -fx-alignment: center;
+}
+
+.date-picker-popup .spinner {
+    -fx-alignment: center;
+    -fx-spacing: 8;
+    -fx-padding: 0 20 0 20; 
+}
+
+.date-picker-popup .spinner-label {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-font-size: 18px;
+}
+
+.date-picker-popup .spinner .left-button .left-arrow,
+.date-picker-popup .spinner .right-button .right-arrow {
+    -fx-background-color: #cce5ff;
+    -fx-background-insets: 0;
+}
+
+.date-picker-popup .spinner .left-button,
+.date-picker-popup .spinner .right-button {
+    -fx-background-color: #335e8c;
+    -fx-background-insets: 0;
+    -fx-padding: 8;
+    -fx-border-color: transparent;
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+}
+
+.date-picker-popup .spinner .left-button:hover,
+.date-picker-popup .spinner .right-button:hover {
+    -fx-background-color: #5a9bd8;
+    -fx-background-insets: 0;
+    -fx-padding: 8;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.date-picker-popup .calendar-day-button:selected, 
+.date-picker-popup .spinner .left-button:selected,
+.date-picker-popup .spinner .right-button:selected {
+    -fx-background-color: #355e8c;
+    -fx-background-insets: 0;
+    -fx-padding: 8;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+}
+
+.date-picker-popup .calendar-grid .week-number-cell {
+    -fx-max-width: 0;
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-padding: 0;
+    -fx-opacity: 0;
+}
+
+.date-picker-popup .day-name-cell {
+    -fx-text-fill: #cce5ff;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+}
+
+/* Días del calendario */
+.date-picker-popup .calendar-day-button {
+    -fx-text-fill: #f0f6ff;
+    -fx-background-color: transparent;
+    -fx-font-size: 13px;
+}
+
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #5a9bd8;
+    -fx-cursor: hand;
+    -fx-text-fill: #003366;
+}
+
+.date-picker-popup .calendar-day-button:hover {
+    -fx-background-color: #5a9bd8;
+    -fx-cursor: hand;
+}
+
+.date-picker-popup .calendar-day-button:focused {
+    -fx-background-color: #5a9bd8;
+    -fx-background-radius: 4;
+}
+
+.date-picker-popup .calendar-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #f0f6ff;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.date-picker-popup .calendar-cell:hover {
+    -fx-background-color: #5a9bd8;
+    -fx-cursor: hand;
+}
+
+.date-picker-popup .day-cell {
+    -fx-background-color: #355e8c;
+    -fx-text-fill: #f0f6ff;
+    -fx-background-radius: 6;
+    -fx-border-color: transparent;
+    -fx-padding: 4;
+    -fx-background-insets: 0;
+    -fx-alignment: center;
+    -fx-pref-width: 39px;
+    -fx-pref-height: 39px;
+   
 }

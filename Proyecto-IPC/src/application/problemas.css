@@ -368,7 +368,7 @@ hyperlink {
 /* Ventana emergente del calendario */
 .date-picker-popup {
     -fx-background-radius: 6;
-    -fx-borderradius: 0;
+    -fx-border-radius: 0;
     -fx-background-color: #b3d9f2;
 }
 
@@ -381,7 +381,7 @@ hyperlink {
     -fx-spacing: 15;
     -fx-alignment: center;
     -fx-background-radius: 6;
-    -fx-borderradius: 0;
+    -fx-border-radius: 0;
 }
 
 .date-picker-popup .month-year-pane {
@@ -509,11 +509,4 @@ hyperlink {
     -fx-pref-width: 39px;
     -fx-pref-height: 39px;
    
-}
-
-/* Días de otro mes (no seleccionables) */
-.date-picker-popup .day-cell:disabled {
-    -fx-opacity: 0.3;
-    -fx-cursor: default;
-    -fx-text-fill: #003366;
 }
