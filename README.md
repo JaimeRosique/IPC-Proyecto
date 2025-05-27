@@ -33,7 +33,7 @@ Trabajo de IPC 2025 TOPOLOGÍA
 | Cambiar color y grosor de marcas                                 | [✔]    |
 | Eliminar marcas individuales                                     | [✔]    |
 | Limpiar toda la carta                                            | [✔]    |
-| Mover transportador para medir ángulos                           | [ ]    |
+| Mover transportador para medir ángulos                           | [✔]    |
 | Trazar línea con ángulo                                          | [ ]    |
 | Medir distancias y convertir a millas náuticas                   | [ ]    |
 | Mostrar coordenadas (latitud / longitud) de un punto             | [ ]    |
