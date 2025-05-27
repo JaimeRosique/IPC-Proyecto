@@ -33,6 +33,11 @@ public class RegistroController implements Initializable {
     private Image[] imgArray = new Image[12];
     private Navigation nav;
     private int i;
+    private boolean modoModificar = false;
+
+        public void setModoModificar(boolean modificar) {
+        this.modoModificar = modificar;
+        }
     @FXML
     private TextField nickname;
     @FXML
@@ -61,7 +66,10 @@ public class RegistroController implements Initializable {
     private Label edad_error;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb){
+        if (modoModificar) {
+        nickname.setDisable(true);  // bloquea el campo para no poder cambiarlo
+        }
         try {
             nav = Navigation.getInstance();
         }catch(Exception e) {
@@ -157,6 +165,13 @@ public class RegistroController implements Initializable {
         pswrd_check.setOnKeyTyped(event -> errPasswrd1());
         
     }
+    public void cargarDatosUsuario(User user) {
+    nickname.setText(user.getNickName());
+    email.setText(user.getEmail());
+    pswrd.setText(user.getPassword());
+    bdate.setValue(user.getBirthdate());
+    avatar_img.setImage(user.getAvatar());
+}
     
     private boolean validarNickname() {
         String nick = nickname.getText();

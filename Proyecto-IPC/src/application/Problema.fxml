@@ -54,6 +54,11 @@
                     <MenuItem mnemonicParsing="false" text="Delete" />
                   </items>
                 </Menu>
+                  <Menu mnemonicParsing="false" onAction="#modificarPerfilAction" text="Modificar perfil">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                  </Menu>
               </menus>
             </MenuBar>
             <Region HBox.hgrow="ALWAYS" />
