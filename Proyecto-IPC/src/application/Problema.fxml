@@ -45,6 +45,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#crearTransportador" text="Mostrar Transportador" />
                         <MenuItem mnemonicParsing="false" onAction="#crearRegla" text="Crear Regla" />
                         <MenuItem mnemonicParsing="false" onAction="#medirDistancia" text="Medir distancia" />
+                        <MenuItem fx:id="compas" mnemonicParsing="false" onAction="#crearCompas" text="Crear Compás" />
                     <MenuItem mnemonicParsing="false" text="Close" />
                   </items>
                 </Menu>

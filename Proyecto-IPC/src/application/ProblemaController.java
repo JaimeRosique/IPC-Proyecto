@@ -64,6 +64,13 @@ import javafx.scene.shape.QuadCurve;
 
 public class ProblemaController implements Initializable {
     
+    
+    private boolean compasActivo = false;
+    private Group compasVisual;
+    private Point2D centroCompas;
+    private Line brazoCompas;
+    private Circle pivoteCompas;
+    private double radioInicialCompas = 100;
     private boolean midiendoDistancia = false;
     private List<Point2D> puntosMedicion = new ArrayList<>();
     private Line lineaMedida;
@@ -141,6 +148,8 @@ public class ProblemaController implements Initializable {
     private ToggleButton gomaButton;
     @FXML
     private ToggleButton textoButton;
+    @FXML
+    private MenuItem compas;
     
     @FXML
     void zoomIn(ActionEvent event) {
@@ -265,6 +274,52 @@ public class ProblemaController implements Initializable {
         map_pin.setLayoutY(itemSelected.getPosition().getY());
         pin_info.setText(itemSelected.getDescription());
         map_pin.setVisible(true);
+    }
+    
+    private void activarCompas(Point2D centro) {
+        if (compasVisual != null) {
+            cartaPane.getChildren().remove(compasVisual);
+        }
+
+        centroCompas = centro;
+
+        // Círculo fijo en el centro
+        pivoteCompas = new Circle(centro.getX(), centro.getY(), 5, Color.DARKBLUE);
+
+        // Brazo que gira
+        brazoCompas = new Line();
+        brazoCompas.setStartX(centro.getX());
+        brazoCompas.setStartY(centro.getY());
+        brazoCompas.setEndX(centro.getX() + radioInicialCompas);
+        brazoCompas.setEndY(centro.getY());
+
+        brazoCompas.setStroke(Color.DARKRED);
+        brazoCompas.setStrokeWidth(2);
+
+        // Agrupar
+        compasVisual = new Group(brazoCompas, pivoteCompas);
+        cartaPane.getChildren().add(compasVisual);
+
+        // Permitir rotar el brazo arrastrando
+        brazoCompas.setOnMouseDragged(e -> {
+            double dx = e.getX() - centroCompas.getX();
+            double dy = e.getY() - centroCompas.getY();
+            double distancia = Math.sqrt(dx * dx + dy * dy);
+
+            // Mantener longitud (radio fijo)
+            double angle = Math.atan2(dy, dx);
+            double endX = centroCompas.getX() + radioInicialCompas * Math.cos(angle);
+            double endY = centroCompas.getY() + radioInicialCompas * Math.sin(angle);
+            brazoCompas.setEndX(endX);
+            brazoCompas.setEndY(endY);
+        });
+
+        // Al hacer doble clic: dibuja un arco
+        brazoCompas.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                drawArc(centroCompas, radioInicialCompas); // Usa tu función
+            }
+        });
     }
 
     private void initData() {
@@ -529,6 +584,10 @@ public class ProblemaController implements Initializable {
                     //medirButton.setSelected(false);
                 }
                 return;
+            } else if (compasActivo) {
+                activarCompas(new Point2D(event.getX(), event.getY()));
+                compasActivo = false;
+                cartaPane.setCursor(Cursor.DEFAULT);
             }
             if (event.getButton() == MouseButton.SECONDARY && !event.isConsumed()) {
                 limpiarSeleccion();
@@ -857,6 +916,12 @@ public class ProblemaController implements Initializable {
         } else {
             cartaPane.setCursor(Cursor.DEFAULT);
         }
+    }
+
+    @FXML
+    private void crearCompas(ActionEvent event) {
+        compasActivo = true;
+        cartaPane.setCursor(compasActivo ? Cursor.CROSSHAIR : Cursor.DEFAULT);
     }
     
     // Clase auxiliar para almacenar la diferencia al arrastrar
