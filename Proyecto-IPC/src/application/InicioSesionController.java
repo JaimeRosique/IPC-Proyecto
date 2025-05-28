@@ -69,13 +69,14 @@ public class InicioSesionController implements Initializable {
             }
         });
         
+        /*
         // Permitir unicamente numeros y letras en la contraseña
         pswrd_id.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("[a-zA-Z0-9]*")) {
                 pswrd_id.setText(oldValue);
             }
         });
-        
+        */
         // Error password cambie de textField
         pswrd_id.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
@@ -165,9 +166,9 @@ public class InicioSesionController implements Initializable {
                 if(usuario != null){ 
                     reiniciar();
                     String nickname = usuario.getNickName();
+                    ProblemaController controller = (ProblemaController) JavaFXMLApplication.getController("Problema");
+                    controller.cambiarUser(nav);
                     JavaFXMLApplication.setRoot("Problema");
-                    ProblemaController controller = (ProblemaController) JavaFXMLApplication.getController("Menu");
-                    //controller.cambiarUser(finanza);
                 }else{
                     pswrdErrorImg.setVisible(true);
                     pswrdError.setStyle("-fx-text-fill: #cc3333;");
