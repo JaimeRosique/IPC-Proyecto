@@ -21,6 +21,7 @@ import javafx.stage.FileChooser;
 import model.*;
 import java.time.LocalDate;
 import java.time.Period;
+import javafx.scene.text.Font;
 
 /**
  * FXML Controller class
@@ -66,7 +67,7 @@ public class RegistroController implements Initializable {
     private Label edad_error;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb){
+    public void initialize(URL url, ResourceBundle rb) {
         if (modoModificar) {
         nickname.setDisable(true);  // bloquea el campo para no poder cambiarlo
         }

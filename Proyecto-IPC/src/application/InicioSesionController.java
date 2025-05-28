@@ -13,6 +13,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 import model.*;
 
 /**
@@ -48,8 +49,7 @@ public class InicioSesionController implements Initializable {
         }catch(Exception e){
             System.err.println(e.toString());
         }
-        
-        // No incluir espacio en el nickname
+                // No incluir espacio en el nickname
         user_id.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.contains(" ")) {
                 user_id.setText(oldValue);
