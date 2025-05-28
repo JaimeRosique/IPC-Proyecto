@@ -9,9 +9,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import model.*;
@@ -42,6 +44,8 @@ public class InicioSesionController implements Initializable {
     private ImageView pswrdErrorImg;
     @FXML
     private Hyperlink hyperlink;
+    @FXML
+    private ToggleButton toggleThemeButton;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try{
@@ -49,6 +53,16 @@ public class InicioSesionController implements Initializable {
         }catch(Exception e){
             System.err.println(e.toString());
         }
+        toggleThemeButton.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            toggleThemeButton.setOnAction(event -> {
+                ThemeManager.setModoOscuro(!ThemeManager.isModoOscuro());
+    
+                Scene escena = toggleThemeButton.getScene();
+                escena.getStylesheets().clear();
+                escena.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+            });
+        });
+        
                 // No incluir espacio en el nickname
         user_id.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.contains(" ")) {

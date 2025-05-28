@@ -49,6 +49,7 @@ public class JavaFXMLApplication extends Application {
     private void cargarEscena(String nombreFXML, String clave) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreFXML));
         Parent root = loader.load();
+        root.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
         roots.put(clave, root);
         controllers.put(clave, loader.getController());
     }
