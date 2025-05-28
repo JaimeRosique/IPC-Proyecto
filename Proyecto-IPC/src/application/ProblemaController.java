@@ -518,46 +518,6 @@ public class ProblemaController implements Initializable {
     }
     
     private void initData() {
-        /*
-        data = map_listview.getItems();
-        data.add(new Poi("1F", "Edificion del DSIC", 275, 250));
-        data.add( new Poi("Agora", "Agora", 575, 350));
-        data.add( new Poi("Pista", "Pista de atletismo y campo de futbol", 950, 350));
-        */
-        /*
-        map_listview.setCellFactory(lv -> new ListCell<Problem>() {
-            @Override
-            protected void updateItem(Problem problem, boolean empty) {
-                super.updateItem(problem, empty);
-                if (empty || problem == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    VBox vbox = new VBox(10);
-                    Label pregunta = new Label("Pregunta: " + problem.getText());
-
-                    for (Answer a : problem.getAnswers()) {
-                        Button btn = new Button(a.getText());
-                        btn.setOnAction(e -> {
-                            if (a.getValidity()) {
-                                btn.setStyle("-fx-background-color: lightgreen;");
-                            } else {
-                                btn.setStyle("-fx-background-color: red;");
-                            }
-
-                            // Opcional: desactivar todos los botones tras responder
-                            vbox.getChildren().filtered(n -> n instanceof Button).forEach(b -> ((Button) b).setDisable(true));
-                        });
-                        vbox.getChildren().add(btn);
-                    }
-
-                    vbox.getChildren().add(0, pregunta);
-                    setGraphic(vbox);
-                }
-            }
-        });
-        map_listview.setItems(FXCollections.observableArrayList(problemas));
-        */
         map_listview.setCellFactory(lv -> new ListCell<Problem>() {
             private boolean expanded = false;
 
