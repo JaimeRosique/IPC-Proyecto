@@ -101,7 +101,7 @@
                   </ScrollPane>
                   <StackPane fx:id="toolBar" accessibleRole="TOOL_BAR" layoutX="14.0" layoutY="7.0" prefHeight="665.0" prefWidth="79.0">
                      <children>
-                        <Button fx:id="lineaButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoLinea" prefHeight="40.0" prefWidth="57.0" text="─">
+                        <Button fx:id="lineaButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoLinea" prefHeight="40.0" prefWidth="71.0" text="─">
                            <StackPane.margin>
                               <Insets top="-200.0" />
                            </StackPane.margin>
@@ -111,7 +111,7 @@
                               <Insets top="550.0" />
                            </StackPane.margin>
                         </Button>
-                        <Button fx:id="seleccionarButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoRaton" prefHeight="40.0" prefWidth="40.0">
+                        <Button fx:id="seleccionarButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoRaton" prefHeight="40.0" prefWidth="71.0">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -123,12 +123,12 @@
                               <Insets top="-500.0" />
                            </StackPane.margin>
                         </Button>
-                        <Button fx:id="puntoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoPunto" prefHeight="40.0" prefWidth="47.0" text="◑">
+                        <Button fx:id="puntoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoPunto" prefHeight="40.0" prefWidth="71.0" text="◑">
                            <StackPane.margin>
                               <Insets top="-300.0" />
                            </StackPane.margin>
                         </Button>
-                        <Button fx:id="arcoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoArco" prefHeight="40.0" prefWidth="40.0">
+                        <Button fx:id="arcoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoArco" prefHeight="40.0" prefWidth="71.0">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -140,7 +140,7 @@
                               <Insets top="-100.0" />
                            </StackPane.margin>
                         </Button>
-                        <Button fx:id="compasButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoCompás" prefHeight="40.0" prefWidth="40.0">
+                        <Button fx:id="compasButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoCompás" prefHeight="40.0" prefWidth="71.0">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -152,12 +152,12 @@
                               <Insets top="-400.0" />
                            </StackPane.margin>
                         </Button>
-                        <ColorPicker fx:id="coloresButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#activarModoPintar" prefHeight="40.0" prefWidth="59.0">
+                        <ColorPicker fx:id="coloresButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#activarModoPintar" prefHeight="40.0" prefWidth="71.0">
                            <StackPane.margin>
                               <Insets top="400.0" />
                            </StackPane.margin>
                         </ColorPicker>
-                        <Button fx:id="transportadorButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarTransportador" prefHeight="40.0" prefWidth="40.0">
+                        <Button fx:id="transportadorButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarTransportador" prefHeight="40.0" prefWidth="71.0">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -169,12 +169,12 @@
                               <Insets top="200.0" />
                            </StackPane.margin>
                         </Button>
-                        <Button fx:id="reglaButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarRegla" prefHeight="40.0" prefWidth="58.0" text="📏">
+                        <Button fx:id="reglaButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarRegla" prefHeight="40.0" prefWidth="71.0" text="📏">
                            <StackPane.margin>
                               <Insets top="300.0" />
                            </StackPane.margin>
                         </Button>
-                        <Button fx:id="gomaButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoGoma" prefHeight="40.0" prefWidth="40.0">
+                        <Button fx:id="gomaButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoGoma" prefHeight="40.0" prefWidth="71.0">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
