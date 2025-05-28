@@ -42,6 +42,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import application.Poi;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -62,11 +63,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Shape;
+import model.*;
 
 
 public class ProblemaController implements Initializable {
     
-    
+    private List<Problem> problemas;
+    private Navigation nav;
     private boolean compasActivo = false;
     private Group compasVisual;
     private Point2D centroCompas;
@@ -106,14 +109,14 @@ public class ProblemaController implements Initializable {
     //=======================================
     // hashmap para guardar los puntos de interes POI
     private final HashMap<String, Poi> hm = new HashMap<>();
-    private ObservableList<Poi> data;
+    private ObservableList<String> data;
     // ======================================
     // la variable zoomGroup se utiliza para dar soporte al zoom
     // el escalado se realiza sobre este nodo, al escalar el Group no mueve sus nodos
     private Group zoomGroup;
 
     @FXML
-    private ListView<Poi> map_listview;
+    private ListView<String> map_listview;
     @FXML
     private ScrollPane map_scrollpane;
     @FXML
@@ -272,6 +275,7 @@ public class ProblemaController implements Initializable {
 
     @FXML
     void listClicked(MouseEvent event) {
+        /*
         Poi itemSelected = map_listview.getSelectionModel().getSelectedItem();
 
         // Animación del scroll hasta la mousePosistion del item seleccionado
@@ -293,6 +297,7 @@ public class ProblemaController implements Initializable {
         map_pin.setLayoutY(itemSelected.getPosition().getY());
         pin_info.setText(itemSelected.getDescription());
         map_pin.setVisible(true);
+        */
     }
     
     private void activarCompas(Point2D centro) {
@@ -457,6 +462,19 @@ public class ProblemaController implements Initializable {
         });
     }
     
+    public void cambiarUser(Navigation m){
+        nav = m;
+        problemas = nav.getProblems();
+        initData(problemas);
+        /*
+        usuario = finanza.getLoggedUser();
+        user.setText(usuario.getNickName());
+        name.setText(usuario.getName());
+        userImg.setImage(usuario.getImage());
+        userData.setVisible(false);
+        */
+    }
+    
     @FXML
     private void limpiarCarta() {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
@@ -471,17 +489,37 @@ public class ProblemaController implements Initializable {
         }
     }
     
-    private void initData() {
+    private void initData(List<Problem> problemas) {
+        // Esto convierte la lista de problemas en una lista observable de Strings
+        System.out.println("Tamaño de la lista: " + problemas.size());
+        ObservableList<String> items = FXCollections.observableArrayList();
+
+        for (Problem p : problemas) {
+            System.out.println(p.getText());
+            items.add(p.getText());  // Aquí usas getText() para mostrar lo que quieras
+        }
+
+        map_listview.setItems(items);
+
+        // Asignar los textos al ListView
+        
+        /*
         data = map_listview.getItems();
         data.add(new Poi("1F", "Edificion del DSIC", 275, 250));
         data.add( new Poi("Agora", "Agora", 575, 350));
         data.add( new Poi("Pista", "Pista de atletismo y campo de futbol", 950, 350));
+        */
+        
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        initData();
+        try{
+            nav = Navigation.getInstance();
+        }catch(Exception e){
+            System.err.println(e.toString());
+        }
         //==========================================================
         // inicializamos el slider y enlazamos con el zoom
         zoom_slider.setMin(0.125);
@@ -987,7 +1025,7 @@ public class ProblemaController implements Initializable {
                 Point2D localPoint = zoomGroup.sceneToLocal(event.getSceneX(), event.getSceneY());
                 Poi poi=result.get();
                 poi.setPosition(localPoint);
-                map_listview.getItems().add(poi);
+                //map_listview.getItems().add(poi);
             }
         }
     }
