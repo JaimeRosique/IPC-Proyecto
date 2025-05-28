@@ -49,20 +49,24 @@ public class JavaFXMLApplication extends Application {
     private void cargarEscena(String nombreFXML, String clave) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreFXML));
         Parent root = loader.load();
-        root.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+        root.getStylesheets().add(ThemeManager.getEstiloActual());
         roots.put(clave, root);
         controllers.put(clave, loader.getController());
     }
 
     public static void setRoot(Parent root) {
-        scene.setRoot(root);
+        scene.setRoot(root);        
     }
 
     public static void setRoot(String clave) {
         Parent root = roots.get(clave);
         if (root != null) {
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add(ThemeManager.getEstiloActual());
+            
             setRoot(root);
 
+      
             Stage stage = (Stage) scene.getWindow();
             switch (clave) {
                 case "IniciarSesion":

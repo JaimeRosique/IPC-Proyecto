@@ -10,41 +10,41 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 /* === ESTILO GLOBAL === */
 .root {
     -fx-font-family: "Verdana", sans-seriff;
-    -fx-background-color: #e0f2ff;
+    -fx-background-color: #e0f2ff !important;
 }
 
 /* === CONTENEDORES === */
 .pane, .anchor-pane, .vbox, .hbox, .grid-pane, .stack-pane, .border-pane {
-    -fx-background-color: #e0f2ff;
+    -fx-background-color: #e0f2ff !important;
     -fx-padding: 10;
 }
 
 /* === MENÚ === */
 .menu {
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
     -fx-padding: 6 14;
     -fx-background-radius: 6;
 }
 
 .menu-bar {
-    -fx-background-color: #b3d9f2;
-    -fx-text-fill: #003366;
+    -fx-background-color: #b3d9f2 !important;
+    -fx-text-fill: #003366 !important;
     -fx-background-radius: 6;
 }
 
 .menu-item {
     -fx-padding: 6 14;
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
     -fx-font-size: 14px;
     -fx-background-color: transparent;
 }
 
 .menu-item:hover {
-    -fx-background-color: #94c6f2;
+    -fx-background-color: #94c6f2 !important;
 }
 
 .menu-item:focused {
-    -fx-background-color: #cce5ff;
+    -fx-background-color: #cce5ff !important;
 }
 
 /* === BOTONES === */
@@ -101,8 +101,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
     
 .button {
-    -fx-background-color: #99cce0;
-    -fx-text-fill: #003366;
+    -fx-background-color: #99cce0 !important;
+    -fx-text-fill: #003366 !important;
     -fx-font-weight: bold;
     -fx-background-radius: 6;
     -fx-padding: 10 20;
@@ -116,7 +116,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .button:hover, .button:focused {
-    -fx-background-color: #6699cc;
+    -fx-background-color: #6699cc !important;
     -fx-font-weight: bold;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
@@ -124,12 +124,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .button:pressed {
-    -fx-background-color: #99c2ff;
+    -fx-background-color: #99c2ff !important;
 }
 
 .toggle-button {
-    -fx-background-color: #b3d9f2;       
-    -fx-text-fill: #003366;                     
+    -fx-background-color: #b3d9f2 !important;       
+    -fx-text-fill: #003366 !important;                     
     -fx-background-radius: 6;
     -fx-font-weight: bold;
     -fx-padding: 8 16;
@@ -138,49 +138,49 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .toggle-button:hover {
-    -fx-background-color: #cceaff;
+    -fx-background-color: #cceaff !important;
 }
 
 /* Selected: más oscuro pero en la misma gama */
 .toggle-button:selected {
-    -fx-background-color: #99c2ff;
-    -fx-text-fill: #002244;
+    -fx-background-color: #99c2ff !important;
+    -fx-text-fill: #002244 !important;
     -fx-font-weight: bold;
 }
 
 /* === TEXTOS Y LABELS === */
 .label {
-    -fx-text-fill: #002244;
+    -fx-text-fill: #002244 !important;
     -fx-font-size: 14px;
 }
 
 #titulo {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #002244;
+    -fx-text-fill: #002244 !important;
 }
 
 .label.title {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
 }
 
 .sugerencia {
-    -fx-text-fill: #4d88b3;
+    -fx-text-fill: #4d88b3 !important;
     -fx-font-style: italic;
 }
 
 .error {
-    -fx-text-fill: #cc3333;
+    -fx-text-fill: #cc3333 !important;
     -fx-font-weight: bold;
 }
 
 /* === CAMPOS DE TEXTO === */
 .text-field, .text-area {
-    -fx-background-color: white;
-    -fx-text-fill: #003366;
-    -fx-border-color: #99ccff;
+    -fx-background-color: white !important;
+    -fx-text-fill: #003366 !important;
+    -fx-border-color: #99ccff !important;
     -fx-border-radius: 4;
     -fx-background-radius: 4;
     -fx-padding: 6;
@@ -189,8 +189,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 /* === LISTVIEW === */
 .list-view {
-    -fx-background-color: #e0f2ff;
-    -fx-border-color: #6699cc;
+    -fx-background-color: #e0f2ff !important;
+    -fx-border-color: #6699cc !important;
     -fx-border-radius: 6;
     -fx-padding: 6;
 }
@@ -198,11 +198,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .list-cell {
     -fx-padding: 8 12;
     -fx-font-size: 14px;
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
 }
 
 .list-cell:odd {
-    -fx-background-color: #cfe9fc;
+    -fx-background-color: #cfe9fc !important;
 }
 
 .list-cell:even {
@@ -210,18 +210,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .list-cell:hover {
-    -fx-background-color: #94c6f2;
-    -fx-text-fill: #003366;
+    -fx-background-color: #94c6f2 !important;
+    -fx-text-fill: #003366 !important;
 }
 
 .list-cell:selected {
-    -fx-background-color: #99c2ff;
-    -fx-text-fill: #002244;
+    -fx-background-color: #99c2ff !important;
+    -fx-text-fill: #002244 !important;
 }
 
 /* === SPLITPANE === */
 .split-pane {
-    -fx-background-color: #e0f2ff;
+    -fx-background-color: #e0f2ff !important;
 }
 
 .split-pane-divider {
@@ -232,14 +232,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 /* === CANVAS Y ÁREAS DE DIBUJO === */
 .canvas {
     -fx-background-color: #ffffff;
-    -fx-border-color: #336699;
+    -fx-border-color: #336699 !important;
     -fx-border-width: 2;
 }
 
 /* === SCROLLPANE === */
 .scroll-pane {
-    -fx-background: #e0f2ff;
-    -fx-border-color: #99cce0;
+    -fx-background: #e0f2ff !important;
+    -fx-border-color: #99cce0 !important;
     -fx-border-radius: 4;
     -fx-background-radius: 6;
     -fx-padding: 8;
@@ -256,64 +256,64 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #99cce0;
+    -fx-background-color: #99cce0 !important;
     -fx-background-radius: 4;
 }
 
 .scroll-bar .thumb:hover {
-    -fx-background-color: #6699cc;
+    -fx-background-color: #6699cc !important;
 }
 
 .scroll-bar .increment-button:hover,
 .scroll-bar .decrement-button:hover {
-    -fx-background-color: #94c6f2;
+    -fx-background-color: #94c6f2 !important;
     -fx-background-radius: 6;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 1, 0, 0, 1);
 }
 
 .scroll-bar .increment-button .increment-arrow,
 .scroll-bar .decrement-button .decrement-arrow {
-    -fx-background-color: #003366;
+    -fx-background-color: #003366 !important;
     -fx-background-radius: 6;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 1, 0, 0, 1);
 }
 
 .scroll-bar .increment-button:hover .increment-arrow,
 .scroll-bar .decrement-button:hover .decrement-arrow {
-    -fx-background-color: #254a99;
+    -fx-background-color: #254a99 !important;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 1, 0, 0, 1);
     -fx-background-radius: 6;
 }
 
 .scroll-pane .corner {
-    -fx-background-color: #e0f2ff; 
+    -fx-background-color: #e0f2ff !important; 
 }
 
 /* === TABLAS === */
 .table-view {
-    -fx-background-color: white;
-    -fx-border-color: #6699cc;
+    -fx-background-color: white !important;
+    -fx-border-color: #6699cc !important;
     -fx-border-radius: 5;
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
 }
 
 .table-view .column-header-background {
-    -fx-background-color: #cce5ff;
-    -fx-text-fill: #003366;
+    -fx-background-color: #cce5ff !important;
+    -fx-text-fill: #003366 !important;
 }
 
 .table-view .table-row-cell:filled:selected {
-    -fx-background-color: #99c2ff;
+    -fx-background-color: #99c2ff !important;
 }
 
 /* === SEPARADORES === */
 .separator {
-    -fx-background-color: #6699cc;
+    -fx-background-color: #6699cc !important;
 }
 
 /* === IMÁGENES CON BORDES === */
 .image-view {
-    -fx-border-color: #6699cc;
+    -fx-border-color: #6699cc !important;
     -fx-border-radius: 10;
     -fx-padding: 2;
 }
@@ -324,51 +324,51 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .slider .track {
-    -fx-background-color: #b3d9f2;
+    -fx-background-color: #b3d9f2 !important;
     -fx-background-radius: 5;
     -fx-pref-height: 6;
 }
 
 .slider .thumb {
-    -fx-background-color: #99cce0;
+    -fx-background-color: #99cce0 !important;
     -fx-background-radius: 50%;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
 }
 
 .slider .thumb:hover {
-    -fx-background-color: #6699cc;
+    -fx-background-color: #6699cc !important;
     -fx-cursor: hand;
 }
 
 /* Estilo general del cuadro de diálogo */
 .dialog-pane {
-    -fx-background-color: #f4f6fa;
+    -fx-background-color: #f4f6fa !important;
     -fx-border-radius: 8px;
     -fx-border-color: transparent;
     -fx-background-radius: 8px;
     -fx-font-family: "Segoe UI", sans-serif;
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
     -fx-font-size: 14px;
 }
 
 .dialog-pane .button {
-    -fx-background-color: #99cce0;
-    -fx-text-fill: white;
+    -fx-background-color: #99cce0 !important;
+    -fx-text-fill: white !important;
     -fx-background-radius: 5;
     -fx-padding: 6 12;
 }
 
 .dialog-pane .button:hover {
-    -fx-background-color: #254a99;
+    -fx-background-color: #254a99 !important;
     -fx-cursor: hand;
 }
 
 .dialog-pane .content.label {
-    -fx-text-fill: #333;
+    -fx-text-fill: #333 !important;
 }
 
 hyperlink {
-    -fx-text-fill: #0db6ff;
+    -fx-text-fill: #0db6ff !important;
     -fx-underline: true;
     -fx-font-size: 19;
     -fx-cursor: hand;
@@ -378,7 +378,7 @@ hyperlink {
 }
 
 .hyperlink:hover {
-    -fx-text-fill: #fc8187;        
+    -fx-text-fill: #fc8187 !important;        
     -fx-underline: true;
 }
 
@@ -386,7 +386,7 @@ hyperlink {
 .date-picker {
     -fx-background-color: transparent;
     -fx-background-radius: 6;
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
     -fx-font-size: 13px;
     -fx-padding: 6;
 }
@@ -394,8 +394,8 @@ hyperlink {
 /* Estilo del texto en el campo del DatePicker */
 .date-picker .text-field {
     -fx-background-color: white;
-    -fx-text-fill: #003366;
-    -fx-border-color: #99ccff;
+    -fx-text-fill: #003366 !important;
+    -fx-border-color: #99ccff !important;
     -fx-border-radius: 4;
     -fx-background-radius: 6;
     -fx-padding: 6;
@@ -403,31 +403,31 @@ hyperlink {
 
 /* Botón del calendario */
 .date-picker .arrow-button {
-    -fx-background-color: #99cce0;
+    -fx-background-color: #99cce0 !important;
     -fx-background-radius: 6;
     -fx-cursor: hand;
 }
 
 .date-picker .arrow-button:hover {
-    -fx-background-color: #6699cc;
+    -fx-background-color: #6699cc !important;
 }
 
 /* Flecha del botón */
 .date-picker .arrow-button .arrow {
-    -fx-background-color: #003366;
+    -fx-background-color: #003366 !important;
 }
 
 /* Ventana emergente del calendario */
 .date-picker-popup {
     -fx-background-radius: 6;
     -fx-border-radius: 0;
-    -fx-background-color: #b3d9f2;
+    -fx-background-color: #b3d9f2 !important;
 }
 
 /* Cabecera del calendario (mes y año) */
 .date-picker-popup .month-year-label,
 .date-picker-popup .calendar-header {
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
     -fx-font-weight: bold;
     -fx-padding: 5 10 5 10;
     -fx-spacing: 15;
@@ -437,7 +437,7 @@ hyperlink {
 }
 
 .date-picker-popup .month-year-pane {
-    -fx-background-color: #94c6f2;
+    -fx-background-color: #94c6f2 !important;
     -fx-background-radius: 6;
 }
 
@@ -447,7 +447,7 @@ hyperlink {
     -fx-vgap: 0;
     -fx-translate-x: 0;
     -fx-translate-y: 0;
-    -fx-background-color: #b3d9f2;
+    -fx-background-color: #b3d9f2 !important;;
 }
 
 .date-picker-popup .calendar-grid .label {
@@ -468,13 +468,13 @@ hyperlink {
 
 .date-picker-popup .spinner .left-button .left-arrow,
 .date-picker-popup .spinner .right-button .right-arrow {
-    -fx-background-color: #003366;
+    -fx-background-color: #003366 !important;
     -fx-background-insets: 0;
 }
 
 .date-picker-popup .spinner .left-button,
 .date-picker-popup .spinner .right-button {
-    -fx-background-color: #6699cc;
+    -fx-background-color: #6699cc !important;
     -fx-background-insets: 0;
     -fx-padding: 8;
     -fx-border-color: transparent;
@@ -484,7 +484,7 @@ hyperlink {
 
 .date-picker-popup .spinner .left-button:hover,
 .date-picker-popup .spinner .right-button:hover {
-    -fx-background-color: #336699;
+    -fx-background-color: #336699 !important;
     -fx-background-insets: 0;
     -fx-padding: 8;
     -fx-border-color: transparent;
@@ -494,7 +494,7 @@ hyperlink {
 .date-picker-popup .calendar-day-button:selected, 
 .date-picker-popup .spinner .left-button:selected,
 .date-picker-popup .spinner .right-button:selected {
-    -fx-background-color: #6699cc;
+    -fx-background-color: #6699cc !important;
     -fx-background-insets: 0;
     -fx-padding: 8;
     -fx-border-color: transparent;
@@ -512,47 +512,47 @@ hyperlink {
 }
 
 .date-picker-popup .day-name-cell {
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
     -fx-font-weight: bold;
     -fx-background-color: transparent;
 }
 
 /* Días del calendario */
 .date-picker-popup .calendar-day-button {
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
     -fx-background-color: transparent;
     -fx-font-size: 13px;
 }
 
 .date-picker-popup .day-cell:hover {
-    -fx-background-color: #99ccff;
+    -fx-background-color: #99ccff !important;
     -fx-cursor: hand;
 }
 
 .date-picker-popup .calendar-day-button:hover {
-    -fx-background-color: #99ccff;
+    -fx-background-color: #99ccff !important;
     -fx-cursor: hand;
 }
 
 .date-picker-popup .calendar-day-button:focused {
-    -fx-background-color: #99c2ff;
+    -fx-background-color: #99c2ff !important;
     -fx-background-radius: 4;
 }
 
 .date-picker-popup .calendar-cell {
     -fx-background-color: transparent;
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
     -fx-border-radius: 6;
     -fx-background-radius: 6;
 }
 
 .date-picker-popup .calendar-cell:hover {
-    -fx-background-color: #99c2ff;
+    -fx-background-color: #99c2ff !important;
     -fx-cursor: hand;
 }
 
 .date-picker-popup .day-cell {
-    -fx-background-color: #cce5ff;
+    -fx-background-color: #cce5ff !important;
     -fx-background-radius: 6;
     -fx-border-color: transparent;
     -fx-padding: 4;
@@ -565,19 +565,19 @@ hyperlink {
 
 /* === COLOR PICKER === */
 .color-picker {
-    -fx-background-color: #b3d9f2;
+    -fx-background-color: #b3d9f2 !important;
     -fx-background-radius: 6;
     -fx-padding: 6;
     -fx-font-size: 13px;
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
 }
 
 .color-picker:hover {
-    -fx-background-color: #6699cc;
+    -fx-background-color: #6699cc !important;
     -fx-background-radius: 6;
     -fx-padding: 6;
     -fx-font-size: 13px;
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
     -fx-cursor: hand;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
@@ -590,20 +590,20 @@ hyperlink {
 }
 
 .color-picker .arrow-button:hover {
-    -fx-background-color: #6699cc;
+    -fx-background-color: #6699cc !important;
 }
 
 /* Flecha dentro del botón */
 .color-picker .arrow-button .arrow {
-    -fx-background-color: #003366;
+    -fx-background-color: #003366 !important;
 }
 
 /* Ventana emergente del ColorPicker */
 .color-palette {
-    -fx-background-color: #b3d9f2;
+    -fx-background-color: #b3d9f2 !important;
     -fx-background-radius: 6;
     -fx-border-radius: 6;
-    -fx-text-fill: #003366;
+    -fx-text-fill: #003366 !important;
 }
 
 .color-palette .hyperlink {
@@ -612,14 +612,14 @@ hyperlink {
 
 /* Celdas de color en la paleta */
 .color-palette .color-rect {
-    -fx-border-color: #ffffff;
+    -fx-border-color: #ffffff !important;
     -fx-border-width: 1;
     -fx-border-radius: 6;
     -fx-background-radius: 6;
 }
 
 .color-palette .color-rect:hover {
-    -fx-border-color: #003366;
+    -fx-border-color: #003366 !important;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 3, 0, 0, 1);
     -fx-cursor: hand;
 }

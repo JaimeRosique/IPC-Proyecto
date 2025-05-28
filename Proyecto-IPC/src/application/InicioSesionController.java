@@ -6,15 +6,19 @@ package application;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import model.*;
 
@@ -45,7 +49,29 @@ public class InicioSesionController implements Initializable {
     @FXML
     private Hyperlink hyperlink;
     @FXML
-    private ToggleButton toggleThemeButton;
+    private VBox rootPane;
+    
+    @FXML
+    private void cambiarTema() {
+        Scene scene = rootPane.getScene();
+
+    if (scene != null) {
+        ThemeManager.toggleTheme(scene);
+
+        // ⚠️ Forzar la re-asignación del root
+        Parent currentRoot = scene.getRoot();
+        scene.setRoot(new Group());  // cambiar temporalmente
+        scene.setRoot(currentRoot);  // volver al root real
+
+        currentRoot.applyCss();
+        currentRoot.layout();
+
+        System.out.println("✅ Tema cambiado y escena refrescada");
+    } else {
+        System.out.println("❌ Scene es null");
+    }
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try{
@@ -53,14 +79,18 @@ public class InicioSesionController implements Initializable {
         }catch(Exception e){
             System.err.println(e.toString());
         }
-        toggleThemeButton.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            toggleThemeButton.setOnAction(event -> {
-                ThemeManager.setModoOscuro(!ThemeManager.isModoOscuro());
-    
-                Scene escena = toggleThemeButton.getScene();
-                escena.getStylesheets().clear();
-                escena.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
-            });
+        
+        Platform.runLater(() -> {
+            Scene scene = rootPane.getScene();
+            if (scene != null) {
+                if (!rootPane.getStyleClass().contains("root")) {
+                rootPane.getStyleClass().add("root");
+            }
+
+                // Volver a aplicar el estilo actual
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(ThemeManager.getEstiloActual());
+            } 
         });
         
                 // No incluir espacio en el nickname

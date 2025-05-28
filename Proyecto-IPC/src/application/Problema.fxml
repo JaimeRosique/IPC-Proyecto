@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="704.0" prefWidth="980.0" stylesheets="@../resources/protractor.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProblemaController">
+<VBox fx:id="rootPane" prefHeight="704.0" prefWidth="980.0" stylesheets="@../resources/protractor.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProblemaController">
    <children>
       <HBox alignment="CENTER_RIGHT" fillHeight="false" spacing="5.0" VBox.vgrow="NEVER">
          <children>
@@ -53,7 +53,7 @@
               </menus>
             </MenuBar>
             <ToggleButton fx:id="toolBarButton" mnemonicParsing="false" text="Barra de herramientas" />
-            <ToggleButton fx:id="toggleThemeButton" mnemonicParsing="false" prefHeight="18.0" prefWidth="130.0" text="Modo nocturno" />
+            <ToggleButton mnemonicParsing="false" onAction="#cambiarTema" prefHeight="18.0" prefWidth="130.0" text="Modo nocturno" />
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="18.0" prefWidth="49.0" text="Zoom" />
             <Button mnemonicParsing="false" onAction="#zoomOut" text="-" />
             <Slider fx:id="zoom_slider" HBox.hgrow="SOMETIMES" />

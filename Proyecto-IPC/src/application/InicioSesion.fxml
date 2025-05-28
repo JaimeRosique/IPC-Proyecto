@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="377.0" stylesheets="@problemas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.InicioSesionController">
+<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="469.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.InicioSesionController">
    <children>
       <AnchorPane prefHeight="63.0" prefWidth="340.0">
          <children>
-            <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="99.0" prefWidth="377.0" style="-fx-background-color: #b3d9f2;" text="Inicio Sesión" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+            <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="99.0" prefWidth="377.0" text="Inicio Sesión" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font size="33.0" />
                </font>
@@ -30,7 +30,7 @@
                   <Image url="@../resources/inicio%20imagen.png" />
                </image>
             </ImageView>
-            <ToggleButton fx:id="toggleThemeButton" layoutX="295.0" layoutY="34.0" mnemonicParsing="false" text="Modo" />
+            <ToggleButton layoutX="356.0" layoutY="24.0" mnemonicParsing="false" onAction="#cambiarTema" prefHeight="50.0" prefWidth="99.0" text="Modo &#10;nocturno" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="11.0" prefWidth="378.0" />

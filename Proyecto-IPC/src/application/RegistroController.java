@@ -21,6 +21,11 @@ import javafx.stage.FileChooser;
 import model.*;
 import java.time.LocalDate;
 import java.time.Period;
+import javafx.application.Platform;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 /**
@@ -35,6 +40,8 @@ public class RegistroController implements Initializable {
     private Navigation nav;
     private int i;
     private boolean modoModificar = false;
+    @FXML
+    private VBox rootPane;
 
         public void setModoModificar(boolean modificar) {
         this.modoModificar = modificar;
@@ -66,8 +73,52 @@ public class RegistroController implements Initializable {
     @FXML
     private Label edad_error;
     
+    @FXML
+    private void cambiarTema() {
+        Scene scene = rootPane.getScene();
+
+    if (scene != null) {
+        // Cambiar el tema
+        ThemeManager.toggleTheme(scene);
+
+        // Forzar recarga visual total
+        Parent originalRoot = scene.getRoot();
+
+        // 1. Desvincular temporalmente el root
+        scene.setRoot(new Group());
+
+            // 2. Volver a asignar el root original
+            scene.setRoot(originalRoot);
+
+            // 3. Reaplicar estilos y layout
+            originalRoot.applyCss();
+            originalRoot.layout();
+
+            System.out.println("✅ Tema cambiado y recargado visualmente.");
+        } else {
+            System.out.println("❌ Scene no disponible al intentar cambiar tema.");
+        }
+    }
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+        if (newScene != null) {
+            // Asegurar clase root
+            if (!rootPane.getStyleClass().contains("root")) {
+                rootPane.getStyleClass().add("root");
+            }
+
+            // Aplicar el CSS activo
+            newScene.getStylesheets().clear();
+            newScene.getStylesheets().add(ThemeManager.getEstiloActual());
+
+            System.out.println("🎨 Tema aplicado en sceneProperty: " + ThemeManager.getEstiloActual());
+        }
+    });
+        
         if (modoModificar) {
         nickname.setDisable(true);  // bloquea el campo para no poder cambiarlo
         }

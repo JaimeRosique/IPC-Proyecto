@@ -145,7 +145,6 @@ public class ProblemaController implements Initializable {
     private double offsetY;
     @FXML
     private ImageView image_map;
-    @FXML
     private ToggleButton toggleThemeButton;
     @FXML
     private Button limpiarCartaButton;
@@ -182,12 +181,31 @@ public class ProblemaController implements Initializable {
     private StackPane toolBar;
     @FXML
     private ToggleButton toolBarButton;
-    @FXML
     private User usuarioLogueado;
+    @FXML
+    private VBox rootPane;
 
+    @FXML
+    private void cambiarTema() {
+        Scene scene = rootPane.getScene();
 
+    if (scene != null) {
+        ThemeManager.toggleTheme(scene);
 
-    
+        // ⚠️ Forzar la re-asignación del root
+        Parent currentRoot = scene.getRoot();
+        scene.setRoot(new Group());  // cambiar temporalmente
+        scene.setRoot(currentRoot);  // volver al root real
+
+        currentRoot.applyCss();
+        currentRoot.layout();
+
+        System.out.println("✅ Tema cambiado y escena refrescada");
+    } else {
+        System.out.println("❌ Scene es null");
+    }
+    }
+        
     @FXML
     void zoomIn(ActionEvent event) {
         //================================================
@@ -709,17 +727,18 @@ public class ProblemaController implements Initializable {
                 regla.setLayoutX(e.getSceneX() - offsetX);
                 regla.setLayoutY(e.getSceneY() - offsetY);
         });
-
         
-        // Escucha cuando el botón tenga Scene (garantiza que la vista ya está cargada)
-        toggleThemeButton.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            toggleThemeButton.setOnAction(event -> {
-                ThemeManager.setModoOscuro(!ThemeManager.isModoOscuro());
-    
-                Scene escena = toggleThemeButton.getScene();
-                escena.getStylesheets().clear();
-                escena.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
-            });
+        Platform.runLater(() -> {
+            Scene scene = rootPane.getScene();
+            if (scene != null) {
+                if (!rootPane.getStyleClass().contains("root")) {
+                rootPane.getStyleClass().add("root");
+            }
+
+                // Volver a aplicar el estilo actual
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(ThemeManager.getEstiloActual());
+            } 
         });
         
         Platform.runLater(() -> {
