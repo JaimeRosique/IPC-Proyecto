@@ -54,12 +54,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
+import javafx.scene.shape.Shape;
 
 
 public class ProblemaController implements Initializable {
@@ -76,11 +78,13 @@ public class ProblemaController implements Initializable {
     private Line lineaMedida;
     private VBox escalaVertical;
     private final double TAMANIO_SUBDIVISION = 50.0;
-    private ImageView regla;
+    @FXML
+    private Button regla;
     private boolean reglaActiva = false;
     @FXML
-    private ToggleButton transportadorButton;
-    private ImageView transportador;
+    private Button transportadorButton;
+    @FXML
+    private Button transportador;
     private boolean transportadorActivo = false;
     private Group ghostPunto;
     private Line lineaTemporal;
@@ -124,6 +128,8 @@ public class ProblemaController implements Initializable {
     private MenuItem punto;
     @FXML
     private Pane cartaPane;
+    private double offsetX;
+    private double offsetY;
     @FXML
     private ImageView image_map;
     @FXML
@@ -131,25 +137,38 @@ public class ProblemaController implements Initializable {
     @FXML
     private Button limpiarCartaButton;
     @FXML
-    private ToggleButton coordenadasButton;
+    private Button arcoButton;
+    private boolean modoArcoActivo = false;
+    private Point2D centroArcos = null;
     @FXML
-    private ToggleButton arcoButton;
+    private Button lineaButton;
+    private boolean modoLineaActivo = false;
+    private Point2D primerPunto = null;
     @FXML
-    private ToggleButton lineaButton;
+    private Button puntoButton;
+    private boolean modoPuntosActivo = false;
     @FXML
-    private ToggleButton puntoButton;
+    private Button reglaButton;
     @FXML
-    private ToggleButton lineaAnguloButton;
+    private Button gomaButton;
+    private boolean modoGomaActivo = false;
     @FXML
-    private ToggleButton coloresGrosorButton;
-    @FXML
-    private ToggleButton reglaButton;
-    @FXML
-    private ToggleButton gomaButton;
-    @FXML
-    private ToggleButton textoButton;
+    private Button textoButton;
+    private boolean modoTextoActivo = false;
     @FXML
     private MenuItem compas;
+    @FXML
+    private ColorPicker coloresButton;
+    private boolean modoPintarActivo = false;
+    private Color colorSeleccionado = Color.BLACK;
+    @FXML
+    private Button seleccionarButton;
+    @FXML
+    private Button compasButton;
+    @FXML
+    private StackPane toolBar;
+    @FXML
+    private ToggleButton toolBarButton;
     
     @FXML
     void zoomIn(ActionEvent event) {
@@ -321,9 +340,139 @@ public class ProblemaController implements Initializable {
             }
         });
     }
+    
+    @FXML
+    private void activarModoRaton() {
+        modoTextoActivo = false;
+        modoPuntosActivo = false;
+        modoLineaActivo = false;
+        modoArcoActivo = false;
+        modoGomaActivo = false;
+        modoPintarActivo = false;
+        centroArcos = null;
+        primerPunto = null;
+    }
+    
+    @FXML
+    private void activarModoPunto() {
+        modoTextoActivo = false;
+        modoPuntosActivo = true;
+        modoLineaActivo = false;
+        modoArcoActivo = false;
+        modoGomaActivo = false;
+        modoPintarActivo = false;
+        centroArcos = null;
+        primerPunto = null;
+    }
 
+    @FXML
+    private void activarModoLinea() {
+        modoTextoActivo = false;
+        modoPuntosActivo = false;
+        modoLineaActivo = true;
+        modoArcoActivo = false;
+        modoGomaActivo = false;
+        modoPintarActivo = false;
+        centroArcos = null;
+        primerPunto = null;
+    }
+    
+    @FXML
+    private void activarModoArco() {
+        modoTextoActivo = false;
+        modoPuntosActivo = false;
+        modoLineaActivo = false;
+        modoArcoActivo = true;
+        modoGomaActivo = false;
+        modoPintarActivo = false;
+        centroArcos = null;
+        primerPunto = null;
+    }
+    
+    @FXML
+    private void activarModoTexto() {
+        modoTextoActivo = true;
+        modoPuntosActivo = false;
+        modoLineaActivo = false;
+        modoArcoActivo = false;
+        modoGomaActivo = false;
+        modoPintarActivo = false;
+        centroArcos = null;
+        primerPunto = null;
+    }
+    
+    @FXML
+    private void activarTransportador() {
+        transportadorActivo = !transportadorActivo;
+        transportador.setVisible(transportadorActivo);
+    }
+    @FXML
+    private void activarRegla() {
+        reglaActiva = !reglaActiva;
+        regla.setVisible(reglaActiva);
+    }
+    
+    @FXML
+    private void activarModoGoma() {
+        modoGomaActivo = true;
+        modoPuntosActivo = false;
+        modoLineaActivo = false;
+        modoArcoActivo = false;
+        modoTextoActivo = false;
+        modoPintarActivo = false;
+        centroArcos = null;
+        primerPunto = null;
+    }
+    @FXML
+    private void activarModoPintar() {
+        modoPintarActivo = true;
+        modoGomaActivo = false;
+        modoTextoActivo = false;
+        modoPuntosActivo = false;
+        modoLineaActivo = false;
+        modoArcoActivo = false;
+        centroArcos = null;
+        primerPunto = null;
+    }
+    private void hacerInteractivo(Node nodo) {
+        nodo.setOnMouseClicked(event -> {
+            colorSeleccionado = coloresButton.getValue();
+            if (modoGomaActivo) {
+                cartaPane.getChildren().remove(nodo);
+                event.consume();
+            } else if (modoPintarActivo) {
+                if (nodo instanceof Shape) {
+                    ((Shape) nodo).setStroke(colorSeleccionado);
+                    if (!(nodo instanceof Line)) {
+                        ((Shape) nodo).setFill(colorSeleccionado);
+                    }
+                    if (nodo instanceof Arc) {
+                        ((Shape) nodo).setFill(null);
+                    }
+                } else if (nodo instanceof Label) {
+                    ((Label) nodo).setTextFill(colorSeleccionado);
+                }
+                event.consume();
+            }
+        });
+    }
+    
+    @FXML
+    private void limpiarCarta() {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Confirmación");
+        alerta.setHeaderText("¿Estás seguro de que quieres limpiar la carta entera?");
+        alerta.setContentText("Se eliminarán todo lo que hayas escrito hasta ahora.");
+        
+        //Esperar la respuesta del usuario
+        Optional<ButtonType> resultado = alerta.showAndWait();
+        if(resultado.isPresent() && resultado.get() == ButtonType.OK) {
+            cartaPane.getChildren().removeIf(nodo -> nodo != image_map);
+        }
+    }
+    
     private void initData() {
-        data=map_listview.getItems();
+        data = map_listview.getItems();
         data.add(new Poi("1F", "Edificion del DSIC", 275, 250));
         data.add( new Poi("Agora", "Agora", 575, 350));
         data.add( new Poi("Pista", "Pista de atletismo y campo de futbol", 950, 350));
@@ -340,6 +489,45 @@ public class ProblemaController implements Initializable {
         zoom_slider.setValue(0.6);
         zoom_slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
              
+        toolBarButton.setOnAction(e -> {
+            toolBar.setVisible(!toolBar.isVisible());
+        });
+        
+        transportador.setVisible(false);
+        transportador.setOnMousePressed(event -> {
+            offsetX = event.getSceneX() - transportador.getLayoutX();
+            offsetY = event.getSceneY() - transportador.getLayoutY();
+        });
+        transportador.setOnMouseDragged(event -> {
+            double newX = event.getSceneX() - offsetX;
+            double newY = event.getSceneY() - offsetY;
+
+            double anchoPane = cartaPane.getWidth();
+            double altoPane = cartaPane.getHeight();
+
+            double anchoBoton = transportador.getBoundsInParent().getWidth();
+            double altoBoton = transportador.getBoundsInParent().getHeight();
+
+            if (newX >= 0 && newX <= anchoPane - anchoBoton) {
+                transportador.setLayoutX(newX);
+            }
+            if (newY >= 0 && newY <= altoPane - altoBoton) {
+                transportador.setLayoutY(newY);
+            }
+        });
+    
+        regla.setVisible(false); // Oculta al principio
+        regla.setOnMousePressed(e -> {
+
+                offsetX = e.getSceneX() - regla.getLayoutX();
+                offsetY = e.getSceneY() - regla.getLayoutY();
+        });
+        regla.setOnMouseDragged(e -> {
+                regla.setLayoutX(e.getSceneX() - offsetX);
+                regla.setLayoutY(e.getSceneY() - offsetY);
+        });
+
+        
         // Escucha cuando el botón tenga Scene (garantiza que la vista ya está cargada)
         toggleThemeButton.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
@@ -392,17 +580,92 @@ public class ProblemaController implements Initializable {
         zoomGroup.getChildren().add(map_scrollpane.getContent());
         map_scrollpane.setContent(contentGroup);
         
-        transportador = new ImageView();
-        Image imgTransportador = new Image(getClass().getResourceAsStream("/resources/transportador.png"));
-        transportador.setImage(imgTransportador);
-        transportador.setVisible(transportadorActivo);
-        zoomGroup.getChildren().add(transportador);
+        //transportador = new ImageView();
+        //Image imgTransportador = new Image(getClass().getResourceAsStream("/resources/transportador.png"));
+        //transportador.setImage(imgTransportador);
+        //transportador.setVisible(transportadorActivo);
+        //zoomGroup.getChildren().add(transportador);
 
         // Configurar arrastre del transportador
         final Delta dragDelta = new Delta();
         
         // Manejar clicks en el pane
         cartaPane.setOnMouseClicked(event -> {
+            if (modoPuntosActivo) {
+                Circle punto = new Circle(event.getX(), event.getY(), 5);
+                cartaPane.getChildren().add(punto);
+                hacerInteractivo(punto);
+            } else if (modoLineaActivo) {
+                if (primerPunto == null) {
+                    primerPunto = new Point2D(event.getX(), event.getY());
+                } else {
+                    Line linea = new Line(
+                    primerPunto.getX(), primerPunto.getY(),
+                    event.getX(), event.getY()
+                    );
+                    linea.setStroke(Color.BLUE);
+                    linea.setStrokeWidth(2);
+                    cartaPane.getChildren().add(linea);
+                    hacerInteractivo(linea);
+                    primerPunto = null;
+                }
+            } else if (modoArcoActivo) {
+                if (centroArcos == null) {
+                // Primer clic: centro del arco
+                    centroArcos = new Point2D(event.getX(), event.getY());
+                } else {
+                    // Segundo clic: punto sobre la circunferencia
+                    Point2D puntoCircunferencia = new Point2D(event.getX(), event.getY());
+
+                    double radio = centroArcos.distance(puntoCircunferencia);
+
+                    // Calcular el ángulo desde el centro hacia el punto de la circunferencia
+                    double deltaX = puntoCircunferencia.getX() - centroArcos.getX();
+                    double deltaY = puntoCircunferencia.getY() - centroArcos.getY();
+                    double angle = Math.toDegrees(Math.atan2(-deltaY, deltaX)); // Y invertido
+
+                    // Ajustar para que el arco esté orientado hacia el segundo punto
+                    double startAngle = angle - 90;
+
+                    Arc arco = new Arc();
+                    arco.setCenterX(centroArcos.getX());
+                    arco.setCenterY(centroArcos.getY());
+                    arco.setRadiusX(radio);
+                    arco.setRadiusY(radio);
+                    arco.setStartAngle(startAngle);
+                    arco.setLength(180);  // Semicírculo
+                    arco.setType(ArcType.OPEN);
+                    arco.setStroke(Color.ORANGE);
+                    arco.setStrokeWidth(2);
+                    arco.setFill(null);
+
+                    cartaPane.getChildren().add(arco);
+                    hacerInteractivo(arco);
+                    
+                    // Reset
+                    centroArcos = null;
+                }
+            } else if (modoTextoActivo) {
+                TextField textoNew = new TextField();
+                textoNew.setLayoutX(event.getX());
+                textoNew.setLayoutY(event.getY());
+
+                // Opcional: ancho fijo o automático
+                textoNew.setPrefColumnCount(10);
+
+                // Al presionar Enter, el TextField se vuelve Label
+                textoNew.setOnAction(e -> {
+                    Label etiqueta = new Label(textoNew.getText());
+                    etiqueta.setLayoutX(textoNew.getLayoutX());
+                    etiqueta.setLayoutY(textoNew.getLayoutY());
+                    cartaPane.getChildren().remove(textoNew);
+                    cartaPane.getChildren().add(etiqueta);
+                });
+
+                cartaPane.getChildren().add(textoNew);
+                hacerInteractivo(textoNew);
+                textoNew.requestFocus(); // Poner foco directamente
+            }
             if (creandoPunto) {
                 double x = event.getX();
                 double y = event.getY();
@@ -616,7 +879,7 @@ public class ProblemaController implements Initializable {
             }
         });
         
-        transportador.setOnMousePressed(event -> {
+        /*transportador.setOnMousePressed(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 Point2D clicLocal = new Point2D(event.getX(), event.getY());
                 dragDelta.x = event.getX();
@@ -636,15 +899,15 @@ public class ProblemaController implements Initializable {
 
                 event.consume();
             }
-        });
+        });*/
         
-        // Crear la imagen de la regla
+        /*// Crear la imagen de la regla
         regla = new ImageView();
         Image imgRegla = new Image(getClass().getResourceAsStream("/resources/regla.png")); // asegúrate de que exista
         regla.setImage(imgRegla);
         regla.setFitWidth(1000);
         regla.setFitHeight(200);
-        regla.setVisible(reglaActiva);
+        egla.setVisible(reglaActiva);
         zoomGroup.getChildren().add(regla);
 
         // Hacer que la regla se pueda arrastrar
@@ -663,7 +926,7 @@ public class ProblemaController implements Initializable {
                 regla.setLayoutY(parentCoords.getY() - dragDelta.y);
                 event.consume();
             }
-        });
+        });*/
         
     }
 
@@ -854,7 +1117,6 @@ public class ProblemaController implements Initializable {
         }
     }
 
-    @FXML
     private void limpiarCarta(ActionEvent event) {
         // Limpiamos la selección primero
         limpiarSeleccion();
@@ -923,6 +1185,20 @@ public class ProblemaController implements Initializable {
         compasActivo = true;
         cartaPane.setCursor(compasActivo ? Cursor.CROSSHAIR : Cursor.DEFAULT);
     }
+
+    @FXML
+    private void modificarPerfilAction(ActionEvent event) {
+    }
+
+
+
+    @FXML
+    private void activarModoCompás(ActionEvent event) {
+    }
+
+
+
+
     
     // Clase auxiliar para almacenar la diferencia al arrastrar
     private static class Delta {
