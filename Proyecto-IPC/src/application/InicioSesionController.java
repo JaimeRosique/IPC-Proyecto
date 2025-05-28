@@ -167,7 +167,7 @@ public class InicioSesionController implements Initializable {
                     reiniciar();
                     String nickname = usuario.getNickName();
                     ProblemaController controller = (ProblemaController) JavaFXMLApplication.getController("Problema");
-                    controller.cambiarUser(nav);
+                    controller.setDatos(nav, usuario);
                     JavaFXMLApplication.setRoot("Problema");
                 }else{
                     pswrdErrorImg.setVisible(true);

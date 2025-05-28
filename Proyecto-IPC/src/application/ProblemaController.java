@@ -63,11 +63,13 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
+import model.*;
 
 
 public class ProblemaController implements Initializable {
     
-    
+    private Navigation nav;
+    private User user;
     private boolean compasActivo = false;
     private Group compasVisual;
     private Point2D centroCompas;
@@ -470,6 +472,11 @@ public class ProblemaController implements Initializable {
         if(resultado.isPresent() && resultado.get() == ButtonType.OK) {
             cartaPane.getChildren().removeIf(nodo -> nodo != image_map);
         }
+    }
+    
+    public void setDatos(Navigation n, User u) {
+        nav = n;
+        user=u;
     }
     
     private void initData() {
