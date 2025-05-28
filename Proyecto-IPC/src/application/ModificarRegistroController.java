@@ -171,6 +171,10 @@ public class ModificarRegistroController implements Initializable {
     pswrd.setText(user.getPassword());
     bdate.setValue(user.getBirthdate());
     avatar_img.setImage(user.getAvatar());
+    if (modoModificar){
+        nickname.setDisable(true);
+    }
+
 }
     
     private boolean validarNickname() {

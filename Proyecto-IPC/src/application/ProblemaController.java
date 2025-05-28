@@ -41,9 +41,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import application.Poi;
+import java.io.IOException;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
@@ -172,6 +175,11 @@ public class ProblemaController implements Initializable {
     private StackPane toolBar;
     @FXML
     private ToggleButton toolBarButton;
+    @FXML
+    private User usuarioLogueado;
+
+
+
     
     @FXML
     void zoomIn(ActionEvent event) {
@@ -214,6 +222,28 @@ public class ProblemaController implements Initializable {
 
         cartaPane.getChildren().add(arc);
     }
+    public void setUsuarioLogueado(User usuario) {
+        this.usuarioLogueado = usuario;
+    }
+    @FXML
+    private void modificarPerfilAction(ActionEvent event) {
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Registro.fxml"));
+        Parent root = loader.load();
+
+        RegistroController controller = loader.getController();
+        controller.setModoModificar(true);  // activa el modo de modificaciÃ³n
+        controller.cargarDatosUsuario(usuarioLogueado);  // pasa el usuario actual
+
+        Stage stage = new Stage();
+        stage.setTitle("Modificar Perfil");
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    }
+
     
     private void seleccionarMarca(Node nodo) {
         if (!marcasSeleccionadas.contains(nodo)) {
@@ -1194,9 +1224,7 @@ public class ProblemaController implements Initializable {
         cartaPane.setCursor(compasActivo ? Cursor.CROSSHAIR : Cursor.DEFAULT);
     }
 
-    @FXML
-    private void modificarPerfilAction(ActionEvent event) {
-    }
+    
 
 
 
