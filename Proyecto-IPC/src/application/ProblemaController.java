@@ -229,7 +229,7 @@ public class ProblemaController implements Initializable {
     public void setUsuarioLogueado(User usuario) {
         this.usuarioLogueado = usuario;
     }
-    @FXML
+    /*@FXML
     private void modificarPerfilAction(ActionEvent event) {
         try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Registro.fxml"));
@@ -246,7 +246,7 @@ public class ProblemaController implements Initializable {
     } catch (IOException e) {
         e.printStackTrace();
     }
-    }
+    }*/
 
     
     private void seleccionarMarca(Node nodo) {
@@ -672,26 +672,13 @@ public class ProblemaController implements Initializable {
         
         // Escucha cuando el botón tenga Scene (garantiza que la vista ya está cargada)
         toggleThemeButton.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            if (newScene != null) {
-                // Aplica estilo claro al inicio
-                newScene.getStylesheets().add(getClass().getResource("/application/problemas.css").toExternalForm());
-                toggleThemeButton.setSelected(false); // No seleccionado = modo claro
-                toggleThemeButton.setText("Modo oscuro");
-
-                // Ahora sí, configurar acción del botón
-                toggleThemeButton.setOnAction(event -> {
-                    newScene.getStylesheets().clear();
-                    if (toggleThemeButton.isSelected()) {
-                        // Modo oscuro
-                        newScene.getStylesheets().add(getClass().getResource("/application/modoNocturno.css").toExternalForm());
-                        toggleThemeButton.setText("Modo claro");
-                    } else {
-                        // Modo claro
-                        newScene.getStylesheets().add(getClass().getResource("/application/problemas.css").toExternalForm());
-                        toggleThemeButton.setText("Modo oscuro");
-                    }
-                });
-            }
+            toggleThemeButton.setOnAction(event -> {
+                ThemeManager.setModoOscuro(!ThemeManager.isModoOscuro());
+    
+                Scene escena = toggleThemeButton.getScene();
+                escena.getStylesheets().clear();
+                escena.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+            });
         });
         
         Platform.runLater(() -> {

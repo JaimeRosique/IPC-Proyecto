@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -29,6 +30,7 @@
                   <Image url="@../resources/inicio%20imagen.png" />
                </image>
             </ImageView>
+            <ToggleButton fx:id="toggleThemeButton" layoutX="295.0" layoutY="34.0" mnemonicParsing="false" text="Modo" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="11.0" prefWidth="378.0" />
