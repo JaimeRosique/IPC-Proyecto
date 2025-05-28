@@ -42,6 +42,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import application.Poi;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -74,6 +75,8 @@ import model.*;
 
 public class ProblemaController implements Initializable {
     
+    private int currentIndex = -1;
+    private List<Problem> preguntasAleatorias;
     private List<Problem> problemas;
     private Navigation nav;
     private User user;
@@ -514,7 +517,8 @@ public class ProblemaController implements Initializable {
         nav = n;
         problemas = nav.getProblems();
         user=u;
-        initData();
+        //initData();
+        randomData();
     }
     
     private void initData() {
@@ -581,6 +585,83 @@ public class ProblemaController implements Initializable {
         map_listview.setItems(FXCollections.observableArrayList(problemas));
     }
 
+    private void randomData() {
+        if (preguntasAleatorias == null || preguntasAleatorias.isEmpty()) {
+            preguntasAleatorias = new ArrayList<>(problemas);
+            Collections.shuffle(preguntasAleatorias);
+            currentIndex = -1;
+        }
+
+        currentIndex++;
+        if (currentIndex >= preguntasAleatorias.size()) {
+            Alert fin = new Alert(Alert.AlertType.INFORMATION, "¡Has respondido todas las preguntas!");
+            fin.showAndWait();
+            return;
+        }
+
+        Problem problemaActual = preguntasAleatorias.get(currentIndex);
+        List<Answer> respuestas = new ArrayList<>(problemaActual.getAnswers());
+        Collections.shuffle(respuestas);
+
+        map_listview.setItems(FXCollections.observableArrayList(List.of(problemaActual)));
+        map_listview.setCellFactory(lv -> new ListCell<Problem>() {
+            @Override
+            protected void updateItem(Problem p, boolean empty) {
+                super.updateItem(p, empty);
+                if (empty || p == null) {
+                    setGraphic(null);
+                } else {
+                    VBox vbox = new VBox(10);
+                    vbox.setFillWidth(true);
+                    vbox.setMaxWidth(Double.MAX_VALUE);
+                    vbox.prefWidthProperty().bind(map_listview.widthProperty().subtract(20)); // <- Ajusta al ancho del ListView
+
+                    Label pregunta = new Label(p.getText());
+                    pregunta.setWrapText(true);
+                    pregunta.setMaxWidth(Double.MAX_VALUE);
+                    pregunta.setStyle("-fx-font-weight: bold;");
+                    pregunta.prefWidthProperty().bind(vbox.prefWidthProperty());
+
+                    List<Button> botones = new ArrayList<>();
+
+                    for (Answer a : respuestas) {
+                        Button btn = new Button(a.getText());
+                        btn.setWrapText(true);
+                        btn.setMaxWidth(Double.MAX_VALUE);
+                        btn.prefWidthProperty().bind(vbox.prefWidthProperty());
+
+                        btn.setOnAction(e -> {
+                            botones.forEach(b -> b.setDisable(true));
+
+                            if (a.getValidity()) {
+                                btn.setStyle("-fx-background-color: lightgreen;");
+                            } else {
+                                btn.setStyle("-fx-background-color: red;");
+                                for (int i = 0; i < respuestas.size(); i++) {
+                                    if (respuestas.get(i).getValidity()) {
+                                        botones.get(i).setStyle("-fx-background-color: lightgreen;");
+                                    }
+                                }
+                            }
+
+                            Button siguiente = new Button("Siguiente");
+                            siguiente.setMaxWidth(Double.MAX_VALUE);
+                            siguiente.prefWidthProperty().bind(vbox.prefWidthProperty());
+                            siguiente.setOnAction(ev -> randomData());
+                            vbox.getChildren().add(siguiente);
+                        });
+
+                        botones.add(btn);
+                        vbox.getChildren().add(btn);
+                    }
+
+                    vbox.getChildren().add(0, pregunta);
+                    setGraphic(vbox);
+                }
+            }
+        });
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
