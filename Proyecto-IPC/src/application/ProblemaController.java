@@ -42,7 +42,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import application.Poi;
 import java.io.IOException;
+import java.util.Map;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
@@ -51,6 +53,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
@@ -71,6 +74,7 @@ import model.*;
 
 public class ProblemaController implements Initializable {
     
+    private List<Problem> problemas;
     private Navigation nav;
     private User user;
     private boolean compasActivo = false;
@@ -112,14 +116,14 @@ public class ProblemaController implements Initializable {
     //=======================================
     // hashmap para guardar los puntos de interes POI
     private final HashMap<String, Poi> hm = new HashMap<>();
-    private ObservableList<Poi> data;
+    private ObservableList<String> data;
     // ======================================
     // la variable zoomGroup se utiliza para dar soporte al zoom
     // el escalado se realiza sobre este nodo, al escalar el Group no mueve sus nodos
     private Group zoomGroup;
 
     @FXML
-    private ListView<Poi> map_listview;
+    private ListView<Problem> map_listview;
     @FXML
     private ScrollPane map_scrollpane;
     @FXML
@@ -305,6 +309,7 @@ public class ProblemaController implements Initializable {
 
     @FXML
     void listClicked(MouseEvent event) {
+        /*
         Poi itemSelected = map_listview.getSelectionModel().getSelectedItem();
 
         // Animación del scroll hasta la mousePosistion del item seleccionado
@@ -326,6 +331,7 @@ public class ProblemaController implements Initializable {
         map_pin.setLayoutY(itemSelected.getPosition().getY());
         pin_info.setText(itemSelected.getDescription());
         map_pin.setVisible(true);
+        */
     }
     
     private void activarCompas(Point2D centro) {
@@ -506,20 +512,118 @@ public class ProblemaController implements Initializable {
     
     public void setDatos(Navigation n, User u) {
         nav = n;
+        problemas = nav.getProblems();
         user=u;
+        initData();
     }
     
     private void initData() {
+        /*
         data = map_listview.getItems();
         data.add(new Poi("1F", "Edificion del DSIC", 275, 250));
         data.add( new Poi("Agora", "Agora", 575, 350));
         data.add( new Poi("Pista", "Pista de atletismo y campo de futbol", 950, 350));
+        */
+        /*
+        map_listview.setCellFactory(lv -> new ListCell<Problem>() {
+            @Override
+            protected void updateItem(Problem problem, boolean empty) {
+                super.updateItem(problem, empty);
+                if (empty || problem == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    VBox vbox = new VBox(10);
+                    Label pregunta = new Label("Pregunta: " + problem.getText());
+
+                    for (Answer a : problem.getAnswers()) {
+                        Button btn = new Button(a.getText());
+                        btn.setOnAction(e -> {
+                            if (a.getValidity()) {
+                                btn.setStyle("-fx-background-color: lightgreen;");
+                            } else {
+                                btn.setStyle("-fx-background-color: red;");
+                            }
+
+                            // Opcional: desactivar todos los botones tras responder
+                            vbox.getChildren().filtered(n -> n instanceof Button).forEach(b -> ((Button) b).setDisable(true));
+                        });
+                        vbox.getChildren().add(btn);
+                    }
+
+                    vbox.getChildren().add(0, pregunta);
+                    setGraphic(vbox);
+                }
+            }
+        });
+        map_listview.setItems(FXCollections.observableArrayList(problemas));
+        */
+        map_listview.setCellFactory(lv -> new ListCell<Problem>() {
+            private boolean expanded = false;
+
+            @Override
+            protected void updateItem(Problem problem, boolean empty) {
+                super.updateItem(problem, empty);
+                if (empty || problem == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    VBox vbox = new VBox(5);
+                    vbox.setPrefWidth(map_listview.getWidth() - 20); // ← importante para forzar ajuste al ancho
+                    vbox.setMaxWidth(Double.MAX_VALUE);
+
+                    Label pregunta = new Label("Pregunta: " + problem.getText());
+                    pregunta.setWrapText(true); // ← permite salto de línea
+                    pregunta.setStyle("-fx-font-weight: bold; -fx-cursor: hand;");
+                    pregunta.setMaxWidth(Double.MAX_VALUE);
+
+                    List<Button> buttons = new ArrayList<>();
+
+                    pregunta.setOnMouseClicked(e -> {
+                        if (!expanded) {
+                            for (Answer a : problem.getAnswers()) {
+                                Button btn = new Button(a.getText());
+                                btn.setWrapText(true);
+                                btn.setPrefWidth(vbox.getPrefWidth()); // ← forzar ancho limitado
+                                btn.setMaxWidth(Double.MAX_VALUE);
+
+                                btn.setOnAction(ev -> {
+                                    buttons.forEach(b -> b.setDisable(true));
+
+                                    if (a.getValidity()) {
+                                        btn.setStyle("-fx-background-color: lightgreen;");
+                                    } else {
+                                        btn.setStyle("-fx-background-color: red;");
+                                        for (int i = 0; i < problem.getAnswers().size(); i++) {
+                                            if (problem.getAnswers().get(i).getValidity()) {
+                                                buttons.get(i).setStyle("-fx-background-color: lightgreen;");
+                                            }
+                                        }
+                                    }
+                                });
+
+                                buttons.add(btn);
+                                vbox.getChildren().add(btn);
+                            }
+                            expanded = true;
+                        } else {
+                            vbox.getChildren().removeAll(buttons);
+                            buttons.clear();
+                            expanded = false;
+                        }
+                    });
+
+                    vbox.getChildren().add(0, pregunta);
+                    setGraphic(vbox);
+                }
+            }
+        });
+        map_listview.setItems(FXCollections.observableArrayList(problemas));
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        initData();
         //==========================================================
         // inicializamos el slider y enlazamos con el zoom
         zoom_slider.setMin(0.125);
@@ -1025,7 +1129,7 @@ public class ProblemaController implements Initializable {
                 Point2D localPoint = zoomGroup.sceneToLocal(event.getSceneX(), event.getSceneY());
                 Poi poi=result.get();
                 poi.setPosition(localPoint);
-                map_listview.getItems().add(poi);
+                //map_listview.getItems().add(poi);
             }
         }
     }
