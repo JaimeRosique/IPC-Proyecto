@@ -50,21 +50,21 @@
                     <MenuItem mnemonicParsing="false" text="Close" />
                   </items>
                 </Menu>
-                  <Menu mnemonicParsing="false" onAction="#modificarPerfilAction" text="Perfil">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Modificar perfil" />
-                        <MenuItem mnemonicParsing="false" text="Cerrar sesión" />
-                    </items>
-                  </Menu>
               </menus>
             </MenuBar>
             <ToggleButton fx:id="toolBarButton" mnemonicParsing="false" text="Barra de herramientas" />
-            <Region HBox.hgrow="ALWAYS" />
             <ToggleButton fx:id="toggleThemeButton" mnemonicParsing="false" prefHeight="18.0" prefWidth="130.0" text="Modo nocturno" />
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="18.0" prefWidth="49.0" text="Zoom" />
             <Button mnemonicParsing="false" onAction="#zoomOut" text="-" />
             <Slider fx:id="zoom_slider" HBox.hgrow="SOMETIMES" />
             <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#zoomIn" text="+" />
+            <Region HBox.hgrow="ALWAYS" />
+            <MenuButton mnemonicParsing="false" text="MenuButton">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </MenuButton>
          </children>
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
