@@ -70,16 +70,20 @@ public class JavaFXMLApplication extends Application {
             Stage stage = (Stage) scene.getWindow();
             switch (clave) {
                 case "IniciarSesion":
-                    stage.setMinWidth(500);
-                    stage.setMinHeight(400);
                     stage.setTitle("Inicio Sesion");
                     stage.centerOnScreen();
+                    stage.setMaxWidth(600);
+                    stage.setMaxHeight(500);
+                    stage.setMinHeight(500);
+                    stage.setMinWidth(400);
                     break;
                 case "Registro":
-                    stage.setMinWidth(922);
-                    stage.setMinHeight(830);
                     stage.setTitle("Registro");
                     stage.centerOnScreen();
+                    stage.setMaxWidth(900);
+                    stage.setMaxHeight(700);
+                    stage.setMinHeight(550);
+                    stage.setMinWidth(400);
                     break;
                 case "Problema":
                     //stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
@@ -91,6 +95,9 @@ public class JavaFXMLApplication extends Application {
                     stage.setMinWidth(922);
                     stage.setMinHeight(830);
                     stage.setTitle("Menu");
+                    stage.centerOnScreen();
+                    stage.setMinHeight(900);
+                    stage.setMinWidth(700);
                     stage.setMaximized(true); // PANTALLA GRANDE
                     break;
                 case "ActualizarDatos":

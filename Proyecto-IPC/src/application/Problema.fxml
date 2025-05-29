@@ -62,7 +62,7 @@
             <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#zoomIn" text="+" />
             <Region HBox.hgrow="ALWAYS" />
             <Region prefHeight="20.0" prefWidth="10.0" />
-            <MenuButton mnemonicParsing="false">
+            <MenuButton id="perfil" mnemonicParsing="false">
               <items>
                   <MenuItem mnemonicParsing="false" text="Estadísticas" />
                 <MenuItem mnemonicParsing="false" text="Modificar perfil" />

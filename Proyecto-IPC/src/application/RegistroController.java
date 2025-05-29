@@ -111,7 +111,7 @@ public class RegistroController implements Initializable {
     
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {        
          // INICIAL contraseña principal
     pswrdTextField.setVisible(false);
     pswrdField.setVisible(true);
