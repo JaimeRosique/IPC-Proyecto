@@ -75,6 +75,10 @@ import model.*;
 
 public class ProblemaController implements Initializable {
     
+    private Line lineaTemporalCompas = null;
+    private boolean modoCompasAvanzado = false;
+    private List<Point2D> puntosCompas = new ArrayList<>();
+    private double distanciaCompas = -1;
     private Arc arcoTemporal = null;
     private boolean modoRatonActivo = false;
     private int currentIndex = -1;
@@ -430,6 +434,7 @@ public class ProblemaController implements Initializable {
         modoArcoActivo = false;
         modoGomaActivo = false;
         modoPintarActivo = false;
+        modoCompasAvanzado = false;
 
         creandoPunto = false;
         creandoLinea = false;
@@ -439,6 +444,8 @@ public class ProblemaController implements Initializable {
         primerPunto = null;
         radioArco = 0;
         puntosLinea.clear();
+        distanciaCompas = -1; 
+        puntosCompas.clear();
 
         if (ghostPunto != null) {
             cartaPane.getChildren().remove(ghostPunto);
@@ -451,6 +458,10 @@ public class ProblemaController implements Initializable {
         if (arcoTemporal != null) {
             cartaPane.getChildren().remove(arcoTemporal);
             arcoTemporal = null;
+        }
+        if (lineaTemporalCompas != null) {
+            cartaPane.getChildren().remove(lineaTemporalCompas);
+            lineaTemporalCompas = null;
         }
 
         cartaPane.setCursor(Cursor.DEFAULT);
@@ -948,6 +959,15 @@ public class ProblemaController implements Initializable {
                 arcoTemporal.setRadiusX(radioFinal);
                 arcoTemporal.setRadiusY(radioFinal);
                 arcoTemporal.setStartAngle(startAngle);
+            } if (modoCompasAvanzado && puntosCompas.size() == 1) {
+                Point2D p1 = puntosCompas.get(0);
+                Point2D p2 = new Point2D(event.getX(), event.getY());
+                if (lineaTemporalCompas != null) cartaPane.getChildren().remove(lineaTemporalCompas);
+                lineaTemporalCompas = new Line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+                lineaTemporalCompas.getStrokeDashArray().addAll(5.0, 5.0);
+                lineaTemporalCompas.setStroke(colorLinea);
+                lineaTemporalCompas.setStrokeWidth(grosorLinea);
+                cartaPane.getChildren().add(lineaTemporalCompas);
             }
         }); 
         
@@ -1010,22 +1030,64 @@ public class ProblemaController implements Initializable {
                         MouseButton.NONE, 0, false, false, false, false,
                         false, false, false, false, false, false, null));
                 });
-            } else if (modoLineaActivo) {
-                /*
-                if (primerPunto == null) {
-                    primerPunto = new Point2D(event.getX(), event.getY());
+            } else if (modoCompasAvanzado) {
+                Point2D punto = new Point2D(event.getX(), event.getY());
+                if (distanciaCompas < 0) {
+                    puntosCompas.add(punto);
+                    if (puntosCompas.size() == 2) {
+                        distanciaCompas = puntosCompas.get(0).distance(puntosCompas.get(1));
+                        Alert a = new Alert(Alert.AlertType.INFORMATION);
+                        a.setHeaderText("Distancia guardada: " + String.format("%.2f", distanciaCompas));
+                        a.showAndWait();
+                        if (lineaTemporalCompas != null) {
+                            cartaPane.getChildren().remove(lineaTemporalCompas);
+                            lineaTemporalCompas = null;
+                        }
+                    }
                 } else {
-                    Line linea = new Line(
-                    primerPunto.getX(), primerPunto.getY(),
-                    event.getX(), event.getY()
-                    );
-                    linea.setStroke(Color.BLUE);
-                    linea.setStrokeWidth(2);
-                    cartaPane.getChildren().add(linea);
-                    hacerInteractivo(linea);
-                    primerPunto = null;
+                    TextInputDialog dialog = new TextInputDialog("0");
+                    dialog.setTitle("Elegir ángulo");
+                    dialog.setHeaderText("Introduce el ángulo en grados para la nueva línea:");
+                    Optional<String> res = dialog.showAndWait();
+
+                    res.ifPresent(text -> {
+                        try {
+                            double angulo = Math.toRadians(Double.parseDouble(text));
+                            double dx = distanciaCompas * Math.cos(angulo);
+                            double dy = -distanciaCompas * Math.sin(angulo); // Invertido por coordenadas de pantalla
+
+                            Point2D destino = new Point2D(punto.getX() + dx, punto.getY() + dy);
+
+                            if (destino.getX() < 0 || destino.getY() < 0 || destino.getX() > cartaPane.getWidth() || destino.getY() > cartaPane.getHeight()) {
+                                Alert fuera = new Alert(Alert.AlertType.ERROR);
+                                fuera.setHeaderText("La línea se sale del límite del panel");
+                                fuera.setContentText("Elige otro punto o reduce el ángulo.");
+                                fuera.showAndWait();
+                                return;
+                            }
+
+                            Line linea = new Line(punto.getX(), punto.getY(), destino.getX(), destino.getY());
+                            linea.setStroke(colorLinea);
+                            linea.setStrokeWidth(grosorLinea);
+
+                            linea.setOnMouseClicked(e -> {
+                                if (modoRatonActivo && e.getButton() == MouseButton.PRIMARY) {
+                                    e.consume();
+                                    if (!e.isShiftDown()) limpiarSeleccion();
+                                    seleccionarMarca(linea);
+                                }
+                            });
+
+                            cartaPane.getChildren().add(linea);
+
+                        } catch (NumberFormatException ex) {
+                            Alert error = new Alert(Alert.AlertType.ERROR);
+                            error.setHeaderText("Ángulo inválido");
+                            error.setContentText("Debes introducir un número válido.");
+                            error.showAndWait();
+                        }
+                    });
                 }
-                */
             } else if (modoArcoActivo) {
                 if (centroArcos == null) {
                     centroArcos = new Point2D(event.getX(), event.getY());
@@ -1045,39 +1107,7 @@ public class ProblemaController implements Initializable {
 
                     cartaPane.getChildren().add(arcoTemporal);
 
-                    // Seguir el mouse para actualizar el arco mientras se mueve
-                    /*
-                    cartaPane.setOnMouseMoved(moveEvent -> {
-                        if (modoArcoActivo && arcoTemporal != null && centroArcos != null) {
-                            Point2D puntoCircunferencia = new Point2D(moveEvent.getX(), moveEvent.getY());
-
-                            // Calcular el radio propuesto
-                            double radioPropuesto = centroArcos.distance(puntoCircunferencia);
-
-                            // Limitar el radio máximo según los bordes del pane
-                            double maxIzquierda = centroArcos.getX(); // Distancia al borde izquierdo
-                            double maxDerecha = cartaPane.getWidth() - centroArcos.getX(); // borde derecho
-                            double maxArriba = centroArcos.getY(); // borde superior
-                            double maxAbajo = cartaPane.getHeight() - centroArcos.getY(); // borde inferior
-
-                            double radioMaximo = Math.min(Math.min(maxIzquierda, maxDerecha), Math.min(maxArriba, maxAbajo));
-                            double radioFinal = Math.min(radioPropuesto, radioMaximo);
-
-                            // Calcular ángulo y aplicar
-                            double deltaX = puntoCircunferencia.getX() - centroArcos.getX();
-                            double deltaY = puntoCircunferencia.getY() - centroArcos.getY();
-                            double angle = Math.toDegrees(Math.atan2(-deltaY, deltaX));
-                            double startAngle = angle - 90;
-
-                            arcoTemporal.setRadiusX(radioFinal);
-                            arcoTemporal.setRadiusY(radioFinal);
-                            arcoTemporal.setStartAngle(startAngle);
-                        }
-                    });
-*/
                 } else {
-                    // Segundo clic: fijar el arco
-                    //cartaPane.setOnMouseMoved(null); // detener seguimiento del mouse
                 
                     // Crear arco definitivo con las propiedades del temporal
                     Arc arcoFinal = new Arc();
@@ -1712,6 +1742,11 @@ public class ProblemaController implements Initializable {
 
     @FXML
     private void activarModoCompás(ActionEvent event) {
+        limpiar();
+        modoCompasAvanzado = true;
+        puntosCompas.clear();
+        distanciaCompas = -1;
+        cartaPane.setCursor(Cursor.CROSSHAIR);
     }
 
 
