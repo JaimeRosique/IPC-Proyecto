@@ -1023,13 +1023,12 @@ public class ProblemaController implements Initializable {
                 double clickY = event.getY();
                 Point2D puntoClic = new Point2D(clickX, clickY);
 
-                // Ajuste al punto más cercano si hay
                 Point2D puntoAjustado = buscarPuntoCercano(puntoClic);
                 Point2D puntoFinal = (puntoAjustado != null) ? puntoAjustado : puntoClic;
                 puntosLinea.add(puntoFinal);
 
                 if (puntosLinea.size() == 1) {
-                    // Primer punto: crear línea provisional
+                    // Crear línea provisional
                     lineaTemporal = new Line();
                     lineaTemporal.setStartX(puntoFinal.getX());
                     lineaTemporal.setStartY(puntoFinal.getY());
@@ -1039,42 +1038,35 @@ public class ProblemaController implements Initializable {
                     lineaTemporal.setStrokeWidth(grosorLinea);
                     cartaPane.getChildren().add(lineaTemporal);
                 } else if (puntosLinea.size() == 2) {
-                    // Segundo punto: fijar la línea
-                    cartaPane.setCursor(Cursor.CROSSHAIR);  // lo mantenemos
+                    cartaPane.setCursor(Cursor.CROSSHAIR);
 
-                    // Usar la línea temporal y fijar su posición final
                     lineaTemporal.setEndX(puntoFinal.getX());
                     lineaTemporal.setEndY(puntoFinal.getY());
 
-                    // Agregar comportamiento de selección
-                    lineaTemporal.setOnMouseClicked(e -> {
+                    // Crear una línea definitiva con la misma geometría
+                    Line lineaFinal = new Line(
+                        lineaTemporal.getStartX(), lineaTemporal.getStartY(),
+                        lineaTemporal.getEndX(), lineaTemporal.getEndY()
+                    );
+                    lineaFinal.setStroke(lineaTemporal.getStroke());
+                    lineaFinal.setStrokeWidth(lineaTemporal.getStrokeWidth());
+
+                    // Añadir comportamiento de selección
+                    lineaFinal.setOnMouseClicked(e -> {
                         if (modoRatonActivo && e.getButton() == MouseButton.PRIMARY) {
                             e.consume();
                             if (!e.isShiftDown()) {
                                 limpiarSeleccion();
                             }
-                            seleccionarMarca(lineaTemporal);
+                            seleccionarMarca(lineaFinal);
                         }
                     });
 
-                    lineaTemporal = null;
-                    puntosLinea.clear();
+                    // Añadir al canvas
+                    cartaPane.getChildren().add(lineaFinal);
 
-                    // Usar la línea temporal y fijar su posición final
-                    //lineaTemporal.setEndX(puntoFinal.getX());
-                    //lineaTemporal.setEndY(puntoFinal.getY());
-
-                    // Agregar comportamiento de selección
-                    lineaTemporal.setOnMouseClicked(e -> {
-                        if (modoRatonActivo && e.getButton() == MouseButton.PRIMARY) {
-                            e.consume();
-                            if (!e.isShiftDown()) {
-                                limpiarSeleccion();
-                            }
-                            seleccionarMarca(lineaTemporal);
-                        }
-                    });
-
+                    // Limpiar temporal
+                    cartaPane.getChildren().remove(lineaTemporal);
                     lineaTemporal = null;
                     puntosLinea.clear();
                 }
