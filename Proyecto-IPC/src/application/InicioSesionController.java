@@ -55,6 +55,11 @@ public class InicioSesionController implements Initializable {
     private Hyperlink hyperlink;
     @FXML
     private VBox rootPane;
+    @FXML
+    private ImageView eyeIcon;
+    private boolean showingPassword = false;
+     private final String ojocerrado = "/resources/abrirojo.png";
+    private final String ojoabierto = "/resources/cerrarojo.png";
     
     @FXML
     private void cambiarTema() {
@@ -80,6 +85,17 @@ public class InicioSesionController implements Initializable {
         }catch(Exception e){
             System.err.println(e.toString());
         }
+       
+        eyeIcon.setOnMouseClicked(event -> togglePasswordVisibility());
+        pswrdTextField.setVisible(false); // empezamos mostrando solo el PasswordField
+    pswrdTextField.managedProperty().bind(pswrdTextField.visibleProperty());
+    pswrdField.managedProperty().bind(pswrdField.visibleProperty());
+
+    // Sincronizamos el contenido entre los dos
+    pswrdTextField.textProperty().bindBidirectional(pswrdField.textProperty());
+
+    // Configuramos el clic en el ojo
+    eyeIcon.setOnMouseClicked(event -> togglePasswordVisibility());
         
         // Espera a que el nodo esté en escena para obtener el Stage
         rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
@@ -138,6 +154,24 @@ public class InicioSesionController implements Initializable {
             }
         });
     }
+    
+    
+    private void togglePasswordVisibility() {
+    showingPassword = !showingPassword;
+    new Image(getClass().getResourceAsStream("/resources/cerrarojo.png"));
+    new Image(getClass().getResourceAsStream("/resources/abrirojo.png"));
+    
+    
+    if (showingPassword) {
+        pswrdTextField.setVisible(true);
+        pswrdField.setVisible(false);
+        eyeIcon.setImage(new Image(getClass().getResourceAsStream(ojoabierto)));
+    } else {
+        pswrdTextField.setVisible(false);
+        pswrdField.setVisible(true);
+        eyeIcon.setImage(new Image(getClass().getResourceAsStream(ojocerrado)));
+    }
+}
     // Metodo cuando usuario mete un nick no registrado
     private void userNoReg() {
         boolean nickVal = nav.exitsNickName(user_id.getText());

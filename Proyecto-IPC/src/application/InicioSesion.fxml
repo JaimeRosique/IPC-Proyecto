@@ -53,7 +53,12 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="user_id" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" promptText="usuario12345" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="429.0">
+    <children>
+        <TextField fx:id="user_id" prefHeight="40.0" prefWidth="388.0" HBox.hgrow="ALWAYS" />
+    </children>
+</HBox>
+
                   <Label fx:id="userError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="300.0" textAlignment="CENTER" textFill="RED" />
                   <ImageView fx:id="userErrorImg" fitHeight="25.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
                </children>
@@ -69,18 +74,24 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="429.0" spacing="5.0">
+    <children>
+        <StackPane alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="388.0" HBox.hgrow="ALWAYS">
+            <children>
+                <TextField fx:id="pswrdTextField" maxWidth="Infinity" visible="false" />
+                <PasswordField fx:id="pswrdField" maxWidth="Infinity" />
+              <ImageView fx:id="eyeIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/abrirojo.png" />
+                                 </image>
+                              </ImageView>
+            </children>
+        </StackPane>
+    </children>
+</HBox>
                   <Label fx:id="pswrdError" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="300.0" textAlignment="CENTER" textFill="RED" />
-                  <HBox prefHeight="40.0" prefWidth="425.0">
-                     <children>
-                        <StackPane prefHeight="30.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <PasswordField fx:id="pswrdField" maxHeight="40.0" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="379.0" />
-                              <TextField fx:id="pswrdTextField" maxWidth="1.7976931348623157E308" visible="false" />
-                           </children>
-                        </StackPane>
-                     </children>
-                  </HBox>
-                  <ImageView fx:id="pswrdErrorImg" fitHeight="32.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="pswrdErrorImg" fitHeight="25.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+
                </children>
             </VBox>
          </children>
