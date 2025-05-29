@@ -106,10 +106,6 @@ public class RegistroController implements Initializable {
             // 3. Reaplicar estilos y layout
             originalRoot.applyCss();
             originalRoot.layout();
-
-            System.out.println("✅ Tema cambiado y recargado visualmente.");
-        } else {
-            System.out.println("❌ Scene no disponible al intentar cambiar tema.");
         }
     }
     
