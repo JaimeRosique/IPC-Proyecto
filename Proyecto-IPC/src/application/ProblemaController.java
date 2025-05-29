@@ -403,7 +403,7 @@ public class ProblemaController implements Initializable {
     }
     
     private void limpiar() {
-        modoRatonActivo = true;
+        modoRatonActivo = false;
         modoTextoActivo = false;
         modoPuntosActivo = false;
         modoLineaActivo = false;
@@ -854,6 +854,39 @@ public class ProblemaController implements Initializable {
 
         // Configurar arrastre del transportador
         final Delta dragDelta = new Delta();
+        
+        coloresButton.setOnAction(e -> {
+            Color nuevoColor = coloresButton.getValue();
+            for (Node nodo : marcasSeleccionadas) {
+                if (nodo instanceof Shape) {
+                    Shape shape = (Shape) nodo;
+                    shape.setStroke(nuevoColor);
+                    if (!(shape instanceof Line)) {
+                        shape.setFill(nuevoColor);
+                    }
+                    if (shape instanceof Arc) {
+                        shape.setFill(null); // Para los arcos, mantener transparencia
+                    }
+                } else if (nodo instanceof Group) {
+                    Group grupo = (Group) nodo;
+                    for (Node child : grupo.getChildrenUnmodifiable()) {
+                        if (child instanceof Circle) {
+                            Circle c = (Circle) child;
+                            if (c.getRadius() > 10) {
+                                c.setStroke(nuevoColor);      // borde del externo
+                                c.setFill(Color.TRANSPARENT); // externo sin relleno
+                            } else {
+                                c.setFill(nuevoColor);        // interno con relleno
+                                c.setStroke(nuevoColor);      // opcional
+                            }
+                        }
+                    }
+                } else if (nodo instanceof Label) {
+                    Label label = (Label) nodo;
+                    label.setTextFill(nuevoColor);
+                }
+            }
+        });
         
         // Manejar clicks en el pane
         cartaPane.setOnMouseClicked(event -> {
