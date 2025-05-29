@@ -9,15 +9,16 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RegistroController">
+<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@modoNocturno.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RegistroController">
    <children>
       <HBox alignment="CENTER" prefHeight="98.0" prefWidth="797.0" VBox.vgrow="SOMETIMES">
          <children>
@@ -25,7 +26,8 @@
                <font>
                   <Font size="41.0" />
                </font></Label>
-            <ToggleButton mnemonicParsing="false" onAction="#cambiarTema" text="Modo nocturno" />
+            <Region prefHeight="76.0" prefWidth="37.0" />
+            <ToggleButton mnemonicParsing="false" onAction="#cambiarTema" text="Modo &#10;nocturno" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="546.0" prefWidth="800.0" VBox.vgrow="SOMETIMES">
@@ -111,9 +113,9 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="242.0" prefWidth="454.0" GridPane.columnIndex="1">
                      <children>
-                        <AnchorPane prefHeight="187.0" prefWidth="438.0">
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <GridPane prefHeight="200.8" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <GridPane prefHeight="200.8" prefWidth="340.0">
                                 <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -143,8 +145,8 @@
                                  </children>
                               </GridPane>
                            </children>
-                        </AnchorPane>
-                        <Button mnemonicParsing="false" onAction="#getImg" text="Elegir imagen desde archivos" />
+                        </StackPane>
+                        <Button mnemonicParsing="false" onAction="#getImg" text="Archivos" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

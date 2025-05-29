@@ -9,44 +9,40 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="469.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.InicioSesionController">
+<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="515.0" stylesheets="@modoNocturno.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.InicioSesionController">
    <children>
-      <AnchorPane prefHeight="90.0" prefWidth="470.0">
+      <StackPane prefHeight="99.2" prefWidth="470.4">
          <children>
-            <StackPane layoutX="294.0" layoutY="-1.0" prefHeight="99.2" prefWidth="470.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <ImageView fitHeight="77.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                     <image>
-                        <Image url="@../resources/inicio%20imagen.png" />
-                     </image>
-                     <StackPane.margin>
-                        <Insets right="300.0" />
-                     </StackPane.margin>
-                  </ImageView>
-                  <ToggleButton mnemonicParsing="false" onAction="#cambiarTema" prefHeight="50.0" prefWidth="99.0" text="Modo &#10;nocturno">
-                     <StackPane.margin>
-                        <Insets left="330.0" />
-                     </StackPane.margin>
-                  </ToggleButton>
-                  <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="85.0" prefWidth="378.0" text="Inicio Sesión" textAlignment="CENTER">
-                     <font>
-                        <Font size="33.0" />
-                     </font>
-                  </Label>
-               </children>
-            </StackPane>
+            <ImageView fitHeight="77.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <image>
+                  <Image url="@../resources/inicio%20imagen.png" />
+               </image>
+               <StackPane.margin>
+                  <Insets right="300.0" />
+               </StackPane.margin>
+            </ImageView>
+            <ToggleButton maxHeight="60.0" maxWidth="100.0" minHeight="40.0" minWidth="89.0" mnemonicParsing="false" onAction="#cambiarTema" prefHeight="60.0" prefWidth="114.0" text="Modo &#10;nocturno">
+               <StackPane.margin>
+                  <Insets left="330.0" />
+               </StackPane.margin>
+            </ToggleButton>
+            <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="86.0" prefWidth="223.0" text="Inicio Sesión" textAlignment="CENTER">
+               <font>
+                  <Font size="33.0" />
+               </font>
+            </Label>
          </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="11.0" prefWidth="378.0" />
+      </StackPane>
+      <Region prefHeight="6.0" prefWidth="470.0" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
             <VBox alignment="BOTTOM_CENTER" prefHeight="84.0" prefWidth="378.0">

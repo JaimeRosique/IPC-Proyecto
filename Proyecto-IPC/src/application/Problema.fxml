@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ColorPicker?>
@@ -23,7 +24,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="rootPane" prefHeight="704.0" prefWidth="980.0" stylesheets="@../resources/protractor.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProblemaController">
+<VBox fx:id="rootPane" prefHeight="704.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProblemaController">
    <children>
       <HBox alignment="CENTER_RIGHT" fillHeight="false" spacing="5.0" VBox.vgrow="NEVER">
          <children>
@@ -52,19 +53,29 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <ToggleButton fx:id="toolBarButton" mnemonicParsing="false" text="Barra de herramientas" />
-            <ToggleButton mnemonicParsing="false" onAction="#cambiarTema" prefHeight="18.0" prefWidth="130.0" text="Modo nocturno" />
+            <ToggleButton fx:id="toolBarButton" mnemonicParsing="false" text="Barra de &#10;herramientas" />
+            <ToggleButton mnemonicParsing="false" onAction="#cambiarTema" prefHeight="18.0" prefWidth="130.0" text="Modo &#10;nocturno" />
+            <Region prefHeight="14.0" prefWidth="65.0" />
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="18.0" prefWidth="49.0" text="Zoom" />
             <Button mnemonicParsing="false" onAction="#zoomOut" text="-" />
             <Slider fx:id="zoom_slider" HBox.hgrow="SOMETIMES" />
             <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#zoomIn" text="+" />
             <Region HBox.hgrow="ALWAYS" />
-            <MenuButton mnemonicParsing="false" text="MenuButton">
+            <Region prefHeight="20.0" prefWidth="10.0" />
+            <MenuButton mnemonicParsing="false">
               <items>
                 <MenuItem mnemonicParsing="false" text="Action 1" />
                 <MenuItem mnemonicParsing="false" text="Action 2" />
               </items>
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icon%20login.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </MenuButton>
+            <Region prefHeight="26.0" prefWidth="10.0" />
          </children>
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -99,11 +110,11 @@
                         </Pane>
                      </content>
                   </ScrollPane>
-                  <StackPane fx:id="toolBar" accessibleRole="TOOL_BAR" layoutX="14.0" layoutY="7.0" prefHeight="665.0" prefWidth="79.0">
+                  <StackPane fx:id="toolBar" accessibleRole="TOOL_BAR" layoutX="14.0" layoutY="9.0" prefHeight="664.0" prefWidth="79.0">
                      <children>
                         <Button fx:id="lineaButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoLinea" prefHeight="40.0" prefWidth="71.0" text="─">
                            <StackPane.margin>
-                              <Insets top="-200.0" />
+                              <Insets top="-270.0" />
                            </StackPane.margin>
                         </Button>
                         <Button fx:id="limpiarCartaButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#limpiarCarta" prefHeight="36.0" prefWidth="52.0" styleClass="limpiar carta" text="❌">
@@ -111,21 +122,9 @@
                               <Insets top="550.0" />
                            </StackPane.margin>
                         </Button>
-                        <Button fx:id="seleccionarButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoRaton" prefHeight="40.0" prefWidth="71.0">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../resources/seleccion.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <StackPane.margin>
-                              <Insets top="-500.0" />
-                           </StackPane.margin>
-                        </Button>
                         <Button fx:id="puntoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoPunto" prefHeight="40.0" prefWidth="71.0" text="◑">
                            <StackPane.margin>
-                              <Insets top="-300.0" />
+                              <Insets top="-380.0" />
                            </StackPane.margin>
                         </Button>
                         <Button fx:id="arcoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoArco" prefHeight="40.0" prefWidth="71.0">
@@ -137,7 +136,7 @@
                               </ImageView>
                            </graphic>
                            <StackPane.margin>
-                              <Insets top="-100.0" />
+                              <Insets top="-160.0" />
                            </StackPane.margin>
                         </Button>
                         <Button fx:id="compasButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoCompás" prefHeight="40.0" prefWidth="71.0">
@@ -149,12 +148,12 @@
                               </ImageView>
                            </graphic>
                            <StackPane.margin>
-                              <Insets top="-400.0" />
+                              <Insets top="-490.0" />
                            </StackPane.margin>
                         </Button>
                         <ColorPicker fx:id="coloresButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#activarModoPintar" prefHeight="40.0" prefWidth="71.0">
                            <StackPane.margin>
-                              <Insets top="400.0" />
+                              <Insets top="380.0" />
                            </StackPane.margin>
                         </ColorPicker>
                         <Button fx:id="transportadorButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarTransportador" prefHeight="40.0" prefWidth="71.0">
@@ -166,12 +165,12 @@
                               </ImageView>
                            </graphic>
                            <StackPane.margin>
-                              <Insets top="200.0" />
+                              <Insets top="170.0" />
                            </StackPane.margin>
                         </Button>
                         <Button fx:id="reglaButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarRegla" prefHeight="40.0" prefWidth="71.0" text="📏">
                            <StackPane.margin>
-                              <Insets top="300.0" />
+                              <Insets top="280.0" />
                            </StackPane.margin>
                         </Button>
                         <Button fx:id="gomaButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoGoma" prefHeight="40.0" prefWidth="71.0">
@@ -183,12 +182,24 @@
                               </ImageView>
                            </graphic>
                            <StackPane.margin>
-                              <Insets top="100.0" />
+                              <Insets top="60.0" />
                            </StackPane.margin>
                         </Button>
                         <Button fx:id="textoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoTexto" prefHeight="40.0" prefWidth="71.0" text="texto">
                            <StackPane.margin>
-                              <Insets />
+                              <Insets top="-50.0" />
+                           </StackPane.margin>
+                        </Button>
+                        <Button fx:id="seleccionarButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoRaton" prefHeight="40.0" prefWidth="71.0">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/seleccion.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <StackPane.margin>
+                              <Insets top="-600.0" />
                            </StackPane.margin>
                         </Button>
                      </children>
@@ -198,4 +209,8 @@
          </items>
       </SplitPane>
    </children>
+   <stylesheets>
+      <URL value="@../resources/protractor.css" />
+      <URL value="@modoNocturno.css" />
+   </stylesheets>
 </VBox>
