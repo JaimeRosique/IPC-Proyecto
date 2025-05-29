@@ -139,7 +139,7 @@ public class RegistroController implements Initializable {
     pswrdCheckTextField.textProperty().bindBidirectional(pswrdCheckField.textProperty());
 
     eyeIcon3.setOnMouseClicked(event -> togglePasswordVisibilityConfirm());
-}
+
         
         
         
@@ -269,8 +269,9 @@ public class RegistroController implements Initializable {
         
         // Errores en pwd1
         pswrdCheckField.setOnKeyTyped(event -> errPasswrd1());
-        
     }
+        
+    
     
     private void togglePasswordVisibilityMain() {
         new Image(getClass().getResourceAsStream("/resources/cerrarojo.png"));
@@ -655,3 +656,5 @@ private void togglePasswordVisibilityConfirm() {
         }
     }
 }
+
+
