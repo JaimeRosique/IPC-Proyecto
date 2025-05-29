@@ -401,8 +401,7 @@ public class ProblemaController implements Initializable {
         });
     }
     
-    @FXML
-    private void activarModoRaton() {
+    private void limpiar() {
         modoTextoActivo = false;
         modoPuntosActivo = false;
         modoLineaActivo = false;
@@ -413,6 +412,7 @@ public class ProblemaController implements Initializable {
         primerPunto = null;
         
         creandoPunto = false;
+        creandoLinea = false;
         
         if (ghostPunto != null) {
             cartaPane.getChildren().remove(ghostPunto);
@@ -423,15 +423,14 @@ public class ProblemaController implements Initializable {
     }
     
     @FXML
+    private void activarModoRaton() {
+        limpiar();
+    }
+    
+    @FXML
     private void activarModoPunto() {
-        modoTextoActivo = false;
+        limpiar();
         modoPuntosActivo = true;
-        modoLineaActivo = false;
-        modoArcoActivo = false;
-        modoGomaActivo = false;
-        modoPintarActivo = false;
-        centroArcos = null;
-        primerPunto = null;
         
         creandoPunto = true;
 
@@ -453,22 +452,9 @@ public class ProblemaController implements Initializable {
 
     @FXML
     private void activarModoLinea() {
-        modoTextoActivo = false;
-        modoPuntosActivo = false;
+        limpiar();
         modoLineaActivo = true;
-        modoArcoActivo = false;
-        modoGomaActivo = false;
-        modoPintarActivo = false;
-        centroArcos = null;
-        primerPunto = null;
-        
-        creandoPunto = false;
-        if (ghostPunto != null) {
-            cartaPane.getChildren().remove(ghostPunto);
-            ghostPunto = null;
-        }
-        
-        cartaPane.setCursor(Cursor.DEFAULT);
+   
         creandoLinea = true;
         puntosLinea.clear();
         if (lineaTemporal != null) {
