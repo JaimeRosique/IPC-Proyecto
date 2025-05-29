@@ -411,6 +411,15 @@ public class ProblemaController implements Initializable {
         modoPintarActivo = false;
         centroArcos = null;
         primerPunto = null;
+        
+        creandoPunto = false;
+        
+        if (ghostPunto != null) {
+            cartaPane.getChildren().remove(ghostPunto);
+            ghostPunto = null;
+        }
+        
+        cartaPane.setCursor(Cursor.DEFAULT);
     }
     
     @FXML
@@ -423,6 +432,23 @@ public class ProblemaController implements Initializable {
         modoPintarActivo = false;
         centroArcos = null;
         primerPunto = null;
+        
+        creandoPunto = true;
+
+        if (ghostPunto == null) {
+            Circle externo = new Circle(0, 0, 12);
+            externo.setStroke(Color.GRAY);
+            externo.setStrokeWidth(3);
+            externo.setFill(Color.TRANSPARENT);
+
+            Circle interno = new Circle(0, 0, 5);
+            interno.setFill(Color.GRAY);
+
+            ghostPunto = new Group(externo, interno);
+            ghostPunto.setMouseTransparent(true);
+            cartaPane.getChildren().add(ghostPunto);
+        }
+        cartaPane.setCursor(Cursor.CROSSHAIR);
     }
 
     @FXML
@@ -435,6 +461,14 @@ public class ProblemaController implements Initializable {
         modoPintarActivo = false;
         centroArcos = null;
         primerPunto = null;
+        
+        creandoLinea = true;
+        puntosLinea.clear();
+        if (lineaTemporal != null) {
+            cartaPane.getChildren().remove(lineaTemporal);
+            lineaTemporal = null;
+        }
+        cartaPane.setCursor(Cursor.CROSSHAIR);
     }
     
     @FXML
@@ -781,9 +815,25 @@ public class ProblemaController implements Initializable {
         // Manejar clicks en el pane
         cartaPane.setOnMouseClicked(event -> {
             if (modoPuntosActivo) {
-                Circle punto = new Circle(event.getX(), event.getY(), 5);
-                cartaPane.getChildren().add(punto);
-                hacerInteractivo(punto);
+                creandoPunto = true;
+        
+                // (ghostPunto != null) {
+                //    cartaPane.getChildren().remove(ghostPunto);
+                //}
+
+                // Crear la "previsualización" del punto
+                Circle externo = new Circle(0, 0, 12);
+                externo.setStroke(Color.GRAY);
+                externo.setStrokeWidth(3);
+                externo.setFill(Color.TRANSPARENT);
+
+                Circle interno = new Circle(0, 0, 5);
+                interno.setFill(Color.GRAY);
+
+                ghostPunto = new Group(externo, interno);
+                ghostPunto.setMouseTransparent(true); // para que no interfiera con clics
+                cartaPane.getChildren().add(ghostPunto);
+                hacerInteractivo(ghostPunto);
             } else if (modoLineaActivo) {
                 if (primerPunto == null) {
                     primerPunto = new Point2D(event.getX(), event.getY());
@@ -883,12 +933,14 @@ public class ProblemaController implements Initializable {
                 cartaPane.getChildren().add(punto);
 
                 // Limpiar estado
-                creandoPunto = false;
-                cartaPane.setCursor(Cursor.DEFAULT);
+                //creandoPunto = false;
+                //cartaPane.setCursor(Cursor.DEFAULT);
+                /*
                 if (ghostPunto != null) {
                     cartaPane.getChildren().remove(ghostPunto);
                     ghostPunto = null;
                 }
+                */
             } else if (creandoLinea) {
                 double clickX = event.getX();
                 double clickY = event.getY();
