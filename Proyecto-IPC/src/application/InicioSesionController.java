@@ -132,7 +132,7 @@ public class InicioSesionController implements Initializable {
         });
         */
         // Error password cambie de textField
-        pswrd_id.focusedProperty().addListener((observable, oldValue, newValue) -> {
+        pswrdField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 passwordVacio();
             }
@@ -171,7 +171,7 @@ public class InicioSesionController implements Initializable {
 
     // Metodo cuando el usuario no rellena la contraseña (vacio)
     private void passwordVacio() {
-        String passwordTxt = pswrd_id.getText();
+        String passwordTxt = pswrdField.getText();
         boolean pwdVal = !passwordTxt.isEmpty();
 
         if (!pwdVal) {
@@ -188,7 +188,7 @@ public class InicioSesionController implements Initializable {
     //RESETEAR LA VISTA ENTERA
     private void reiniciar(){
         user_id.setText("");
-        pswrd_id.setText("");
+        pswrdField.setText("");
         userErrorImg.setVisible(false);
         userError.setText("Inicia con tus credenciales");
         userError.setStyle("-fx-text-fill: #4d88b3;");
@@ -197,7 +197,7 @@ public class InicioSesionController implements Initializable {
     // Metodo para dejar todos los datos en blanco de nuevo
     private void blanc() {
         user_id.setText("");
-        pswrd_id.setText("");
+        pswrdField.setText("");
         pswrdErrorImg.setVisible(false);
         pswrdError.setText("Inicia con tus credenciales");
         pswrdError.setStyle("-fx-text-fill: #4d88b3;");
@@ -214,9 +214,9 @@ public class InicioSesionController implements Initializable {
 
     @FXML
     private void log_in(ActionEvent event) {
-        if(!user_id.getText().isBlank() && !pswrd_id.getText().isBlank()){ 
+        if(!user_id.getText().isBlank() && !pswrdField.getText().isBlank()){ 
             if(nav.exitsNickName(user_id.getText())){
-                User usuario = nav.authenticate(user_id.getText(), pswrd_id.getText());
+                User usuario = nav.authenticate(user_id.getText(), pswrdField.getText());
                 if(usuario != null){ 
                     reiniciar();
                     String nickname = usuario.getNickName();
@@ -227,7 +227,7 @@ public class InicioSesionController implements Initializable {
                     pswrdErrorImg.setVisible(true);
                     pswrdError.setStyle("-fx-text-fill: #cc3333;");
                     pswrdError.setText("Contraseña incorrecta para el usuario");
-                    pswrd_id.requestFocus();
+                    pswrdField.requestFocus();
                 }
             }else{
                 userErrorImg.setVisible(true);
@@ -242,7 +242,7 @@ public class InicioSesionController implements Initializable {
             if(user_id.getText().isEmpty()){userError.setText("Campo usuario vacío");}
             else{pswrdError.setText("Campo contraseña vacío");}
             if(user_id.getText().isBlank()){ user_id.requestFocus();}
-            else{pswrd_id.requestFocus();}
+            else{pswrdField.requestFocus();}
         }
     }
 
