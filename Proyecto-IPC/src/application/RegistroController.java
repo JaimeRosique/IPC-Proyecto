@@ -106,10 +106,6 @@ public class RegistroController implements Initializable {
             // 3. Reaplicar estilos y layout
             originalRoot.applyCss();
             originalRoot.layout();
-
-            System.out.println("✅ Tema cambiado y recargado visualmente.");
-        } else {
-            System.out.println("❌ Scene no disponible al intentar cambiar tema.");
         }
     }
     
@@ -168,8 +164,6 @@ public class RegistroController implements Initializable {
             // Aplicar el CSS activo
             newScene.getStylesheets().clear();
             newScene.getStylesheets().add(ThemeManager.getEstiloActual());
-
-            System.out.println("🎨 Tema aplicado en sceneProperty: " + ThemeManager.getEstiloActual());
         }
     });
         
