@@ -116,9 +116,30 @@ public class RegistroController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        eyeIcon2.setOnMouseClicked(event -> togglePasswordVisibilityMain());
-        eyeIcon3.setOnMouseClicked(event -> togglePasswordVisibilityConfirm());
-        
+         // INICIAL contraseña principal
+    pswrdTextField.setVisible(false);
+    pswrdField.setVisible(true);
+    eyeIcon2.setImage(new Image(getClass().getResourceAsStream(ojocerrado)));
+
+    pswrdTextField.managedProperty().bind(pswrdTextField.visibleProperty());
+    pswrdField.managedProperty().bind(pswrdField.visibleProperty());
+
+    pswrdTextField.textProperty().bindBidirectional(pswrdField.textProperty());
+
+    eyeIcon2.setOnMouseClicked(event -> togglePasswordVisibilityMain());
+
+    // INICIAL confirmar contraseña
+    pswrdCheckTextField.setVisible(false);
+    pswrdCheckField.setVisible(true);
+    eyeIcon3.setImage(new Image(getClass().getResourceAsStream(ojocerrado)));
+
+    pswrdCheckTextField.managedProperty().bind(pswrdCheckTextField.visibleProperty());
+    pswrdCheckField.managedProperty().bind(pswrdCheckField.visibleProperty());
+
+    pswrdCheckTextField.textProperty().bindBidirectional(pswrdCheckField.textProperty());
+
+    eyeIcon3.setOnMouseClicked(event -> togglePasswordVisibilityConfirm());
+}
         
         
         
@@ -256,14 +277,13 @@ public class RegistroController implements Initializable {
     new Image(getClass().getResourceAsStream("/resources/abrirojo.png"));
     showingPasswordMain = !showingPasswordMain;
     if (showingPasswordMain) {
-        pswrdTextField.setText(pswrdField.getText());
+        
         pswrdTextField.setVisible(true);
         pswrdField.setVisible(false);
         eyeIcon2.setImage(new Image(getClass().getResourceAsStream(ojoabierto)));
     } else {
-        pswrdField.setText(pswrdTextField.getText());
-        pswrdField.setVisible(true);
         pswrdTextField.setVisible(false);
+        pswrdField.setVisible(true);
         eyeIcon2.setImage(new Image(getClass().getResourceAsStream(ojocerrado)));
     }
 }
@@ -275,14 +295,12 @@ private void togglePasswordVisibilityConfirm() {
     
     showingPasswordConfirm = !showingPasswordConfirm;
     if (showingPasswordConfirm) {
-        pswrdCheckTextField.setText(pswrdCheckField.getText());
         pswrdCheckTextField.setVisible(true);
         pswrdCheckField.setVisible(false);
         eyeIcon3.setImage(new Image(getClass().getResourceAsStream(ojoabierto)));
     } else {
-        pswrdCheckField.setText(pswrdCheckTextField.getText());
-        pswrdCheckField.setVisible(true);
         pswrdCheckTextField.setVisible(false);
+        pswrdCheckField.setVisible(true);
         eyeIcon3.setImage(new Image(getClass().getResourceAsStream(ojocerrado)));
     }
 }
