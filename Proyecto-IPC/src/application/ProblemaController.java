@@ -400,6 +400,7 @@ public class ProblemaController implements Initializable {
     }
     
     private void limpiar() {
+        /*
         modoRatonActivo = false;
         modoTextoActivo = false;
         modoPuntosActivo = false;
@@ -412,6 +413,8 @@ public class ProblemaController implements Initializable {
         
         creandoPunto = false;
         creandoLinea = false;
+        centroArco = null;
+        radioArco = 0;
         
         if (ghostPunto != null) {
             cartaPane.getChildren().remove(ghostPunto);
@@ -419,6 +422,39 @@ public class ProblemaController implements Initializable {
         }
         
         cartaPane.setCursor(Cursor.DEFAULT);
+        */
+        modoRatonActivo = false;
+        modoTextoActivo = false;
+        modoPuntosActivo = false;
+        modoLineaActivo = false;
+        modoArcoActivo = false;
+        modoGomaActivo = false;
+        modoPintarActivo = false;
+
+        creandoPunto = false;
+        creandoLinea = false;
+        creandoArco = false; // ← IMPORTANTE
+        centroArcos = null;
+        centroArco = null;
+        primerPunto = null;
+        radioArco = 0;
+        puntosLinea.clear();
+
+        if (ghostPunto != null) {
+            cartaPane.getChildren().remove(ghostPunto);
+            ghostPunto = null;
+        }
+        if (lineaTemporal != null) {
+            cartaPane.getChildren().remove(lineaTemporal);
+            lineaTemporal = null;
+        }
+        if (arcoTemporal != null) {
+            cartaPane.getChildren().remove(arcoTemporal);
+            arcoTemporal = null;
+        }
+
+        cartaPane.setCursor(Cursor.DEFAULT);
+        //cartaPane.setOnMouseMoved(null);
     }
     
     @FXML
@@ -476,6 +512,11 @@ public class ProblemaController implements Initializable {
     private void activarModoArco() {
         limpiar();
         modoArcoActivo = true;
+        //centroArco = null;
+        //radioArco = 0;
+
+        cartaPane.setCursor(Cursor.CROSSHAIR);
+        
     }
     
     @FXML
@@ -864,6 +905,52 @@ public class ProblemaController implements Initializable {
         // Configurar arrastre del transportador
         final Delta dragDelta = new Delta();
         
+        cartaPane.setOnMouseMoved(event -> {
+            if (creandoLinea && puntosLinea.size() == 1 && lineaTemporal != null) {
+                lineaTemporal.setEndX(event.getX());
+                lineaTemporal.setEndY(event.getY());
+            } else if (creandoPunto && ghostPunto != null) {
+                double x = event.getX();
+                double y = event.getY();
+
+                // Limitar a los bordes del mapa
+                double mapWidth = image_map.getBoundsInParent().getWidth();
+                double mapHeight = image_map.getBoundsInParent().getHeight();
+
+                if (x >= 0 && x <= mapWidth && y >= 0 && y <= mapHeight) {
+                    ghostPunto.setVisible(true);
+                    ghostPunto.setLayoutX(x);
+                    ghostPunto.setLayoutY(y);
+                } else {
+                    ghostPunto.setVisible(false); // ocultar si está fuera
+                }
+            } if (modoArcoActivo && arcoTemporal != null && centroArcos != null) {
+                Point2D puntoCircunferencia = new Point2D(event.getX(), event.getY());
+
+                // Calcular el radio propuesto
+                double radioPropuesto = centroArcos.distance(puntoCircunferencia);
+
+                // Limitar el radio máximo según los bordes del pane
+                double maxIzquierda = centroArcos.getX(); // Distancia al borde izquierdo
+                double maxDerecha = cartaPane.getWidth() - centroArcos.getX(); // borde derecho
+                double maxArriba = centroArcos.getY(); // borde superior
+                double maxAbajo = cartaPane.getHeight() - centroArcos.getY(); // borde inferior
+
+                double radioMaximo = Math.min(Math.min(maxIzquierda, maxDerecha), Math.min(maxArriba, maxAbajo));
+                double radioFinal = Math.min(radioPropuesto, radioMaximo);
+
+                // Calcular ángulo y aplicar
+                double deltaX = puntoCircunferencia.getX() - centroArcos.getX();
+                double deltaY = puntoCircunferencia.getY() - centroArcos.getY();
+                double angle = Math.toDegrees(Math.atan2(-deltaY, deltaX));
+                double startAngle = angle - 90;
+
+                arcoTemporal.setRadiusX(radioFinal);
+                arcoTemporal.setRadiusY(radioFinal);
+                arcoTemporal.setStartAngle(startAngle);
+            }
+        }); 
+        
         coloresButton.setOnAction(e -> {
             Color nuevoColor = coloresButton.getValue();
             for (Node nodo : marcasSeleccionadas) {
@@ -959,8 +1046,9 @@ public class ProblemaController implements Initializable {
                     cartaPane.getChildren().add(arcoTemporal);
 
                     // Seguir el mouse para actualizar el arco mientras se mueve
+                    /*
                     cartaPane.setOnMouseMoved(moveEvent -> {
-                        if (arcoTemporal != null && centroArcos != null) {
+                        if (modoArcoActivo && arcoTemporal != null && centroArcos != null) {
                             Point2D puntoCircunferencia = new Point2D(moveEvent.getX(), moveEvent.getY());
 
                             // Calcular el radio propuesto
@@ -986,11 +1074,11 @@ public class ProblemaController implements Initializable {
                             arcoTemporal.setStartAngle(startAngle);
                         }
                     });
-
+*/
                 } else {
                     // Segundo clic: fijar el arco
-                    cartaPane.setOnMouseMoved(null); // detener seguimiento del mouse
-
+                    //cartaPane.setOnMouseMoved(null); // detener seguimiento del mouse
+                
                     // Crear arco definitivo con las propiedades del temporal
                     Arc arcoFinal = new Arc();
                     arcoFinal.setCenterX(arcoTemporal.getCenterX());
@@ -1254,28 +1342,6 @@ public class ProblemaController implements Initializable {
                 ghostPunto.setVisible(false);
             }
         });
-        
-        cartaPane.setOnMouseMoved(event -> {
-            if (creandoLinea && puntosLinea.size() == 1 && lineaTemporal != null) {
-                lineaTemporal.setEndX(event.getX());
-                lineaTemporal.setEndY(event.getY());
-            } else if (creandoPunto && ghostPunto != null) {
-                double x = event.getX();
-                double y = event.getY();
-
-                // Limitar a los bordes del mapa
-                double mapWidth = image_map.getBoundsInParent().getWidth();
-                double mapHeight = image_map.getBoundsInParent().getHeight();
-
-                if (x >= 0 && x <= mapWidth && y >= 0 && y <= mapHeight) {
-                    ghostPunto.setVisible(true);
-                    ghostPunto.setLayoutX(x);
-                    ghostPunto.setLayoutY(y);
-                } else {
-                    ghostPunto.setVisible(false); // ocultar si está fuera
-                }
-            }
-        }); 
         
         zoom_slider.valueProperty().addListener((o, oldVal, newVal) -> {
             zoom(newVal.doubleValue());
