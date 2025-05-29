@@ -447,6 +447,14 @@ public class ProblemaController implements Initializable {
             ghostPunto.setMouseTransparent(true);
             cartaPane.getChildren().add(ghostPunto);
         }
+        Platform.runLater(() -> {
+            cartaPane.requestFocus();
+            cartaPane.fireEvent(new MouseEvent(MouseEvent.MOUSE_MOVED,
+                cartaPane.getWidth() / 2, cartaPane.getHeight() / 2,
+                cartaPane.getWidth() / 2, cartaPane.getHeight() / 2,
+                MouseButton.NONE, 0, false, false, false, false,
+                false, false, false, false, false, false, null));
+        });
         //cartaPane.setCursor(Cursor.CROSSHAIR);
     }
 
@@ -809,10 +817,6 @@ public class ProblemaController implements Initializable {
         cartaPane.setOnMouseClicked(event -> {
             if (modoPuntosActivo) {
                 creandoPunto = true;
-        
-                // (ghostPunto != null) {
-                //    cartaPane.getChildren().remove(ghostPunto);
-                //}
 
                 // Crear la "previsualización" del punto
                 Circle externo = new Circle(0, 0, 12);
@@ -827,6 +831,14 @@ public class ProblemaController implements Initializable {
                 ghostPunto.setMouseTransparent(true); // para que no interfiera con clics
                 cartaPane.getChildren().add(ghostPunto);
                 hacerInteractivo(ghostPunto);
+                Platform.runLater(() -> {
+                    cartaPane.requestFocus();
+                    cartaPane.fireEvent(new MouseEvent(MouseEvent.MOUSE_MOVED,
+                        cartaPane.getWidth() / 2, cartaPane.getHeight() / 2,
+                        cartaPane.getWidth() / 2, cartaPane.getHeight() / 2,
+                        MouseButton.NONE, 0, false, false, false, false,
+                        false, false, false, false, false, false, null));
+                });
             } else if (modoLineaActivo) {
                 /*
                 if (primerPunto == null) {
@@ -904,38 +916,33 @@ public class ProblemaController implements Initializable {
                 double x = event.getX();
                 double y = event.getY();
 
-                // Crear el punto final (idéntico al ghost)
-                Circle externo = new Circle(x, y, 12);
-                externo.setStroke(Color.BLACK);
-                externo.setStrokeWidth(3);
-                externo.setFill(Color.TRANSPARENT);
+                double mapWidth = image_map.getBoundsInParent().getWidth();
+                double mapHeight = image_map.getBoundsInParent().getHeight();
 
-                Circle interno = new Circle(x, y, 5);
-                interno.setFill(Color.BLACK);
+                // Solo crear punto si está dentro del mapa
+                if (x >= 0 && x <= mapWidth && y >= 0 && y <= mapHeight) {
+                    Circle externo = new Circle(x, y, 12);
+                    externo.setStroke(Color.BLACK);
+                    externo.setStrokeWidth(3);
+                    externo.setFill(Color.TRANSPARENT);
 
-                Group punto = new Group(externo, interno);
-                punto.setCursor(Cursor.HAND);
-                punto.setOnMouseClicked(e -> {
-                    if (e.getButton() == MouseButton.SECONDARY) {
-                        e.consume();
-                        if (!e.isShiftDown()) {
-                            limpiarSeleccion();
+                    Circle interno = new Circle(x, y, 5);
+                    interno.setFill(Color.BLACK);
+
+                    Group punto = new Group(externo, interno);
+                    punto.setCursor(Cursor.HAND);
+                    punto.setOnMouseClicked(e -> {
+                        if (e.getButton() == MouseButton.SECONDARY) {
+                            e.consume();
+                            if (!e.isShiftDown()) {
+                                limpiarSeleccion();
+                            }
+                            seleccionarMarca(punto);
                         }
-                        seleccionarMarca(punto);
-                    }
-                });
+                    });
 
-                cartaPane.getChildren().add(punto);
-
-                // Limpiar estado
-                //creandoPunto = false;
-                //cartaPane.setCursor(Cursor.DEFAULT);
-                /*
-                if (ghostPunto != null) {
-                    cartaPane.getChildren().remove(ghostPunto);
-                    ghostPunto = null;
+                    cartaPane.getChildren().add(punto);
                 }
-                */
             } else if (creandoLinea) {
                 double clickX = event.getX();
                 double clickY = event.getY();
@@ -1110,13 +1117,37 @@ public class ProblemaController implements Initializable {
             }
         });
         
+        cartaPane.setOnMouseEntered(e -> {
+            if (modoPuntosActivo && ghostPunto != null) {
+                ghostPunto.setVisible(true);
+            }
+        });
+
+        cartaPane.setOnMouseExited(e -> {
+            if (ghostPunto != null) {
+                ghostPunto.setVisible(false);
+            }
+        });
+        
         cartaPane.setOnMouseMoved(event -> {
             if (creandoLinea && puntosLinea.size() == 1 && lineaTemporal != null) {
                 lineaTemporal.setEndX(event.getX());
                 lineaTemporal.setEndY(event.getY());
             } else if (creandoPunto && ghostPunto != null) {
-                ghostPunto.setLayoutX(event.getX());
-                ghostPunto.setLayoutY(event.getY());
+                double x = event.getX();
+                double y = event.getY();
+
+                // Limitar a los bordes del mapa
+                double mapWidth = image_map.getBoundsInParent().getWidth();
+                double mapHeight = image_map.getBoundsInParent().getHeight();
+
+                if (x >= 0 && x <= mapWidth && y >= 0 && y <= mapHeight) {
+                    ghostPunto.setVisible(true);
+                    ghostPunto.setLayoutX(x);
+                    ghostPunto.setLayoutY(y);
+                } else {
+                    ghostPunto.setVisible(false); // ocultar si está fuera
+                }
             }
         }); 
         
