@@ -75,6 +75,7 @@ import model.*;
 
 public class ProblemaController implements Initializable {
     
+    private Arc arcoTemporal = null;
     private boolean modoRatonActivo = false;
     private int currentIndex = -1;
     private List<Problem> preguntasAleatorias;
@@ -477,14 +478,8 @@ public class ProblemaController implements Initializable {
     
     @FXML
     private void activarModoArco() {
-        modoTextoActivo = false;
-        modoPuntosActivo = false;
-        modoLineaActivo = false;
+        limpiar();
         modoArcoActivo = true;
-        modoGomaActivo = false;
-        modoPintarActivo = false;
-        centroArcos = null;
-        primerPunto = null;
     }
     
     @FXML
@@ -932,38 +927,83 @@ public class ProblemaController implements Initializable {
                 */
             } else if (modoArcoActivo) {
                 if (centroArcos == null) {
-                // Primer clic: centro del arco
                     centroArcos = new Point2D(event.getX(), event.getY());
+
+                    // Crear un arco temporal
+                    arcoTemporal = new Arc();
+                    arcoTemporal.setCenterX(centroArcos.getX());
+                    arcoTemporal.setCenterY(centroArcos.getY());
+                    arcoTemporal.setRadiusX(0);
+                    arcoTemporal.setRadiusY(0);
+                    arcoTemporal.setStartAngle(0);
+                    arcoTemporal.setLength(180);
+                    arcoTemporal.setType(ArcType.OPEN);
+                    arcoTemporal.setStroke(colorLinea);
+                    arcoTemporal.setStrokeWidth(grosorLinea);
+                    arcoTemporal.setFill(null);
+
+                    cartaPane.getChildren().add(arcoTemporal);
+
+                    // Seguir el mouse para actualizar el arco mientras se mueve
+                    cartaPane.setOnMouseMoved(moveEvent -> {
+                        if (arcoTemporal != null && centroArcos != null) {
+                            Point2D puntoCircunferencia = new Point2D(moveEvent.getX(), moveEvent.getY());
+
+                            // Calcular el radio propuesto
+                            double radioPropuesto = centroArcos.distance(puntoCircunferencia);
+
+                            // Limitar el radio máximo según los bordes del pane
+                            double maxIzquierda = centroArcos.getX(); // Distancia al borde izquierdo
+                            double maxDerecha = cartaPane.getWidth() - centroArcos.getX(); // borde derecho
+                            double maxArriba = centroArcos.getY(); // borde superior
+                            double maxAbajo = cartaPane.getHeight() - centroArcos.getY(); // borde inferior
+
+                            double radioMaximo = Math.min(Math.min(maxIzquierda, maxDerecha), Math.min(maxArriba, maxAbajo));
+                            double radioFinal = Math.min(radioPropuesto, radioMaximo);
+
+                            // Calcular ángulo y aplicar
+                            double deltaX = puntoCircunferencia.getX() - centroArcos.getX();
+                            double deltaY = puntoCircunferencia.getY() - centroArcos.getY();
+                            double angle = Math.toDegrees(Math.atan2(-deltaY, deltaX));
+                            double startAngle = angle - 90;
+
+                            arcoTemporal.setRadiusX(radioFinal);
+                            arcoTemporal.setRadiusY(radioFinal);
+                            arcoTemporal.setStartAngle(startAngle);
+                        }
+                    });
+
                 } else {
-                    // Segundo clic: punto sobre la circunferencia
-                    Point2D puntoCircunferencia = new Point2D(event.getX(), event.getY());
+                    // Segundo clic: fijar el arco
+                    cartaPane.setOnMouseMoved(null); // detener seguimiento del mouse
 
-                    double radio = centroArcos.distance(puntoCircunferencia);
+                    // Crear arco definitivo con las propiedades del temporal
+                    Arc arcoFinal = new Arc();
+                    arcoFinal.setCenterX(arcoTemporal.getCenterX());
+                    arcoFinal.setCenterY(arcoTemporal.getCenterY());
+                    arcoFinal.setRadiusX(arcoTemporal.getRadiusX());
+                    arcoFinal.setRadiusY(arcoTemporal.getRadiusY());
+                    arcoFinal.setStartAngle(arcoTemporal.getStartAngle());
+                    arcoFinal.setLength(arcoTemporal.getLength());
+                    arcoFinal.setType(ArcType.OPEN);
+                    arcoFinal.setStroke(colorLinea);
+                    arcoFinal.setStrokeWidth(grosorLinea);
+                    arcoFinal.setFill(null);
 
-                    // Calcular el ángulo desde el centro hacia el punto de la circunferencia
-                    double deltaX = puntoCircunferencia.getX() - centroArcos.getX();
-                    double deltaY = puntoCircunferencia.getY() - centroArcos.getY();
-                    double angle = Math.toDegrees(Math.atan2(-deltaY, deltaX)); // Y invertido
+                    // Hacer seleccionable
+                    arcoFinal.setOnMouseClicked(e -> {
+                        if (modoRatonActivo && e.getButton() == MouseButton.PRIMARY) {
+                            e.consume();
+                            if (!e.isShiftDown()) {
+                                limpiarSeleccion();
+                            }
+                            seleccionarMarca(arcoFinal);
+                        }
+                    });
 
-                    // Ajustar para que el arco esté orientado hacia el segundo punto
-                    double startAngle = angle - 90;
-
-                    Arc arco = new Arc();
-                    arco.setCenterX(centroArcos.getX());
-                    arco.setCenterY(centroArcos.getY());
-                    arco.setRadiusX(radio);
-                    arco.setRadiusY(radio);
-                    arco.setStartAngle(startAngle);
-                    arco.setLength(180);  // Semicírculo
-                    arco.setType(ArcType.OPEN);
-                    arco.setStroke(Color.ORANGE);
-                    arco.setStrokeWidth(2);
-                    arco.setFill(null);
-
-                    cartaPane.getChildren().add(arco);
-                    hacerInteractivo(arco);
-                    
-                    // Reset
+                    cartaPane.getChildren().remove(arcoTemporal); // eliminar temporal
+                    cartaPane.getChildren().add(arcoFinal);       // agregar definitivo
+                    arcoTemporal = null;
                     centroArcos = null;
                 }
             } else if (modoTextoActivo) {
