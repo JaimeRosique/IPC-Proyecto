@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -43,7 +44,9 @@ public class InicioSesionController implements Initializable {
     @FXML
     private Label pswrdError;
     @FXML
-    private TextField pswrd_id;
+    private PasswordField pswrdField;
+    @FXML
+    private TextField pswrdTextField;
     @FXML
     private ImageView userErrorImg;
     @FXML
