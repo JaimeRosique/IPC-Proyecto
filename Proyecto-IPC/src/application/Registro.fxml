@@ -89,7 +89,17 @@
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="SOMETIMES">
                                  <children>
                                     <Label text="Contraseña" />
-                                    <PasswordField fx:id="pswrd" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
+                                    <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <PasswordField fx:id="pswrdField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
+                                          <TextField fx:id="pswrdTextField" />
+                                          <ImageView fx:id="eyeIcon2" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../resources/abrirojo.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </StackPane>
                                     <Label fx:id="pswrd_error" prefHeight="18.0" prefWidth="490.0" text="Contraseña no válida" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
@@ -100,7 +110,17 @@
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="SOMETIMES">
                                  <children>
                                     <Label text="Confirmar Contraseña *" />
-                                    <PasswordField fx:id="pswrd_check" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <PasswordField fx:id="pswrdCheckField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
+                                          <TextField fx:id="pswrdCheckTextField" StackPane.alignment="CENTER_RIGHT" />
+                                          <ImageView fx:id="eyeIcon3" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+                                             <image>
+                                                <Image url="@../resources/abrirojo.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </StackPane>
                                     <Label fx:id="pswrd_check_error" prefHeight="18.0" prefWidth="462.0" text="Las contraseñas no coinciden" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
