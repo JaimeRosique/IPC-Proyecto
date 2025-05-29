@@ -448,7 +448,7 @@ public class ProblemaController implements Initializable {
             ghostPunto.setMouseTransparent(true);
             cartaPane.getChildren().add(ghostPunto);
         }
-        cartaPane.setCursor(Cursor.CROSSHAIR);
+        //cartaPane.setCursor(Cursor.CROSSHAIR);
     }
 
     @FXML
@@ -462,6 +462,13 @@ public class ProblemaController implements Initializable {
         centroArcos = null;
         primerPunto = null;
         
+        creandoPunto = false;
+        if (ghostPunto != null) {
+            cartaPane.getChildren().remove(ghostPunto);
+            ghostPunto = null;
+        }
+        
+        cartaPane.setCursor(Cursor.DEFAULT);
         creandoLinea = true;
         puntosLinea.clear();
         if (lineaTemporal != null) {
@@ -835,6 +842,7 @@ public class ProblemaController implements Initializable {
                 cartaPane.getChildren().add(ghostPunto);
                 hacerInteractivo(ghostPunto);
             } else if (modoLineaActivo) {
+                /*
                 if (primerPunto == null) {
                     primerPunto = new Point2D(event.getX(), event.getY());
                 } else {
@@ -848,6 +856,7 @@ public class ProblemaController implements Initializable {
                     hacerInteractivo(linea);
                     primerPunto = null;
                 }
+                */
             } else if (modoArcoActivo) {
                 if (centroArcos == null) {
                 // Primer clic: centro del arco
@@ -963,12 +972,29 @@ public class ProblemaController implements Initializable {
                     cartaPane.getChildren().add(lineaTemporal);
                 } else if (puntosLinea.size() == 2) {
                     // Segundo punto: fijar la línea
-                    cartaPane.setCursor(Cursor.DEFAULT);
-                    creandoLinea = false;
+                    cartaPane.setCursor(Cursor.CROSSHAIR);  // lo mantenemos
 
                     // Usar la línea temporal y fijar su posición final
                     lineaTemporal.setEndX(puntoFinal.getX());
                     lineaTemporal.setEndY(puntoFinal.getY());
+
+                    // Agregar comportamiento de selección
+                    lineaTemporal.setOnMouseClicked(e -> {
+                        if (e.getButton() == MouseButton.SECONDARY) {
+                            e.consume();
+                            if (!e.isShiftDown()) {
+                                limpiarSeleccion();
+                            }
+                            seleccionarMarca(lineaTemporal);
+                        }
+                    });
+
+                    lineaTemporal = null;
+                    puntosLinea.clear();
+
+                    // Usar la línea temporal y fijar su posición final
+                    //lineaTemporal.setEndX(puntoFinal.getX());
+                    //lineaTemporal.setEndY(puntoFinal.getY());
 
                     // Agregar comportamiento de selección
                     lineaTemporal.setOnMouseClicked(e -> {
