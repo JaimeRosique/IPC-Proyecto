@@ -168,8 +168,6 @@ public class RegistroController implements Initializable {
             // Aplicar el CSS activo
             newScene.getStylesheets().clear();
             newScene.getStylesheets().add(ThemeManager.getEstiloActual());
-
-            System.out.println("🎨 Tema aplicado en sceneProperty: " + ThemeManager.getEstiloActual());
         }
     });
         
