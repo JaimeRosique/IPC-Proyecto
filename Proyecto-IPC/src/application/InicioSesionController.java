@@ -55,21 +55,17 @@ public class InicioSesionController implements Initializable {
     private void cambiarTema() {
         Scene scene = rootPane.getScene();
 
-    if (scene != null) {
-        ThemeManager.toggleTheme(scene);
+        if (scene != null) {
+            ThemeManager.toggleTheme(scene);
 
-        // ⚠️ Forzar la re-asignación del root
-        Parent currentRoot = scene.getRoot();
-        scene.setRoot(new Group());  // cambiar temporalmente
-        scene.setRoot(currentRoot);  // volver al root real
+            // ⚠️ Forzar la re-asignación del root
+            Parent currentRoot = scene.getRoot();
+            scene.setRoot(new Group());  // cambiar temporalmente
+            scene.setRoot(currentRoot);  // volver al root real
 
-        currentRoot.applyCss();
-        currentRoot.layout();
-
-        System.out.println("✅ Tema cambiado y escena refrescada");
-    } else {
-        System.out.println("❌ Scene es null");
-    }
+            currentRoot.applyCss();
+            currentRoot.layout();
+        }
     }
     
     @Override
