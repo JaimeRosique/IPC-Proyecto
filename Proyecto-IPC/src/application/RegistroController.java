@@ -27,6 +27,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -103,6 +104,14 @@ public class RegistroController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Espera a que el nodo esté en escena para obtener el Stage
+        rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                Stage stage = (Stage) rootPane.getScene().getWindow();
+                Image icono = new Image(getClass().getResourceAsStream("compas"));
+                stage.getIcons().add(icono);
+            }
+        });
         
         rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
         if (newScene != null) {

@@ -192,20 +192,16 @@ public class ProblemaController implements Initializable {
         Scene scene = rootPane.getScene();
 
     if (scene != null) {
-        ThemeManager.toggleTheme(scene);
+            ThemeManager.toggleTheme(scene);
 
-        // ⚠️ Forzar la re-asignación del root
-        Parent currentRoot = scene.getRoot();
-        scene.setRoot(new Group());  // cambiar temporalmente
-        scene.setRoot(currentRoot);  // volver al root real
+            // ⚠️ Forzar la re-asignación del root
+            Parent currentRoot = scene.getRoot();
+            scene.setRoot(new Group());  // cambiar temporalmente
+            scene.setRoot(currentRoot);  // volver al root real
 
-        currentRoot.applyCss();
-        currentRoot.layout();
-
-        System.out.println("✅ Tema cambiado y escena refrescada");
-    } else {
-        System.out.println("❌ Scene es null");
-    }
+            currentRoot.applyCss();
+            currentRoot.layout();
+        }
     }
         
     @FXML
@@ -496,11 +492,13 @@ public class ProblemaController implements Initializable {
     
     @FXML
     private void activarTransportador() {
+        limpiar();
         transportadorActivo = !transportadorActivo;
         transportador.setVisible(transportadorActivo);
     }
     @FXML
     private void activarRegla() {
+        limpiar();
         reglaActiva = !reglaActiva;
         regla.setVisible(reglaActiva);
     }
@@ -592,10 +590,13 @@ public class ProblemaController implements Initializable {
     @FXML
     private void limpiarCarta() {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setGraphic(null);
         alerta.setTitle("Confirmación");
         alerta.setHeaderText("¿Estás seguro de que quieres limpiar la carta entera?");
         alerta.setContentText("Se eliminarán todo lo que hayas escrito hasta ahora.");
-        
+        DialogPane dialogPane = alerta.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+        dialogPane.getStyleClass().add(" ");
         //Esperar la respuesta del usuario
         Optional<ButtonType> resultado = alerta.showAndWait();
         if(resultado.isPresent() && resultado.get() == ButtonType.OK) {
@@ -685,6 +686,10 @@ public class ProblemaController implements Initializable {
         currentIndex++;
         if (currentIndex >= preguntasAleatorias.size()) {
             Alert fin = new Alert(Alert.AlertType.INFORMATION, "¡Has respondido todas las preguntas!");
+            fin.setGraphic(null);
+            DialogPane dialogPane = fin.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+            dialogPane.getStyleClass().add(" ");
             fin.showAndWait();
             return;
         }
@@ -754,6 +759,15 @@ public class ProblemaController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+         // Espera a que el nodo esté en escena para obtener el Stage
+        rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                Stage stage = (Stage) rootPane.getScene().getWindow();
+                Image icono = new Image(getClass().getResourceAsStream("compas"));
+                stage.getIcons().add(icono);
+            }
+        });
+        
         // TODO
         //==========================================================
         // inicializamos el slider y enlazamos con el zoom
@@ -1144,6 +1158,10 @@ public class ProblemaController implements Initializable {
                             drawArc(centroArco, radioArco);
                         } catch (NumberFormatException ex) {
                             Alert alerta = new Alert(Alert.AlertType.ERROR, "Radio inválido. Introduce un número válido.");
+                            alerta.setGraphic(null);
+                            DialogPane dialogPane = alerta.getDialogPane();
+                            dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+                            dialogPane.getStyleClass().add(" ");
                             alerta.showAndWait();
                         }
                     }
@@ -1203,6 +1221,7 @@ public class ProblemaController implements Initializable {
                     double subdivisiones = distancia / TAMANIO_SUBDIVISION;
 
                     Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                    alerta.setGraphic(null);
                     alerta.setTitle("Medición de distancia");
                     alerta.setHeaderText("Resultado");
                     alerta.setContentText("Distancia medida: " + String.format("%.2f", subdivisiones) + " subdivisiones.");
@@ -1333,6 +1352,10 @@ public class ProblemaController implements Initializable {
     @FXML
     private void about(ActionEvent event) {
         Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
+        mensaje.setGraphic(null);
+        DialogPane dialogPane = mensaje.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+        dialogPane.getStyleClass().add(" ");
         // Acceder al Stage del Dialog y cambiar el icono
         Stage dialogStage = (Stage) mensaje.getDialogPane().getScene().getWindow();
         dialogStage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
@@ -1523,6 +1546,10 @@ public class ProblemaController implements Initializable {
     private void eliminarMarca(ActionEvent event) {
         if (marcasSeleccionadas.isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.WARNING, "No hay ninguna marca seleccionada para eliminar.");
+            alerta.setGraphic(null);
+            DialogPane dialogPane = alerta.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+            dialogPane.getStyleClass().add(" ");
             alerta.showAndWait();
             return;
         }
@@ -1530,6 +1557,10 @@ public class ProblemaController implements Initializable {
         // Confirmar la eliminación con el usuario (opcional)
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION, 
                 "¿Deseas eliminar las marcas seleccionadas?", ButtonType.YES, ButtonType.NO);
+        confirmacion.setGraphic(null);
+        DialogPane dialogPane = confirmacion.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+        dialogPane.getStyleClass().add(" ");
         Optional<ButtonType> respuesta = confirmacion.showAndWait();
 
         if (respuesta.isPresent() && respuesta.get() == ButtonType.YES) {

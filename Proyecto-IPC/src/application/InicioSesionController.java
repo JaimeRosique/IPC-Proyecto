@@ -17,9 +17,11 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import model.*;
 
 /**
@@ -75,6 +77,15 @@ public class InicioSesionController implements Initializable {
         }catch(Exception e){
             System.err.println(e.toString());
         }
+        
+        // Espera a que el nodo esté en escena para obtener el Stage
+        rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                Stage stage = (Stage) rootPane.getScene().getWindow();
+                Image icono = new Image(getClass().getResourceAsStream("/Proyecto-IPC/src/resources/compas"));
+                stage.getIcons().add(icono);
+            }
+        });
         
         Platform.runLater(() -> {
             Scene scene = rootPane.getScene();
