@@ -75,6 +75,7 @@ import model.*;
 
 public class ProblemaController implements Initializable {
     
+    private boolean modoRatonActivo = false;
     private int currentIndex = -1;
     private List<Problem> preguntasAleatorias;
     private List<Problem> problemas;
@@ -236,7 +237,7 @@ public class ProblemaController implements Initializable {
         arc.setFill(null); // sin relleno
         
         arc.setOnMouseClicked(e -> {
-            if (e.getButton() == MouseButton.SECONDARY) {
+            if (modoRatonActivo && e.getButton() == MouseButton.PRIMARY) {
                 e.consume();
                 if (!e.isShiftDown()) {
                     limpiarSeleccion();
@@ -402,6 +403,7 @@ public class ProblemaController implements Initializable {
     }
     
     private void limpiar() {
+        modoRatonActivo = true;
         modoTextoActivo = false;
         modoPuntosActivo = false;
         modoLineaActivo = false;
@@ -425,6 +427,7 @@ public class ProblemaController implements Initializable {
     @FXML
     private void activarModoRaton() {
         limpiar();
+        modoRatonActivo = true;
     }
     
     @FXML
@@ -530,6 +533,7 @@ public class ProblemaController implements Initializable {
         primerPunto = null;
     }
     private void hacerInteractivo(Node nodo) {
+        /*
         nodo.setOnMouseClicked(event -> {
             colorSeleccionado = coloresButton.getValue();
             if (modoGomaActivo) {
@@ -547,6 +551,44 @@ public class ProblemaController implements Initializable {
                 } else if (nodo instanceof Label) {
                     ((Label) nodo).setTextFill(colorSeleccionado);
                 }
+                event.consume();
+            }
+        });
+        */
+        nodo.setOnMouseClicked(event -> {
+            if (modoGomaActivo) {
+                cartaPane.getChildren().remove(nodo);
+                event.consume();
+            } else if (modoPintarActivo && marcasSeleccionadas.contains(nodo)) {
+                Color nuevoColor = coloresButton.getValue();
+
+                if (nodo instanceof Shape) {
+                    Shape shape = (Shape) nodo;
+                    shape.setStroke(nuevoColor);
+                    if (!(shape instanceof Line)) {
+                        shape.setFill(nuevoColor);
+                    }
+                    if (shape instanceof Arc) {
+                        shape.setFill(null);
+                    }
+
+                } else if (nodo instanceof Group) {
+                    Group grupo = (Group) nodo;
+                    for (Node child : grupo.getChildrenUnmodifiable()) {
+                        if (child instanceof Shape) {
+                            Shape shape = (Shape) child;
+                            shape.setStroke(nuevoColor);
+                            if (!(shape instanceof Line)) {
+                                shape.setFill(nuevoColor);
+                            }
+                        }
+                    }
+
+                } else if (nodo instanceof Label) {
+                    Label label = (Label) nodo;
+                    label.setTextFill(nuevoColor);
+                }
+
                 event.consume();
             }
         });
@@ -932,7 +974,7 @@ public class ProblemaController implements Initializable {
                     Group punto = new Group(externo, interno);
                     punto.setCursor(Cursor.HAND);
                     punto.setOnMouseClicked(e -> {
-                        if (e.getButton() == MouseButton.SECONDARY) {
+                        if (modoRatonActivo && e.getButton() == MouseButton.PRIMARY) {
                             e.consume();
                             if (!e.isShiftDown()) {
                                 limpiarSeleccion();
@@ -973,7 +1015,7 @@ public class ProblemaController implements Initializable {
 
                     // Agregar comportamiento de selección
                     lineaTemporal.setOnMouseClicked(e -> {
-                        if (e.getButton() == MouseButton.SECONDARY) {
+                        if (modoRatonActivo && e.getButton() == MouseButton.PRIMARY) {
                             e.consume();
                             if (!e.isShiftDown()) {
                                 limpiarSeleccion();
@@ -991,7 +1033,7 @@ public class ProblemaController implements Initializable {
 
                     // Agregar comportamiento de selección
                     lineaTemporal.setOnMouseClicked(e -> {
-                        if (e.getButton() == MouseButton.SECONDARY) {
+                        if (modoRatonActivo && e.getButton() == MouseButton.PRIMARY) {
                             e.consume();
                             if (!e.isShiftDown()) {
                                 limpiarSeleccion();
@@ -1014,7 +1056,7 @@ public class ProblemaController implements Initializable {
                     
                     // PUEDE CAMBIARSE
                     marcaCentro.setOnMouseClicked(e -> {
-                        if (e.getButton() == MouseButton.SECONDARY) {
+                        if (modoRatonActivo && e.getButton() == MouseButton.PRIMARY) {
                             e.consume();
                             if (!e.isShiftDown()) {
                                 limpiarSeleccion();
@@ -1064,7 +1106,7 @@ public class ProblemaController implements Initializable {
                     label.setStyle("-fx-font-size: 14px; -fx-text-fill: black;"); // estilo básico, personalízalo
                     
                     label.setOnMouseClicked(e -> {
-                        if (e.getButton() == MouseButton.SECONDARY) {
+                        if (modoRatonActivo && e.getButton() == MouseButton.PRIMARY) {
                             e.consume();
                             if (!e.isShiftDown()) {
                                 limpiarSeleccion();
@@ -1112,7 +1154,7 @@ public class ProblemaController implements Initializable {
                 compasActivo = false;
                 cartaPane.setCursor(Cursor.DEFAULT);
             }
-            if (event.getButton() == MouseButton.SECONDARY && !event.isConsumed()) {
+            if (event.getButton() == MouseButton.PRIMARY && !event.isConsumed()) {
                 limpiarSeleccion();
             }
         });
@@ -1325,6 +1367,7 @@ public class ProblemaController implements Initializable {
 
     @FXML
     private void cambiarColor(ActionEvent event) {
+        /*
         if (marcasSeleccionadas.isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.WARNING, "No hay ninguna marca seleccionada");
             alerta.showAndWait();
@@ -1378,6 +1421,37 @@ public class ProblemaController implements Initializable {
                 }
             }
         });
+        */
+        Color nuevoColor = coloresButton.getValue();
+        for (Node nodo : marcasSeleccionadas) {
+            if (nodo instanceof Shape) {
+                Shape shape = (Shape) nodo;
+                shape.setStroke(nuevoColor);
+                if (!(shape instanceof Line)) {
+                    shape.setFill(nuevoColor);
+                }
+                if (shape instanceof Arc) {
+                    shape.setFill(null); // Para los arcos, mantener transparencia
+                }
+            } else if (nodo instanceof Group) {
+                Group grupo = (Group) nodo;
+                for (Node child : grupo.getChildrenUnmodifiable()) {
+                    if (child instanceof Circle) {
+                        Circle c = (Circle) child;
+                        if (c.getRadius() > 10) {
+                            c.setStroke(nuevoColor);      // borde del externo
+                            c.setFill(Color.TRANSPARENT); // externo sin relleno
+                        } else {
+                            c.setFill(nuevoColor);        // interno con relleno
+                            c.setStroke(nuevoColor);      // opcional
+                        }
+                    }
+                }
+            } else if (nodo instanceof Label) {
+                Label label = (Label) nodo;
+                label.setTextFill(nuevoColor);
+            }
+        }
     }
 
     @FXML
