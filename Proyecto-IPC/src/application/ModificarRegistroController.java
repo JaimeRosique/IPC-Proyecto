@@ -101,7 +101,7 @@ public class ModificarRegistroController implements Initializable {
         });
         
         // Permitir solo letras y espaciado en el nickname
-        nickname.textProperty().addListener((observable, oldValue, newValue) -> {
+        /*nickname.textProperty().addListener((observable, oldValue, newValue) -> {
             if ( newValue.length() > 15) {
             nickname.setText(oldValue);
             }
@@ -109,14 +109,14 @@ public class ModificarRegistroController implements Initializable {
         
         
         // Errores en nickname usado
-        nickname.setOnKeyTyped(event -> validarNickname());
+       // nickname.setOnKeyTyped(event -> validarNickname());
         
         // Errores en nickname usado
-        nickname.focusedProperty().addListener((observable, oldValue, newValue) -> {
+        /*nickname.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 validarNickname();
             }
-        });
+        });*/
         
         // Permitir solo letras y numeros  sin espaciado en el correo
         email.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -186,7 +186,7 @@ public class ModificarRegistroController implements Initializable {
 
 }
     
-    private boolean validarNickname() {
+    /*private boolean validarNickname() {
         String nick = nickname.getText();
     boolean nickNoVacio = !nick.isEmpty();
 
@@ -195,8 +195,8 @@ public class ModificarRegistroController implements Initializable {
         return true;
     }
 
-    boolean nickValido = !nav.exitsNickName(nick); 
-    boolean formatoValido = nick.matches("[a-zA-Z0-9_-]{6,15}");
+   // boolean nickValido = !nav.exitsNickName(nick); 
+    //boolean formatoValido = nick.matches("[a-zA-Z0-9_-]{6,15}");
     
     if (!nickNoVacio) {
         user_error.setStyle("-fx-text-fill: #cc3333;");
@@ -214,11 +214,11 @@ public class ModificarRegistroController implements Initializable {
     }
     return true;
          
-    }
+    }*/
     
 
      private boolean validarEmail() {
-    String emailInput = email.getText().trim();
+    String emailInput = email.getText().trim().toLowerCase();
 
     if (emailInput.toLowerCase().endsWith("@gmail.com")) {
         email_error.setVisible(false);
@@ -375,11 +375,11 @@ public class ModificarRegistroController implements Initializable {
     private boolean checkCampos() {
         boolean mandado = false;
         
-        String user_name = nickname.getText().trim();
+        //String user_name = nickname.getText().trim();
         String emailText = email.getText();
         
-        boolean validUser = !user_name.isEmpty();
-        boolean validEmail = !emailText.isEmpty() && !emailText.contains(" ");
+        //boolean validUser = !user_name.isEmpty();
+        boolean validEmail = validarEmail();
         boolean nickNoUsado = true;
         boolean pwd1Valida = pswrd.getText().length() >= 6;
         boolean pwd2Valida = pswrd_check.getText().equals(pswrd.getText());
@@ -390,9 +390,9 @@ public class ModificarRegistroController implements Initializable {
             }
         
         //user_errorImg.setVisible(!validUser);
-        user_error.setVisible(true);
+        /*user_error.setVisible(true);
         user_error.setStyle(validUser ? "-fx-text-fill: #7c7c7c;" : "-fx-text-fill: #fc0000;");
-        if(!mandado && !validUser){nickname.requestFocus(); mandado = true;}
+        if(!mandado && !validUser){nickname.requestFocus(); mandado = true;}*/
         
         //pswrdErrorImg.setVisible(pswrd.getText().isEmpty());
         pswrd_error.setVisible(true);
@@ -404,12 +404,17 @@ public class ModificarRegistroController implements Initializable {
         pswrd_check_error.setStyle(pswrd_check.getText().equals(pswrd.getText()) ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
         if(!mandado && !pwd2Valida){pswrd_check.requestFocus(); mandado = true;}
         
-        //email_errorImg.setVisible(email.getText().isEmpty());
         email_error.setVisible(true);
-        email_error.setStyle(email.getText().isEmpty() ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
-        if(!mandado && !validEmail){email.requestFocus(); mandado = true;}
+    email_error.setStyle(email.getText().isEmpty() ? "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
+    if (!mandado && !validEmail) {
+        email.requestFocus();
+        mandado = true;
+    } else {
+        email_error.setVisible(false);
+        email_error.setText("");
+    }
         
-        return validUser && validEmail && nickNoUsado && pwd1Valida && pwd2Valida;
+        return  validEmail && nickNoUsado && pwd1Valida && pwd2Valida;
     }
     
     // Metodo que limpia todos los datos 
@@ -427,6 +432,7 @@ public class ModificarRegistroController implements Initializable {
         user_error.setStyle("-fx-text-fill: #7c7c7c;");
         //emailErrImg.setVisible(false);
         email_error.setVisible(false);
+        email_error.setText("");
         email_error.setStyle("-fx-text-fill: #7c7c7c;");
         //passwrdErrImg.setVisible(false);
         pswrd_error.setVisible(false);
@@ -469,6 +475,11 @@ public class ModificarRegistroController implements Initializable {
     if (camposValidos) {
         user.setEmail(email.getText());
         user.setPassword(pswrd.getText());
+        if (avatar_img.getImage() == null) {
+    avatar_img.setImage(imgArray[0]);  // usa la primera del array por defecto
+}
+
+user.setAvatar(avatar_img.getImage());
         user.setAvatar(avatar_img.getImage());
         user.setBirthdate(bdate.getValue());
 
