@@ -37,7 +37,7 @@ import javafx.stage.Stage;
 public class RegistroController implements Initializable {
 
     private String dest;
-    private Image[] imgArray = new Image[12];
+    private Image[] imgArray = new Image[10];
     private Navigation nav;
     private int i;
     private boolean modoModificar = false;
@@ -652,12 +652,14 @@ if (!mandado && !nickOk) { nickname.requestFocus(); mandado = true; }
     @FXML
     private void img_izq(MouseEvent event) {
         i = (i - 1 + imgArray.length) % imgArray.length;
+        System.out.println("Izquierda, i = " + i);
         avatar_img.setImage(imgArray[i]);
     }
 
     @FXML
     private void img_der(MouseEvent event) {
         i = (i + 1) % imgArray.length;
+        System.out.println("Derecha, i = " + i);
         avatar_img.setImage(imgArray[i]);
     }
 
