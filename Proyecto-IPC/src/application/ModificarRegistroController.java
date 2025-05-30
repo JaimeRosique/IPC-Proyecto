@@ -176,6 +176,7 @@ public class ModificarRegistroController implements Initializable {
     
     
     public void cargarDatosUsuario(User user) {
+        this.user = user;
     nickname.setText(user.getNickName());
     email.setText(user.getEmail());
     pswrd.setText(user.getPassword());
@@ -187,26 +188,32 @@ public class ModificarRegistroController implements Initializable {
     
     private boolean validarNickname() {
         String nick = nickname.getText();
-        boolean nickValido = !nav.exitsNickName(nick); 
-        boolean nickNoVacio = !nick.isEmpty();
+    boolean nickNoVacio = !nick.isEmpty();
 
-        boolean formatoValido = nick.matches("[a-zA-Z0-9_-]{6,15}");
-        if (!nickNoVacio) {
-            //nikErrImg.setVisible(true);
-            user_error.setStyle("-fx-text-fill: #cc3333; -fx-effect: dropshadow(gaussian, rgba(173, 216, 230, 0.5), 2, 1, 0, 1);");
-            user_error.setText("No debería estar vacio");
-        } else if (!nickValido) {
-            //nikErrImg.setVisible(true);
-            user_error.setStyle("-fx-text-fill: #cc3333;");
-            user_error.setText("Usuario repetido");
-        }  else if (nick.contains(" ")){
-             user_error.setVisible(true);
-             user_error.setText("El nombre de usuario no puede contener espacios.");
-             user_error.setStyle("-fx-text-fill: #cc3333;");
-    return false;
-        }
-        user_error.setText("");
+    if (modoModificar) {
+        user_error.setText("");  // no mostrar error si estamos modificando
         return true;
+    }
+
+    boolean nickValido = !nav.exitsNickName(nick); 
+    boolean formatoValido = nick.matches("[a-zA-Z0-9_-]{6,15}");
+    
+    if (!nickNoVacio) {
+        user_error.setStyle("-fx-text-fill: #cc3333;");
+        user_error.setText("No debería estar vacío");
+    } else if (!nickValido) {
+        user_error.setStyle("-fx-text-fill: #cc3333;");
+        user_error.setText("Usuario repetido");
+    } else if (nick.contains(" ")) {
+        user_error.setVisible(true);
+        user_error.setText("El nombre de usuario no puede contener espacios.");
+        user_error.setStyle("-fx-text-fill: #cc3333;");
+        return false;
+    } else {
+        user_error.setText("");
+    }
+    return true;
+         
     }
     
 
