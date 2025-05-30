@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="900.0" maxWidth="900.0" minHeight="500.0" minWidth="500.0" prefHeight="600.0" prefWidth="700.0" spacing="20.0" styleClass="main-vbox" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EstadisticasController">
+   <padding>
+      <Insets bottom="20" left="20" right="20" top="20" />
+   </padding>
+   <children>
+      <VBox spacing="10" styleClass="statistics-section">
+         <children>
+            <Label styleClass="section-title" text="Estadísticas" />
+            <GridPane hgap="30" styleClass="statistics-grid" vgap="10">
+               <columnConstraints>
+                  <ColumnConstraints halignment="LEFT" percentWidth="50" />
+                  <ColumnConstraints halignment="LEFT" percentWidth="50" />
+               </columnConstraints>
+               <children>
+                  <Label styleClass="statistic-label" text="Problemas Realizados:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                  <Label fx:id="problemasRealizados" styleClass="statistic-value" text="20,27M" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                  <Label styleClass="statistic-label" text="Problemas Acertados:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                  <Label fx:id="problemasAcertados" styleClass="statistic-value" text="18,166K" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label styleClass="statistic-label" text="Problemas Fallados:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                  <Label fx:id="problemasFallados" styleClass="statistic-value" text="9,15%" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label styleClass="statistic-label" text="Media:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                  <Label fx:id="media" styleClass="statistic-value" text="20,080" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               </children>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+            </GridPane>
+            <Button fx:id="moreInfoButton" styleClass="info-button" text="Cerrar" />
+         </children>
+      </VBox>
+      <VBox spacing="10" styleClass="histogram-section" VBox.vgrow="ALWAYS">
+         <children>
+            <Label styleClass="section-title" text="Histograma de los problemas" />
+            <BarChart fx:id="dataHistogram" prefHeight="300" styleClass="bar-chart" VBox.vgrow="ALWAYS">
+               <xAxis>
+                  <CategoryAxis label="Preguntas" fx:id="xAxis" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis fx:id="yAxis" label="Acertadas" />
+               </yAxis>
+            </BarChart>
+         </children>
+      </VBox>
+   </children>
+</VBox>
