@@ -1750,6 +1750,10 @@ public class ProblemaController implements Initializable {
         cartaPane.setCursor(Cursor.CROSSHAIR);
     }
 
+    @FXML
+    private void irEstadisticas(ActionEvent event) {
+    }
+
 
 
 

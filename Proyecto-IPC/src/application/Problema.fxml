@@ -63,7 +63,7 @@
             <Region prefHeight="20.0" prefWidth="10.0" />
             <MenuButton id="perfil" mnemonicParsing="false">
               <items>
-                  <MenuItem mnemonicParsing="false" text="Estadísticas" />
+                  <MenuItem mnemonicParsing="false" onAction="#irEstadisticas" text="Estadísticas" />
                 <MenuItem mnemonicParsing="false" onAction="#modificarPerfilAction" text="Modificar perfil" />
                 <MenuItem mnemonicParsing="false" text="Cerrar sesión" />
               </items>
