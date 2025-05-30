@@ -92,8 +92,6 @@ public class JavaFXMLApplication extends Application {
                     stage.setY(screenBounds.getMinY());
                     stage.setWidth(screenBounds.getWidth());
                     stage.setHeight(screenBounds.getHeight());
-                    stage.setMinWidth(922);
-                    stage.setMinHeight(830);
                     stage.setTitle("Menu");
                     stage.centerOnScreen();
                     stage.setMinHeight(900);

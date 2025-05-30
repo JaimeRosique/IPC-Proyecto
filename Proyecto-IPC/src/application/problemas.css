@@ -47,7 +47,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .menu-item {
     -fx-padding: 6 14;
     -fx-text-fill: #003366 !important;
-    -fx-font-size: 14px;
+    -fx-font-size: 14;
+    -fx-background-radius: 6;
     -fx-background-color: transparent;
     -fx-text-overrun: clip;
 }
@@ -255,8 +256,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 /* === LISTVIEW === */
 .list-view {
-    -fx-max-width: 500;
-    -fx-min-width: 100;
+    -fx-max-width: 400;
+    -fx-min-width: 250;
     -fx-min-height: 100;
     -fx-text-overrun: clip;
     -fx-background-color: #e0f2ff !important;
