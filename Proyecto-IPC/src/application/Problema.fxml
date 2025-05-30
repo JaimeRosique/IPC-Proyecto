@@ -26,6 +26,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
 <VBox fx:id="rootPane" prefHeight="704.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProblemaController">
    <children>
@@ -33,42 +34,53 @@
          <children>
             <MenuBar>
               <menus>
-                <Menu mnemonicParsing="false" text="Ayuda">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#about">
+                  <Menu mnemonicParsing="false" text="Ayuda">
+                    <items>
+                      <MenuItem mnemonicParsing="false">
                            <graphic>
-                              <TabPane prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE">
+                              <TabPane prefHeight="200.0" prefWidth="200.0">
                                 <tabs>
-                                    <Tab text="Untitled Tab">
-                                      <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                      </content>
+                                    <Tab text="Transportador y regla">
+                                       <content>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
+                                       </content>
                                     </Tab>
-                                  <Tab text="Untitled Tab 1">
-                                    <content>
-                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                    </content>
-                                  </Tab>
-                                  <Tab text="Untitled Tab 2">
-                                    <content>
-                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                    </content>
-                                  </Tab>
-                                    <Tab text="Untitled Tab">
-                                      <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                      </content>
+                                    <Tab text="Modos de dibujo">
+                                       <content>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
+                                       </content>
                                     </Tab>
-                                    <Tab text="Untitled Tab">
-                                      <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                      </content>
+                                    <Tab text="Compás">
+                                       <content>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
+                                       </content>
+                                    </Tab>
+                                    <Tab text="Selección de color y grosor">
+                                       <content>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
+                                       </content>
+                                    </Tab>
+                                    <Tab text="Borrar">
+                                       <content>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
+                                       </content>
+                                    </Tab>
+                                    <Tab text="texto">
+                                       <content>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
+                                       </content>
+                                    </Tab>
+                                    <Tab text="Texto">
+                                       <content>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
+                                       </content>
                                     </Tab>
                                 </tabs>
                               </TabPane>
-                           </graphic></MenuItem>
-                  </items>
-                </Menu>
+                           </graphic>
+                        </MenuItem>
+                    </items>
+                  </Menu>
                 <Menu mnemonicParsing="false" text="Herramientas">
                   <items>
                         <MenuItem fx:id="punto" mnemonicParsing="false" onAction="#crearPunto" text="Crear punto" />
@@ -81,6 +93,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#crearTransportador" text="Mostrar transportador" />
                         <MenuItem mnemonicParsing="false" onAction="#crearRegla" text="Mostrar regla" />
                         <MenuItem fx:id="compas" mnemonicParsing="false" onAction="#crearCompas" text="Utilizar compás" />
+                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
                   </items>
                 </Menu>
               </menus>
