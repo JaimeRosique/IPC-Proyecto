@@ -15,8 +15,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -26,7 +24,6 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
 
 <VBox fx:id="rootPane" prefHeight="704.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProblemaController">
    <children>
@@ -36,49 +33,13 @@
               <menus>
                   <Menu mnemonicParsing="false" text="Ayuda">
                     <items>
-                      <MenuItem mnemonicParsing="false">
-                           <graphic>
-                              <TabPane prefHeight="200.0" prefWidth="200.0">
-                                <tabs>
-                                    <Tab text="Transportador y regla">
-                                       <content>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
-                                       </content>
-                                    </Tab>
-                                    <Tab text="Modos de dibujo">
-                                       <content>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
-                                       </content>
-                                    </Tab>
-                                    <Tab text="Compás">
-                                       <content>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
-                                       </content>
-                                    </Tab>
-                                    <Tab text="Selección de color y grosor">
-                                       <content>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
-                                       </content>
-                                    </Tab>
-                                    <Tab text="Borrar">
-                                       <content>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
-                                       </content>
-                                    </Tab>
-                                    <Tab text="texto">
-                                       <content>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
-                                       </content>
-                                    </Tab>
-                                    <Tab text="Texto">
-                                       <content>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hola" />
-                                       </content>
-                                    </Tab>
-                                </tabs>
-                              </TabPane>
-                           </graphic>
-                        </MenuItem>
+                      <MenuItem mnemonicParsing="false" onAction="#mostrarAyudaTransportador" text="Transportador y regla" />
+                        <MenuItem mnemonicParsing="false" onAction="#mostrarAyudaColores" text="Color y grosor" />
+                        <MenuItem mnemonicParsing="false" onAction="#mostrarAyudaBorrar" text="Borrar y limpiar" />
+                        <MenuItem mnemonicParsing="false" onAction="#mostrarAyudaDibujar" text="Dibujar" />
+                        <MenuItem mnemonicParsing="false" onAction="#mostrarAyudaCompas" text="Compás" />
+                        <MenuItem mnemonicParsing="false" onAction="#mostrarAyudaHerramientas" text="Barra de herramientas" />
+                        <MenuItem mnemonicParsing="false" onAction="#mostrarAyudaProblemas" text="Problemas" />
                     </items>
                   </Menu>
                 <Menu mnemonicParsing="false" text="Herramientas">
@@ -150,8 +111,8 @@
                                     <String fx:value="map-pin" />
                                  </styleClass>
                               </MenuButton>
-                              <Button fx:id="transportador" layoutX="164.0" layoutY="93.0" mnemonicParsing="false" styleClass="transportador" />
-                              <Button fx:id="regla" layoutX="237.0" layoutY="48.0" mnemonicParsing="false" styleClass="regla" />
+                              <Button fx:id="transportador" layoutX="574.0" layoutY="98.0" mnemonicParsing="false" styleClass="transportador" />
+                              <Button fx:id="regla" layoutX="574.0" layoutY="48.0" mnemonicParsing="false" styleClass="regla" />
                            </children>
                         </Pane>
                      </content>

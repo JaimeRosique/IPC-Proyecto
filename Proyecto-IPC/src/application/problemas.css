@@ -464,6 +464,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-cursor: hand;
 }
 
+.text-area {
+    -fx-control-inner-background: transparent;
+    -fx-font-size: 14;
+    -fx-border-color: transparent;
+    -fx-border-radius: 6;
+}
+
 /* Estilo general del cuadro de diálogo */
 .dialog-pane {
     -fx-background-color: #cfe9fc !important;
@@ -474,8 +481,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-font-size: 14;
 }
 
+.dialog-pane > *.content, .dialog-pane .text-area, .dialog-pane .text {
+    -fx-background-color: #cfe9fc !important;
+}
+
 .dialog-pane .header-panel {
-    -fx-background-color: #b3d9f2;
+    -fx-background-color: #b3d9f2 !important;
 }
 
 .dialog-pane .button {
@@ -751,4 +762,27 @@ hyperlink {
     -fx-border-color: #003366 !important;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 3, 0, 0, 1);
     -fx-cursor: hand;
+}
+
+.chart-pie {
+    -fx-start-angle: 90;
+}
+
+.default-color0.chart-pie {
+    -fx-pie-color: #5bf900;
+}
+
+.default-color1.chart-pie {
+    -fx-pie-color: #ff4d4d;
+}
+
+.chart-legend {
+    -fx-background-color: #b3d9f2 !important;
+    -fx-padding: 10;
+}
+
+.chart-pie-label {
+    -fx-fill: #003366 !important;
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
 }
