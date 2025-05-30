@@ -28,18 +28,18 @@
                </columnConstraints>
                <children>
                   <Label styleClass="statistic-label" text="Problemas Realizados:" GridPane.rowIndex="1" />
-                  <Label fx:id="problemasRealizados" styleClass="statistic-value" text="20,27M" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="problemasRealizados" styleClass="statistic-value" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label styleClass="statistic-label" text="Problemas Acertados:" GridPane.rowIndex="2" />
-                  <Label fx:id="problemasAcertados" styleClass="statistic-value" text="18,166K" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="problemasAcertados" styleClass="statistic-value" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label styleClass="statistic-label" text="Problemas Fallados:" GridPane.rowIndex="3" />
-                  <Label fx:id="problemasFallados" styleClass="statistic-value" text="9,15%" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="problemasFallados" styleClass="statistic-value" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label styleClass="statistic-label" text="Media:" GridPane.rowIndex="4" />
                   <Label fx:id="media" styleClass="statistic-value" text="20,080" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Button fx:id="moreInfoButton" styleClass="info-button" text="Cerrar" GridPane.columnIndex="2" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin></Button>
-                  <DatePicker prefHeight="53.0" prefWidth="182.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <DatePicker fx:id="filtroFechaCombo" prefHeight="53.0" prefWidth="182.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="4.0" top="10.0" />
                      </GridPane.margin></DatePicker>
@@ -64,7 +64,7 @@
       <VBox prefHeight="298.0" prefWidth="734.0" spacing="10" styleClass="histogram-section" VBox.vgrow="ALWAYS">
          <children>
             <Label styleClass="section-title" text="Gráfico de los problemas" />
-            <PieChart />
+            <PieChart fx:id="dataPieChart" />
          </children>
       </VBox>
    </children>
