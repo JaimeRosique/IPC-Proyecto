@@ -196,7 +196,49 @@ public class ProblemaController implements Initializable {
     private VBox rootPane;
     @FXML
     private ComboBox<Integer> grosorButton;
+    @FXML
+    private MenuItem a;
 
+    @FXML
+    public void mostrarAyudaTransportador() {
+        mostrarAyuda("Transportador y regla", "Los botones de transportador o regla hacen que estos sean visibles(inicialmente en la esquina superior izquierda). Para moverlos, haz clic y arrastra con el mouse.");
+    }
+    @FXML
+    public void mostrarAyudaColores() {
+        mostrarAyuda("Colores y grosor", " ");
+    }
+    @FXML
+    public void mostrarAyudaDibujar() {
+        mostrarAyuda("Funciones de dibujo", "Se dibuja un punto, línea o arco al pulsar en la carta náutica. Para cada punto un click, línea dos(inicio primero y final segundo) y para arco dos(primero centro y segundo punto central de la semicircunferencia).");
+    }
+    @FXML
+    public void mostrarAyudaCompas() {
+        mostrarAyuda("Compás", " ");
+    }
+    @FXML
+    public void mostrarAyudaHerramientas() {
+        mostrarAyuda("Herramientas", "Cada botón activa una funcionalidad, todas ellas explicadas en el menú ''Ayuda''. La barra de herramientas puede mostrarse u ocultarse en el botón superior también están las mismas funcionalidades en el menú ''Herramientas''.");
+    }
+    @FXML
+    public void mostrarAyudaSeleccionar() {
+        mostrarAyuda("Seleccionar", "Al activar esta funcionalidad se desactivan las demás para poder seleccionar marcas o moverte sin dibujar.");
+    }
+    @FXML
+    public void mostrarAyudaBorrar() {
+        mostrarAyuda("Borrar y limpiar", " ");
+    }
+    @FXML
+    public void mostrarAyudaProblemas() {
+        mostrarAyuda("Problemas", " ");
+    }
+    private void mostrarAyuda(String titulo, String contenido) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Ayuda - " + titulo);
+        alert.setHeaderText(titulo);
+        alert.setContentText(contenido);
+        alert.showAndWait();
+    }
+    
     @FXML
     private void cambiarTema() {
         Scene scene = rootPane.getScene();
@@ -1778,6 +1820,10 @@ public class ProblemaController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         } 
+    }
+
+    @FXML
+    private void mostrarAyudaProblemas(ActionEvent event) {
     }
 
 
