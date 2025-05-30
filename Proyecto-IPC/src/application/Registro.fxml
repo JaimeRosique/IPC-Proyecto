@@ -50,7 +50,7 @@
                                  <children>
                                     <Label text="Nombre de usuario" />
                                     <TextField fx:id="nickname" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="manuel" />
-                                    <Label fx:id="user_error" prefHeight="18.0" prefWidth="492.0" text="Error" textFill="RED" visible="false" />
+                                    <Label fx:id="user_error" prefHeight="18.0" prefWidth="492.0" text="Error" textFill="RED" visible="false" wrapText="true" />
                                  </children>
                               </VBox>
                            </children>

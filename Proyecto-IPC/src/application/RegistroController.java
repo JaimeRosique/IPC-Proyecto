@@ -88,7 +88,6 @@ public class RegistroController implements Initializable {
     private Label email_error;
     @FXML
     private Label edad_error;
-    @FXML
     private User user;
     
     @FXML
@@ -211,15 +210,15 @@ public class RegistroController implements Initializable {
         
         
         // Errores en nickname usado
-        nickname.setOnKeyTyped(event -> validarNickname());
+        //nickname.setOnKeyTyped(event -> validarNickname());
         
         // Errores en nickname usado
-        nickname.focusedProperty().addListener((observable, oldValue, newValue) -> {
+        /*nickname.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 validarNickname();
             }
         });
-        
+        */
         // Permitir solo letras y numeros  sin espaciado en el correo
         email.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("[a-zA-Z0-9\\s'\\-áéíúóàèìòùÁÉÍÓÚÀÈÌÒÙäëïöüÄËÏÖÜñÑ@.]*")) {
@@ -335,24 +334,37 @@ private void togglePasswordVisibilityConfirm() {
         String nick = nickname.getText();
         boolean nickValido = !nav.exitsNickName(nick); 
         boolean nickNoVacio = !nick.isEmpty();
-
         boolean formatoValido = nick.matches("[a-zA-Z0-9_-]{6,15}");
+        
         if (!nickNoVacio) {
-            //nikErrImg.setVisible(true);
-            user_error.setStyle("-fx-text-fill: #cc3333; -fx-effect: dropshadow(gaussian, rgba(173, 216, 230, 0.5), 2, 1, 0, 1);");
-            user_error.setText("No debería estar vacio");
-        } else if (!nickValido) {
-            //nikErrImg.setVisible(true);
-            user_error.setStyle("-fx-text-fill: #cc3333;");
-            user_error.setText("Usuario repetido");
-        }  else if (nick.contains(" ")){
-             user_error.setVisible(true);
-             user_error.setText("El nombre de usuario no puede contener espacios.");
-             user_error.setStyle("-fx-text-fill: #cc3333;");
-    return false;
-        }
+        user_error.setVisible(true);
+        user_error.setText("No debería estar vacío");
+        user_error.setStyle("-fx-text-fill: #cc3333;");
+        return false;
+
+    } else if (nick.contains(" ")) {
+        user_error.setVisible(true);
+        user_error.setText("El nombre de usuario no puede contener espacios.");
+        user_error.setStyle("-fx-text-fill: #cc3333;");
+        return false;
+
+    } else if (!nickValido) {
+        user_error.setVisible(true);
+        user_error.setText("Usuario repetido");
+        user_error.setStyle("-fx-text-fill: #cc3333;");
+        return false;
+
+    } else if (!formatoValido) {
+        user_error.setVisible(true);
+        user_error.setText("Debe tener entre 6 y 15 caracteres.");
+        user_error.setStyle("-fx-text-fill: #cc3333;");
+        return false;
+
+    } else {
+        user_error.setVisible(false);
         user_error.setText("");
         return true;
+    }
     }
     
 
@@ -529,9 +541,8 @@ private void togglePasswordVisibilityConfirm() {
             }
         
         //user_errorImg.setVisible(!validUser);
-        user_error.setVisible(true);
-        user_error.setStyle(validUser ? "-fx-text-fill: #7c7c7c;" : "-fx-text-fill: #fc0000;");
-        if(!mandado && !validUser){nickname.requestFocus(); mandado = true;}
+        boolean nickOk = validarNickname();
+if (!mandado && !nickOk) { nickname.requestFocus(); mandado = true; }
         
         //pswrdErrorImg.setVisible(pswrd.getText().isEmpty());
         pswrd_error.setVisible(true);
@@ -548,7 +559,7 @@ private void togglePasswordVisibilityConfirm() {
         email_error.setStyle(email.getText().isEmpty() ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
         if(!mandado && !validEmail){email.requestFocus(); mandado = true;}
         
-        return validUser && validEmail && nickNoUsado && pwd1Valida && pwd2Valida;
+        return nickOk && validEmail  && pwd1Valida && pwd2Valida;
     }
     
     // Metodo que limpia todos los datos 
