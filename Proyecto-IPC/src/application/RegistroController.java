@@ -58,6 +58,9 @@ public class RegistroController implements Initializable {
 
         public void setModoModificar(boolean modificar) {
         this.modoModificar = modificar;
+        if (modificar) {
+        nickname.setDisable(true);  // bloquea campo usuario
+    }
         }
         private boolean showingPasswordMain = false;
         private boolean showingPasswordConfirm = false;
@@ -85,6 +88,8 @@ public class RegistroController implements Initializable {
     private Label email_error;
     @FXML
     private Label edad_error;
+    @FXML
+    private User user;
     
     @FXML
     private void cambiarTema() {
@@ -318,6 +323,7 @@ private void togglePasswordVisibilityConfirm() {
     
     
     public void cargarDatosUsuario(User user) {
+        this.user = user;
     nickname.setText(user.getNickName());
     email.setText(user.getEmail());
     pswrdField.setText(user.getPassword());
@@ -597,20 +603,36 @@ private void togglePasswordVisibilityConfirm() {
 
     @FXML
     private void aceptar(ActionEvent event) {
-        //TODO -- Verificar todos los campos + ampliaciones necesarias
         boolean camposValidos = checkCampos();
-        //boolean contrValida = checkPassWrd() && eqPassWrd();
-        
-        if (camposValidos /*&& contrValida*/) {
-            try{
-                nav.registerUser(nickname.getText(), email.getText(), pswrdField.getText(), avatar_img.getImage(), bdate.getValue());
-                mostrarAlert();
-                limpiarCampos();
-                JavaFXMLApplication.setRoot(dest);
-            }catch(Exception e){
-                System.err.println(e.toString());
+
+    if (camposValidos) {
+        if (modoModificar) {
+            // Estamos modificando un usuario ya existente
+            user.setEmail(email.getText());
+            user.setPassword(pswrdField.getText());
+            user.setAvatar(avatar_img.getImage());
+            user.setBirthdate(bdate.getValue());
+
+            System.out.println("✅ Usuario modificado correctamente");
+        } else {
+            // Registro de un nuevo usuario
+            try {
+                nav.registerUser(
+                    nickname.getText(),
+                    email.getText(),
+                    pswrdField.getText(),
+                    avatar_img.getImage(),
+                    bdate.getValue()
+                );
+                System.out.println("✅ Usuario registrado correctamente");
+            } catch (Exception e) {
+                System.err.println("❌ Error al registrar usuario: " + e.getMessage());
             }
         }
+
+        limpiarCampos();
+        JavaFXMLApplication.setRoot(dest);  // volver a la pantalla destino
+    }
     }
 
     @FXML

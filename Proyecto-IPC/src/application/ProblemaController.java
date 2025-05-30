@@ -252,24 +252,26 @@ public class ProblemaController implements Initializable {
     public void setUsuarioLogueado(User usuario) {
         this.usuarioLogueado = usuario;
     }
-    /*@FXML
-    private void modificarPerfilAction(ActionEvent event) {
+    @FXML
+    public void modificarPerfilAction(ActionEvent event) {
         try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Registro.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ModificarRegistro.fxml"));
         Parent root = loader.load();
+        ModificarRegistroController controller = loader.getController();
 
-        RegistroController controller = loader.getController();
-        controller.setModoModificar(true);  // activa el modo de modificaciÃ³n
-        controller.cargarDatosUsuario(usuarioLogueado);  // pasa el usuario actual
+        controller.cargarDatosUsuario(user);
+        controller.setModoModificar(true);
+        controller.setDst("Problema");
 
-        Stage stage = new Stage();
-        stage.setTitle("Modificar Perfil");
-        stage.setScene(new Scene(root));
-        stage.show();
+        JavaFXMLApplication.setRoot(root);
+
+        System.out.println("✅ Cambio a vista ModificarRegistro realizado correctamente");
     } catch (IOException e) {
         e.printStackTrace();
+        System.err.println("❌ Error al cargar ModificarRegistro.fxml: " + e.getMessage());
     }
-    }*/
+        
+    }
 
     
     private void seleccionarMarca(Node nodo) {
@@ -1748,6 +1750,7 @@ public class ProblemaController implements Initializable {
         distanciaCompas = -1;
         cartaPane.setCursor(Cursor.CROSSHAIR);
     }
+
 
 
 
