@@ -763,3 +763,26 @@ hyperlink {
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 3, 0, 0, 1);
     -fx-cursor: hand;
 }
+
+.chart-pie {
+    -fx-start-angle: 90;
+}
+
+.default-color0.chart-pie {
+    -fx-pie-color: #5bf900;
+}
+
+.default-color1.chart-pie {
+    -fx-pie-color: #ff4d4d;
+}
+
+.chart-legend {
+    -fx-background-color: #b3d9f2 !important;
+    -fx-padding: 10;
+}
+
+.chart-pie-label {
+    -fx-fill: #003366 !important;
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+}

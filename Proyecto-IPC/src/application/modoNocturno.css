@@ -792,3 +792,32 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-border-radius: 6;
     -fx-background-radius: 6;
 }
+
+.chart-pie {
+    -fx-start-angle: 90;
+}
+
+.default-color0.chart-pie {
+    -fx-pie-color: #5bf900;
+}
+
+.default-color1.chart-pie {
+    -fx-pie-color: #ff4d4d;
+}
+
+.chart-legend {
+    -fx-background-color: #1c4a6e;
+    -fx-padding: 10;
+}
+
+.chart-pie-label {
+    -fx-fill: #e0eefa;
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+}
+
+.chart-legend-item {
+    -fx-font-size: 14;
+    -fx-text-fill: #cce5ff;
+    -fx-padding: 5 0 5 0;
+}
