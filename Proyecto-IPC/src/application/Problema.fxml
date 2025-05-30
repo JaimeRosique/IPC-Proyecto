@@ -28,7 +28,7 @@
    <children>
       <HBox alignment="CENTER_RIGHT" fillHeight="false" spacing="5.0" VBox.vgrow="NEVER">
          <children>
-            <MenuBar stylesheets="@estilos.css">
+            <MenuBar>
               <menus>
                 <Menu mnemonicParsing="false" text="Ayuda">
                   <items>
@@ -84,7 +84,7 @@
       </HBox>
       <SplitPane fx:id="splitPane" dividerPositions="0.2004694835680751" prefHeight="547.0" prefWidth="854.0" VBox.vgrow="SOMETIMES">
          <items>
-            <ListView fx:id="map_listview" onMouseClicked="#listClicked" prefHeight="399.0" prefWidth="87.0" stylesheets="@estilos.css" />
+            <ListView fx:id="map_listview" onMouseClicked="#listClicked" prefHeight="399.0" prefWidth="87.0" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" layoutX="155.2" layoutY="67.2" onMouseMoved="#showPosition" onMousePressed="#addPoi" pannable="true" prefHeight="508.8" prefWidth="680.8" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -144,7 +144,7 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../resources/compas-de-dibujo.png" />
+                                    <Image url="@../resources/compas.png" />
                                  </image>
                               </ImageView>
                            </graphic>
