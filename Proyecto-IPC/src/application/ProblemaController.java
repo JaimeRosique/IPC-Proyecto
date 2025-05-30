@@ -260,14 +260,14 @@ public class ProblemaController implements Initializable {
     @FXML
     public void modificarPerfilAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ModificarRegistro.fxml"));
-        //Parent root = loader.load();
+        Parent root = loader.load();
         ModificarRegistroController controller = loader.getController();
 
         controller.cargarDatosUsuario(user);
         controller.setModoModificar(true);
         controller.setDst("Problema");
 
-        //JavaFXMLApplication.setRoot(root);                
+        JavaFXMLApplication.setRoot(root);                
     }
 
     
