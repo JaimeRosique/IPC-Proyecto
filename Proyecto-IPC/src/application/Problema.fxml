@@ -65,7 +65,7 @@
             <MenuButton id="perfil" mnemonicParsing="false">
               <items>
                   <MenuItem mnemonicParsing="false" text="Estadísticas" />
-                <MenuItem mnemonicParsing="false" text="Modificar perfil" />
+                <MenuItem mnemonicParsing="false" onAction="#modificarPerfilAction" text="Modificar perfil" />
                 <MenuItem mnemonicParsing="false" text="Cerrar Sesión" />
               </items>
                <graphic>

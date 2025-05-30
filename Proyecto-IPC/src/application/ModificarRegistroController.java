@@ -65,6 +65,9 @@ public class ModificarRegistroController implements Initializable {
     @FXML
     private Label edad_error;
     
+    @FXML
+    private User user;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb){
         if (modoModificar) {
@@ -165,15 +168,20 @@ public class ModificarRegistroController implements Initializable {
         pswrd_check.setOnKeyTyped(event -> errPasswrd1());
         
     }
+    @FXML
+
+    
+    
+    
+    
+    
     public void cargarDatosUsuario(User user) {
     nickname.setText(user.getNickName());
     email.setText(user.getEmail());
     pswrd.setText(user.getPassword());
     bdate.setValue(user.getBirthdate());
     avatar_img.setImage(user.getAvatar());
-    if (modoModificar){
-        nickname.setDisable(true);
-    }
+    nickname.setDisable(true);
 
 }
     
@@ -365,7 +373,7 @@ public class ModificarRegistroController implements Initializable {
         
         boolean validUser = !user_name.isEmpty();
         boolean validEmail = !emailText.isEmpty() && !emailText.contains(" ");
-        boolean nickNoUsado = !nav.exitsNickName(nickname.getText());
+        boolean nickNoUsado = true;
         boolean pwd1Valida = pswrd.getText().length() >= 6;
         boolean pwd2Valida = pswrd_check.getText().equals(pswrd.getText());
         boolean edadValida = validarEdad();
@@ -443,26 +451,24 @@ public class ModificarRegistroController implements Initializable {
     private void cancelar(ActionEvent event) {
         //limpiarCampos();
         InicioSesionController controller = (InicioSesionController) JavaFXMLApplication.getController("IniciarSesion");
-        JavaFXMLApplication.setRoot("IniciarSesion");
+        JavaFXMLApplication.setRoot("Problema");
         controller.setFocus();
     }
 
     @FXML
     private void aceptar(ActionEvent event) {
-        //TODO -- Verificar todos los campos + ampliaciones necesarias
         boolean camposValidos = checkCampos();
-        //boolean contrValida = checkPassWrd() && eqPassWrd();
-        
-        if (camposValidos /*&& contrValida*/) {
-            try{
-                nav.registerUser(nickname.getText(), email.getText(), pswrd.getText(), avatar_img.getImage(), bdate.getValue());
-                mostrarAlert();
-                limpiarCampos();
-                JavaFXMLApplication.setRoot(dest);
-            }catch(Exception e){
-                System.err.println(e.toString());
-            }
-        }
+    
+    if (camposValidos) {
+        user.setEmail(email.getText());
+        user.setPassword(pswrd.getText());
+        user.setAvatar(avatar_img.getImage());
+        user.setBirthdate(bdate.getValue());
+
+        System.out.println("Datos del usuario modificados correctamente");
+
+        JavaFXMLApplication.setRoot("Problema");  // volver a ProblemaController
+    }
     }
 
     @FXML
