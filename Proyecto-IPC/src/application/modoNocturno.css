@@ -155,6 +155,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0, 0, 1);
 }
 
+#listButton {
+    -fx-max-width: 350;
+}
+
 #perfil {
     -fx-text-overrun: clip;
     -fx-background-color: #355e8c;

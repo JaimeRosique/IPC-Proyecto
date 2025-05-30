@@ -775,6 +775,7 @@ public class ProblemaController implements Initializable {
 
                     for (Answer a : respuestas) {
                         Button btn = new Button(a.getText());
+                        btn.setId("listButton");
                         btn.setWrapText(true);
                         btn.setMaxWidth(Double.MAX_VALUE);
                         btn.prefWidthProperty().bind(vbox.prefWidthProperty());
