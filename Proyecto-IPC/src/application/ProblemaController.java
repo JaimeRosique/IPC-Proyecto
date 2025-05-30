@@ -53,6 +53,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextInputDialog;
@@ -192,6 +193,8 @@ public class ProblemaController implements Initializable {
     private User usuarioLogueado;
     @FXML
     private VBox rootPane;
+    @FXML
+    private ComboBox<Integer> grosorButton;
 
     @FXML
     private void cambiarTema() {
@@ -1739,7 +1742,6 @@ public class ProblemaController implements Initializable {
         regla.setVisible(reglaActiva);
     }
 
-    @FXML
     private void medirDistancia(ActionEvent event) {
         midiendoDistancia = true;
         puntosMedicion.clear();
