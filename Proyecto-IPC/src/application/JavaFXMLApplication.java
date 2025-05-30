@@ -28,6 +28,12 @@ public class JavaFXMLApplication extends Application {
 
         // Configuración de la ventana principal
         stage.setScene(scene);
+        stage.getIcons().add(new Image(InicioSesionController.class.getResourceAsStream("/resources/compas.png")));
+        stage.centerOnScreen();
+        stage.setMaxWidth(600);
+        stage.setMaxHeight(500);
+        stage.setMinHeight(500);
+        stage.setMinWidth(400);
         stage.show();
     }
 
@@ -55,6 +61,7 @@ public class JavaFXMLApplication extends Application {
             Stage stage = (Stage) scene.getWindow();
             switch (clave) {
                 case "IniciarSesion":
+                    stage.getIcons().add(new Image(InicioSesionController.class.getResourceAsStream("/resources/compas.png")));
                     stage.setTitle("Inicio Sesion");
                     stage.centerOnScreen();
                     stage.setMaxWidth(600);
@@ -63,6 +70,7 @@ public class JavaFXMLApplication extends Application {
                     stage.setMinWidth(400);
                     break;
                 case "Registro":
+                    stage.getIcons().add(new Image(RegistroController.class.getResourceAsStream("/resources/compas.png")));
                     stage.setTitle("Registro");
                     stage.centerOnScreen();
                     stage.setMaxWidth(900);
@@ -71,14 +79,12 @@ public class JavaFXMLApplication extends Application {
                     stage.setMinWidth(400);
                     break;
                 case "Problema":
-                    //stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/compas.png")));
-                    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-                    stage.setTitle("Menu");
-                    stage.setMaximized(true); 
-                    stage.setMaxHeight(8000);
-                    stage.setMaxWidth(8000);
+                    stage.setMaximized(true);
+                    stage.getIcons().add(new Image(ProblemaController.class.getResourceAsStream("/resources/compas.png")));
                     stage.setMinHeight(900);
                     stage.setMinWidth(700);
+                    stage.setMaxHeight(8000);
+                    stage.setMaxWidth(8000);
                     break;
             }
         } else {
