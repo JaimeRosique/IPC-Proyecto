@@ -9,9 +9,42 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.layout.VBox;
 import model.*;
 
 public class EstadisticasController implements Initializable {
+
+    @FXML
+    private VBox rootPane;
+    @FXML
+    private BarChart<?, ?> dataHistogram;
+    @FXML
+    private NumberAxis yAxis;
+    @FXML
+    private CategoryAxis xAxis;
+    
+    @FXML
+    private void cambiarTema() {
+        Scene scene = rootPane.getScene();
+
+        if (scene != null) {
+            ThemeManager.toggleTheme(scene);
+
+            // ⚠️ Forzar la re-asignación del root
+            Parent currentRoot = scene.getRoot();
+            scene.setRoot(new Group());  // cambiar temporalmente
+            scene.setRoot(currentRoot);  // volver al root real
+
+            currentRoot.applyCss();
+            currentRoot.layout();
+        }
+    }
 
     private List<Session> sesion;
     private Navigation nav;
@@ -27,7 +60,6 @@ public class EstadisticasController implements Initializable {
     private Label media;
     @FXML
     private Button moreInfoButton;
-    @FXML
     private PieChart dataPieChart;
 
     @Override

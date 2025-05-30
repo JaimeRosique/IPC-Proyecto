@@ -25,6 +25,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-padding: 10;
 }
 
+.grid-pane .row {
+    -fx-min-height: 100px;
+}
+
+.row {
+    -fx-min-height: 100px;
+}
+
 .label {
     -fx-text-overrun: clip;
 }

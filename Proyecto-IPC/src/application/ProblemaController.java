@@ -1769,6 +1769,8 @@ public class ProblemaController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Estadísticas");
             stage.setScene(new Scene(root));
+            stage.centerOnScreen();
+            stage.getIcons().add(new Image(ProblemaController.class.getResourceAsStream("/resources/compas.png")));
             stage.initModality(Modality.APPLICATION_MODAL); // <- bloquea la ventana actual
             stage.initOwner(cartaPane.getScene().getWindow()); // <- ventana principal como owner
             stage.showAndWait(); // <- espera hasta que se cierre
