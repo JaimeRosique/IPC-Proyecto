@@ -259,7 +259,6 @@ public class ProblemaController implements Initializable {
     }
     @FXML
     public void modificarPerfilAction(ActionEvent event) {
-        try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ModificarRegistro.fxml"));
         Parent root = loader.load();
         ModificarRegistroController controller = loader.getController();
@@ -268,14 +267,7 @@ public class ProblemaController implements Initializable {
         controller.setModoModificar(true);
         controller.setDst("Problema");
 
-        JavaFXMLApplication.setRoot(root);
-
-        System.out.println("✅ Cambio a vista ModificarRegistro realizado correctamente");
-    } catch (IOException e) {
-        e.printStackTrace();
-        System.err.println("❌ Error al cargar ModificarRegistro.fxml: " + e.getMessage());
-    }
-        
+        JavaFXMLApplication.setRoot(root);                
     }
 
     

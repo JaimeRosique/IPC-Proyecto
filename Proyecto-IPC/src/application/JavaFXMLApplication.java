@@ -23,23 +23,8 @@ public class JavaFXMLApplication extends Application {
         cargarEscena("InicioSesion.fxml", "IniciarSesion");
         cargarEscena("Registro.fxml", "Registro");
         cargarEscena("Problema.fxml", "Problema");
-        /*
-        cargarEscena("Menu.fxml", "Menu");
-        cargarEscena("ActualizarDatos.fxml", "ActualizarDatos");
-        cargarEscena("AddGastos.fxml", "AddGastos");
-        cargarEscena("AddCat.fxml", "AddCat");
-        cargarEscena("VerCuenta.fxml", "VerCuenta");
-        cargarEscena("VerCuentaAño.fxml", "VerCuentaAño");
-        cargarEscena("VerCuentaCat.fxml", "VerCuentaCat");
-        cargarEscena("ListaCargos.fxml", "ListaCargos");
-        */
-
         // Crear la escena inicial
         scene = new Scene(roots.get("IniciarSesion"));
-
-        // Cargar CSS si lo tienes
-        //String css = this.getClass().getResource("/styles/EstilosLayout.css").toExternalForm();
-        //scene.getStylesheets().add(css);
 
         // Configuración de la ventana principal
         stage.setScene(scene);
@@ -86,49 +71,14 @@ public class JavaFXMLApplication extends Application {
                     stage.setMinWidth(400);
                     break;
                 case "Problema":
-                    //stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
+                    //stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/compas.png")));
                     Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-                    stage.setX(screenBounds.getMinX());
-                    stage.setY(screenBounds.getMinY());
-                    stage.setWidth(screenBounds.getWidth());
-                    stage.setHeight(screenBounds.getHeight());
                     stage.setTitle("Menu");
-                    stage.centerOnScreen();
+                    stage.setMaximized(true); 
+                    stage.setMaxHeight(8000);
+                    stage.setMaxWidth(8000);
                     stage.setMinHeight(900);
                     stage.setMinWidth(700);
-                    stage.setMaximized(true); // PANTALLA GRANDE
-                    break;
-                case "ActualizarDatos":
-                    stage.setMinWidth(922);
-                    stage.setMinHeight(830);
-                    stage.setTitle("Actualizar Datos");
-                    stage.centerOnScreen();
-                    break;
-                case "AddGastos":
-                    stage.setMinWidth(922);
-                    stage.setMinHeight(830);
-                    stage.setTitle("Añadir Gastos");
-                    stage.centerOnScreen();
-                    break;
-                case "AddCat":
-                    stage.setMinWidth(400);
-                    stage.setMinHeight(300);
-                    stage.setTitle("Añadir Categoria");
-                    stage.centerOnScreen();
-                    break;
-                case "VerCuenta":
-                case "VerCuentaAño":
-                case "VerCuentaCat":
-                    stage.setMinWidth(922);
-                    stage.setMinHeight(830);
-                    stage.setTitle("Ver Cuenta");
-                    stage.centerOnScreen();
-                    break;
-                case "ListaCargos":
-                    stage.setMinWidth(922);
-                    stage.setMinHeight(830);
-                    stage.setTitle("Lista Cargos");
-                    stage.centerOnScreen();
                     break;
             }
         } else {
