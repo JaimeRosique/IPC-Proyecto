@@ -24,8 +24,9 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
-<VBox fx:id="rootPane" prefHeight="704.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProblemaController">
+<VBox fx:id="rootPane" prefHeight="745.0" prefWidth="2152.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProblemaController">
    <children>
       <HBox alignment="CENTER_RIGHT" fillHeight="false" spacing="5.0" VBox.vgrow="NEVER">
          <children>
@@ -113,6 +114,7 @@
                               </MenuButton>
                               <Button fx:id="transportador" layoutX="574.0" layoutY="98.0" mnemonicParsing="false" styleClass="transportador" />
                               <Button fx:id="regla" layoutX="574.0" layoutY="48.0" mnemonicParsing="false" styleClass="regla" />
+                              <Circle fx:id="rotadorButton" accessibleRole="BUTTON" centerY="10.0" fill="DODGERBLUE" layoutX="1074.0" layoutY="20.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                            </children>
                         </Pane>
                      </content>
@@ -209,7 +211,7 @@
                               <Insets top="-600.0" />
                            </StackPane.margin>
                         </Button>
-                        <ComboBox fx:id="grosorButton" prefWidth="150.0">
+                        <ComboBox fx:id="grosorButton" onAction="#cambiarGrosor" prefWidth="150.0">
                            <StackPane.margin>
                               <Insets top="480.0" />
                            </StackPane.margin>
