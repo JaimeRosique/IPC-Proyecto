@@ -73,6 +73,10 @@ public class RegistroController implements Initializable {
     @FXML
     private TextField email;
     @FXML
+    private Image lF;
+    @FXML
+    private Image dF;
+    @FXML
     private ImageView avatar_izq;
     @FXML
     private ImageView avatar_img;
@@ -499,26 +503,25 @@ private void togglePasswordVisibilityConfirm() {
     
     // Metodo que inicializa las 12 imagenes de imgArray 
     private void imgSetUp() {
-        /*
-        lF = new Image("images/Flecha-Izq.png", 140, 150, false, true);
-        dF= new Image("images/Flecha-Der.png", 140, 150, false, true);
-        imgArray[0] = new Image("avatars/default.png", 140, 150, false, true);
-        imgArray[1] = new Image("avatars/men.png", 140, 150, false, true);
-        imgArray[2] = new Image("avatars/men2.png", 140, 150, false, true);
-        imgArray[3] = new Image("avatars/men3.png", 140, 150, false, true);
-        imgArray[4] = new Image("avatars/men4.png", 140, 150, false, true);
-        imgArray[5] = new Image("avatars/men5.png", 140, 150, false, true);
-        imgArray[6] = new Image("avatars/woman.png", 140, 150, false, true);
-        imgArray[7] = new Image("avatars/woman2.png", 140, 150, false, true);
-        imgArray[8] = new Image("avatars/woman3.png", 140, 150, false, true);
-        imgArray[9] = new Image("avatars/woman4.png", 140, 150, false, true);
-        imgArray[10] = new Image("avatars/woman5.png", 140, 150, false, true);
-        imgArray[11] = new Image("avatars/woman6.png", 140, 150, false, true);
-        imgUser.setImage(imgArray[0]);
-        lArrow.setImage(lF);
-        dArrow.setImage(dF);
+        
+        lF = new Image("resources/flecha_izq.png", 140, 150, false, true);
+        dF = new Image("resources/flecha_der.png", 140, 150, false, true);          
+        imgArray[0] = new Image("resources/men.png", 140, 150, false, true);
+        imgArray[1] = new Image("resources/men2.png", 140, 150, false, true);
+        imgArray[2] = new Image("resources/men3.png", 140, 150, false, true);
+        imgArray[3] = new Image("resources/men4.png", 140, 150, false, true);
+        imgArray[4] = new Image("resources/men5.png", 140, 150, false, true);
+        imgArray[5] = new Image("resources/woman.png", 140, 150, false, true);
+        imgArray[6] = new Image("resources/woman2.png", 140, 150, false, true);
+        imgArray[7] = new Image("resources/woman3.png", 140, 150, false, true);
+        imgArray[8] = new Image("resources/woman4.png", 140, 150, false, true);
+        imgArray[9] = new Image("resources/woman5.png", 140, 150, false, true);
+        
+        avatar_izq.setImage(lF);
+        avatar_der.setImage(dF);
         i = 0;
-        */
+        avatar_img.setImage(imgArray[i]);
+        
     }
     
     //Método para comprobar los campos
@@ -648,15 +651,13 @@ if (!mandado && !nickOk) { nickname.requestFocus(); mandado = true; }
 
     @FXML
     private void img_izq(MouseEvent event) {
-        i--;
-        if(i < 0){i = 11;}
+        i = (i - 1 + imgArray.length) % imgArray.length;
         avatar_img.setImage(imgArray[i]);
     }
 
     @FXML
     private void img_der(MouseEvent event) {
-        i++;
-        if(i >= 12){i = 0;}
+        i = (i + 1) % imgArray.length;
         avatar_img.setImage(imgArray[i]);
     }
 
