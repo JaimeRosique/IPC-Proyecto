@@ -15,6 +15,8 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -33,7 +35,38 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Ayuda">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#about" text="Acerca de" />
+                    <MenuItem mnemonicParsing="false" onAction="#about">
+                           <graphic>
+                              <TabPane prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                    <Tab text="Untitled Tab">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                      </content>
+                                    </Tab>
+                                  <Tab text="Untitled Tab 1">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                  </Tab>
+                                  <Tab text="Untitled Tab 2">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                  </Tab>
+                                    <Tab text="Untitled Tab">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                      </content>
+                                    </Tab>
+                                    <Tab text="Untitled Tab">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                      </content>
+                                    </Tab>
+                                </tabs>
+                              </TabPane>
+                           </graphic></MenuItem>
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Herramientas">

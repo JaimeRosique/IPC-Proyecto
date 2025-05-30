@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 import java.util.HashMap;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
@@ -79,12 +80,14 @@ public class JavaFXMLApplication extends Application {
                     stage.setMinWidth(400);
                     break;
                 case "Problema":
-                    stage.setMaximized(true);
                     stage.getIcons().add(new Image(ProblemaController.class.getResourceAsStream("/resources/compas.png")));
+                    stage.setTitle("Menu");
                     stage.setMinHeight(900);
                     stage.setMinWidth(700);
                     stage.setMaxHeight(8000);
                     stage.setMaxWidth(8000);
+                    // Esperar a que se renderice y luego maximizar
+                    Platform.runLater(() -> stage.setMaximized(true));
                     break;
             }
         } else {

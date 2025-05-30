@@ -632,7 +632,7 @@ public class ProblemaController implements Initializable {
         //Esperar la respuesta del usuario
         Optional<ButtonType> resultado = alerta.showAndWait();
         if(resultado.isPresent() && resultado.get() == ButtonType.OK) {
-            cartaPane.getChildren().removeIf(nodo -> nodo != image_map);
+            cartaPane.getChildren().removeIf(nodo -> nodo != image_map && nodo != transportador && nodo != regla);
         }
     }
     
