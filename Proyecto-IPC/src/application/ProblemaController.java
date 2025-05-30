@@ -564,14 +564,14 @@ public class ProblemaController implements Initializable {
     
     @FXML
     private void activarModoGoma() {
+        limpiar();
         modoGomaActivo = true;
-        modoPuntosActivo = false;
-        modoLineaActivo = false;
-        modoArcoActivo = false;
-        modoTextoActivo = false;
-        modoPintarActivo = false;
-        centroArcos = null;
-        primerPunto = null;
+        if (!marcasSeleccionadas.isEmpty()) {
+            for (Node n : new ArrayList<>(marcasSeleccionadas)) {
+                cartaPane.getChildren().remove(n);
+            }
+            marcasSeleccionadas.clear();
+        }
     }
     @FXML
     private void activarModoPintar() {
@@ -585,32 +585,13 @@ public class ProblemaController implements Initializable {
         primerPunto = null;
     }
     private void hacerInteractivo(Node nodo) {
-        /*
         nodo.setOnMouseClicked(event -> {
-            colorSeleccionado = coloresButton.getValue();
             if (modoGomaActivo) {
-                cartaPane.getChildren().remove(nodo);
-                event.consume();
-            } else if (modoPintarActivo) {
-                if (nodo instanceof Shape) {
-                    ((Shape) nodo).setStroke(colorSeleccionado);
-                    if (!(nodo instanceof Line)) {
-                        ((Shape) nodo).setFill(colorSeleccionado);
-                    }
-                    if (nodo instanceof Arc) {
-                        ((Shape) nodo).setFill(null);
-                    }
-                } else if (nodo instanceof Label) {
-                    ((Label) nodo).setTextFill(colorSeleccionado);
+                Node objetivo = event.getPickResult().getIntersectedNode();
+                if (objetivo instanceof Line || objetivo instanceof Circle || objetivo instanceof Arc || objetivo instanceof TextField || objetivo instanceof Group) {
+                    cartaPane.getChildren().remove(objetivo);
+                    marcasSeleccionadas.remove(objetivo);
                 }
-                event.consume();
-            }
-        });
-        */
-        nodo.setOnMouseClicked(event -> {
-            if (modoGomaActivo) {
-                cartaPane.getChildren().remove(nodo);
-                event.consume();
             } else if (modoPintarActivo && marcasSeleccionadas.contains(nodo)) {
                 Color nuevoColor = coloresButton.getValue();
 
@@ -1216,6 +1197,7 @@ public class ProblemaController implements Initializable {
                                 limpiarSeleccion();
                             }
                             seleccionarMarca(punto);
+                            seleccionarMarca(ghostPunto);
                         }
                     });
 
