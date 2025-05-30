@@ -269,6 +269,13 @@ public class ProblemaController implements Initializable {
 
         JavaFXMLApplication.setRoot(root);                
     }
+    @FXML
+    public void cerrarSesion(ActionEvent event) throws IOException {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("InicioSesion.fxml"));
+    Parent root = loader.load();
+
+    JavaFXMLApplication.setRoot(root);
+}
 
     
     private void seleccionarMarca(Node nodo) {
@@ -1450,7 +1457,6 @@ public class ProblemaController implements Initializable {
         ((Stage) zoom_slider.getScene().getWindow()).close();
     }
 
-    @FXML
     private void about(ActionEvent event) {
         Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
         mensaje.setGraphic(null);

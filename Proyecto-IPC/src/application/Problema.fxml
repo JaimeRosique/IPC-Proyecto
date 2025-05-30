@@ -111,7 +111,7 @@
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#irEstadisticas" text="Estadísticas" />
                 <MenuItem mnemonicParsing="false" onAction="#modificarPerfilAction" text="Modificar perfil" />
-                <MenuItem mnemonicParsing="false" text="Cerrar sesión" />
+                <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar sesión" />
               </items>
                <graphic>
                   <ImageView fitHeight="21.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
