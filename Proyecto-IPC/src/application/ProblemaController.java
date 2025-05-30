@@ -47,6 +47,7 @@ import java.util.Map;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
@@ -62,6 +63,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
@@ -235,7 +237,26 @@ public class ProblemaController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Ayuda - " + titulo);
         alert.setHeaderText(titulo);
-        alert.setContentText(contenido);
+        
+        Label label = new Label(contenido);
+        label.setWrapText(true);
+        label.setMaxWidth(400); // Ajusta esto según el tamaño que prefieras
+
+        VBox vbox = new VBox(label);
+        vbox.setSpacing(10);
+        vbox.setPadding(new Insets(10));
+
+        alert.getDialogPane().setContent(vbox);
+        alert.getDialogPane().setPrefWidth(450); // Ancho del diálogo
+        alert.getDialogPane().setPrefHeight(Region.USE_COMPUTED_SIZE); // Altura automática
+
+        Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+        alertStage.getIcons().add(
+                new Image(getClass().getResourceAsStream("/resources/compas.png")));
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+        dialogPane.getStyleClass().add(" ");
+        
         alert.showAndWait();
     }
     

@@ -464,6 +464,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-cursor: hand;
 }
 
+.text-area {
+    -fx-control-inner-background: transparent;
+    -fx-font-size: 14;
+    -fx-border-color: transparent;
+    -fx-border-radius: 6;
+}
+
 /* Estilo general del cuadro de diálogo */
 .dialog-pane {
     -fx-background-color: #cfe9fc !important;
@@ -474,8 +481,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-font-size: 14;
 }
 
+.dialog-pane > *.content, .dialog-pane .text-area, .dialog-pane .text {
+    -fx-background-color: #cfe9fc !important;
+}
+
 .dialog-pane .header-panel {
-    -fx-background-color: #b3d9f2;
+    -fx-background-color: #b3d9f2 !important;
 }
 
 .dialog-pane .button {
