@@ -258,7 +258,7 @@ public class ProblemaController implements Initializable {
         this.usuarioLogueado = usuario;
     }
     @FXML
-    public void modificarPerfilAction(ActionEvent event) {
+    public void modificarPerfilAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ModificarRegistro.fxml"));
         //Parent root = loader.load();
         ModificarRegistroController controller = loader.getController();

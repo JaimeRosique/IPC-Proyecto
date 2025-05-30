@@ -470,22 +470,41 @@ public class ModificarRegistroController implements Initializable {
 
     @FXML
     private void aceptar(ActionEvent event) {
-        boolean camposValidos = checkCampos();
-    
+       boolean camposValidos = checkCampos();
+
     if (camposValidos) {
-        user.setEmail(email.getText());
-        user.setPassword(pswrd.getText());
-        if (avatar_img.getImage() == null) {
-    avatar_img.setImage(imgArray[0]);  // usa la primera del array por defecto
-}
+        try {
+            // Asegurar imagen por defecto si está vacía
+            if (avatar_img.getImage() == null) {
+                System.out.println(">>> Imagen null, asignando imagen por defecto");
+                avatar_img.setImage(imgArray[0]);
+            }
 
-user.setAvatar(avatar_img.getImage());
-        user.setAvatar(avatar_img.getImage());
-        user.setBirthdate(bdate.getValue());
+            user.setEmail(email.getText());
+            System.out.println(">>> Email asignado: " + email.getText());
 
-        System.out.println("Datos del usuario modificados correctamente");
+            user.setPassword(pswrd.getText());
+            System.out.println(">>> Password asignado");
 
-        JavaFXMLApplication.setRoot("Problema");  // volver a ProblemaController
+            user.setAvatar(avatar_img.getImage());
+            System.out.println(">>> Avatar asignado");
+
+            user.setBirthdate(bdate.getValue());
+            System.out.println(">>> Fecha de nacimiento asignada");
+
+            // Si tienes método de guardado (ajústalo si tu modelo lo requiere)
+            // user.save();
+            System.out.println(">>> Datos del usuario preparados correctamente");
+
+            // Cambiar de escena
+            JavaFXMLApplication.setRoot("Problema");
+
+        } catch (Exception e) {
+            System.err.println(">>> ERROR al guardar usuario: " + e.getMessage());
+            e.printStackTrace();
+        }
+    } else {
+        System.out.println(">>> Los campos no son válidos, revisa los errores.");
     }
     }
 
