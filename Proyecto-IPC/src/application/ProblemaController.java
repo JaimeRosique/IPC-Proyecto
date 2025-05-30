@@ -105,6 +105,8 @@ public class ProblemaController implements Initializable {
     @FXML
     private Button transportador;
     private boolean transportadorActivo = false;
+    private double anchoBoton;
+    private double altoBoton;
     private Group ghostPunto;
     private Line lineaTemporal;
     private List<Point2D> puntosArcoLibre = new ArrayList<>();
@@ -837,36 +839,50 @@ public class ProblemaController implements Initializable {
         
         transportador.setVisible(false);
         transportador.setOnMousePressed(event -> {
-            offsetX = event.getSceneX() - transportador.getLayoutX();
-            offsetY = event.getSceneY() - transportador.getLayoutY();
+            offsetX = event.getX();
+            offsetY = event.getY();
         });
         transportador.setOnMouseDragged(event -> {
-            double newX = event.getSceneX() - offsetX;
-            double newY = event.getSceneY() - offsetY;
+            // Convertir la posición del mouse en escena a coordenadas dentro de cartaPane
+            Point2D localCoords = cartaPane.sceneToLocal(event.getSceneX(), event.getSceneY());
 
+            double newX = localCoords.getX() - transportador.getWidth() / 2;
+            double newY = localCoords.getY() - transportador.getHeight() / 2;
+
+            // Límites para que no se salga del pane
             double anchoPane = cartaPane.getWidth();
             double altoPane = cartaPane.getHeight();
 
-            double anchoBoton = transportador.getBoundsInParent().getWidth();
-            double altoBoton = transportador.getBoundsInParent().getHeight();
-
-            if (newX >= 0 && newX <= anchoPane - anchoBoton) {
+            if (newX >= 0 && newX <= anchoPane - transportador.getWidth()) {
                 transportador.setLayoutX(newX);
-            }
-            if (newY >= 0 && newY <= altoPane - altoBoton) {
+        }
+            if (newY >= 0 && newY <= altoPane - transportador.getHeight()) {
                 transportador.setLayoutY(newY);
             }
         });
     
         regla.setVisible(false); // Oculta al principio
-        regla.setOnMousePressed(e -> {
-
-                offsetX = e.getSceneX() - regla.getLayoutX();
-                offsetY = e.getSceneY() - regla.getLayoutY();
+        regla.setOnMousePressed(event -> {
+                offsetX = event.getX();
+                offsetY = event.getY();
         });
-        regla.setOnMouseDragged(e -> {
-                regla.setLayoutX(e.getSceneX() - offsetX);
-                regla.setLayoutY(e.getSceneY() - offsetY);
+        regla.setOnMouseDragged(event -> {
+                // Convertir la posición del mouse en escena a coordenadas dentro de cartaPane
+            Point2D localCoords = cartaPane.sceneToLocal(event.getSceneX(), event.getSceneY());
+
+            double newX = localCoords.getX() - regla.getWidth() / 2;
+            double newY = localCoords.getY() - regla.getHeight() / 2;
+
+            // Límites para que no se salga del pane
+            double anchoPane = cartaPane.getWidth();
+            double altoPane = cartaPane.getHeight();
+
+            if (newX >= 0 && newX <= anchoPane - regla.getWidth()) {
+                regla.setLayoutX(newX);
+        }
+            if (newY >= 0 && newY <= altoPane - regla.getHeight()) {
+                regla.setLayoutY(newY);
+            }
         });
         
         Platform.runLater(() -> {
@@ -1040,6 +1056,9 @@ public class ProblemaController implements Initializable {
                     if (puntosCompas.size() == 2) {
                         distanciaCompas = puntosCompas.get(0).distance(puntosCompas.get(1));
                         Alert a = new Alert(Alert.AlertType.INFORMATION);
+                        DialogPane dialogPane = a.getDialogPane();
+                        dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+                        dialogPane.getStyleClass().add(" ");
                         a.setHeaderText("Distancia guardada: " + String.format("%.2f", distanciaCompas));
                         a.showAndWait();
                         if (lineaTemporalCompas != null) {
@@ -1063,6 +1082,9 @@ public class ProblemaController implements Initializable {
 
                             if (destino.getX() < 0 || destino.getY() < 0 || destino.getX() > cartaPane.getWidth() || destino.getY() > cartaPane.getHeight()) {
                                 Alert fuera = new Alert(Alert.AlertType.ERROR);
+                                DialogPane dialogPane = fuera.getDialogPane();
+                                dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+                                dialogPane.getStyleClass().add(" ");
                                 fuera.setHeaderText("La línea se sale del límite del panel");
                                 fuera.setContentText("Elige otro punto o reduce el ángulo.");
                                 fuera.showAndWait();
@@ -1085,6 +1107,9 @@ public class ProblemaController implements Initializable {
 
                         } catch (NumberFormatException ex) {
                             Alert error = new Alert(Alert.AlertType.ERROR);
+                            DialogPane dialogPane = error.getDialogPane();
+                            dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+                            dialogPane.getStyleClass().add(" ");
                             error.setHeaderText("Ángulo inválido");
                             error.setContentText("Debes introducir un número válido.");
                             error.showAndWait();
@@ -1702,9 +1727,6 @@ public class ProblemaController implements Initializable {
         transportador.setVisible(transportadorActivo);
 
         if (transportadorActivo) {
-            // Inicializar posición si quieres (por ejemplo, centro)
-            transportador.setLayoutX(100);
-            transportador.setLayoutY(100);
             cartaPane.setCursor(Cursor.OPEN_HAND);
         } else {
             cartaPane.setCursor(Cursor.DEFAULT);

@@ -37,18 +37,16 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Herramientas">
                   <items>
-                        <MenuItem fx:id="punto" mnemonicParsing="false" onAction="#crearPunto" text="Punto" />
-                        <MenuItem mnemonicParsing="false" onAction="#crearLinea" text="Crear Linea" />
-                        <MenuItem mnemonicParsing="false" onAction="#crearArco" text="Crear Arco" />
-                        <MenuItem mnemonicParsing="false" onAction="#crearTexto" text="Crear Texto" />
-                        <MenuItem mnemonicParsing="false" onAction="#cambiarColor" text="Cambiar Color" />
-                        <MenuItem mnemonicParsing="false" onAction="#eliminarMarca" text="Eliminar" />
-                        <MenuItem mnemonicParsing="false" onAction="#limpiarCarta" text="Limpiar Carta" />
-                        <MenuItem mnemonicParsing="false" onAction="#crearTransportador" text="Mostrar Transportador" />
-                        <MenuItem mnemonicParsing="false" onAction="#crearRegla" text="Crear Regla" />
-                        <MenuItem mnemonicParsing="false" onAction="#medirDistancia" text="Medir distancia" />
-                        <MenuItem fx:id="compas" mnemonicParsing="false" onAction="#crearCompas" text="Crear Compás" />
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem fx:id="punto" mnemonicParsing="false" onAction="#crearPunto" text="Crear punto" />
+                        <MenuItem mnemonicParsing="false" onAction="#crearLinea" text="Crear linea" />
+                        <MenuItem mnemonicParsing="false" onAction="#crearArco" text="Crear arco" />
+                        <MenuItem mnemonicParsing="false" onAction="#crearTexto" text="Crear texto" />
+                        <MenuItem mnemonicParsing="false" onAction="#cambiarColor" text="Cambiar color" />
+                        <MenuItem mnemonicParsing="false" onAction="#eliminarMarca" text="Eliminar selección" />
+                        <MenuItem mnemonicParsing="false" onAction="#limpiarCarta" text="Limpiar carta" />
+                        <MenuItem mnemonicParsing="false" onAction="#crearTransportador" text="Mostrar transportador" />
+                        <MenuItem mnemonicParsing="false" onAction="#crearRegla" text="Mostrar regla" />
+                        <MenuItem fx:id="compas" mnemonicParsing="false" onAction="#crearCompas" text="Utilizar compás" />
                   </items>
                 </Menu>
               </menus>
@@ -66,7 +64,7 @@
               <items>
                   <MenuItem mnemonicParsing="false" text="Estadísticas" />
                 <MenuItem mnemonicParsing="false" onAction="#modificarPerfilAction" text="Modificar perfil" />
-                <MenuItem mnemonicParsing="false" text="Cerrar Sesión" />
+                <MenuItem mnemonicParsing="false" text="Cerrar sesión" />
               </items>
                <graphic>
                   <ImageView fitHeight="21.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
