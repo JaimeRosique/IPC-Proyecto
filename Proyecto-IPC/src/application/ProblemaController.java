@@ -71,6 +71,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import model.*;
 
 
@@ -1758,6 +1759,25 @@ public class ProblemaController implements Initializable {
 
     @FXML
     private void irEstadisticas(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("estadisticas.fxml"));
+            Parent root = loader.load();
+
+            EstadisticasController controller = loader.getController();
+            controller.setDatos(nav, user);
+
+            Stage stage = new Stage();
+            stage.setTitle("Estadísticas");
+            stage.setScene(new Scene(root));
+            stage.centerOnScreen();
+            stage.getIcons().add(new Image(ProblemaController.class.getResourceAsStream("/resources/compas.png")));
+            stage.initModality(Modality.APPLICATION_MODAL); // <- bloquea la ventana actual
+            stage.initOwner(cartaPane.getScene().getWindow()); // <- ventana principal como owner
+            stage.showAndWait(); // <- espera hasta que se cierre
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
     }
 
 
