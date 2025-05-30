@@ -47,6 +47,7 @@ import java.util.Map;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
@@ -73,6 +74,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import model.*;
 
@@ -199,7 +201,10 @@ public class ProblemaController implements Initializable {
     @FXML
     private ComboBox<Integer> grosorButton;
     @FXML
-    private MenuItem a;
+    private Circle rotadorButton;
+    private Point2D centroRegla;
+    private double anguloInicial;
+    private boolean modoRotar = false;
 
     @FXML
     public void mostrarAyudaTransportador() {
@@ -207,7 +212,7 @@ public class ProblemaController implements Initializable {
     }
     @FXML
     public void mostrarAyudaColores() {
-        mostrarAyuda("Colores y grosor", " ");
+        mostrarAyuda("Colores y grosor", "Las marcas seleccionadas cambian de color o grosor desde los botones de seleccionar color o grosor. ");
     }
     @FXML
     public void mostrarAyudaDibujar() {
@@ -215,23 +220,22 @@ public class ProblemaController implements Initializable {
     }
     @FXML
     public void mostrarAyudaCompas() {
-        mostrarAyuda("Compás", " ");
+        mostrarAyuda("Compás", "El compás mide la distancia entre dos puntos y dado un ángulo crea una línea con esa distancia.");
     }
     @FXML
     public void mostrarAyudaHerramientas() {
         mostrarAyuda("Herramientas", "Cada botón activa una funcionalidad, todas ellas explicadas en el menú ''Ayuda''. La barra de herramientas puede mostrarse u ocultarse en el botón superior también están las mismas funcionalidades en el menú ''Herramientas''.");
     }
-    @FXML
     public void mostrarAyudaSeleccionar() {
-        mostrarAyuda("Seleccionar", "Al activar esta funcionalidad se desactivan las demás para poder seleccionar marcas o moverte sin dibujar.");
+        mostrarAyuda("Seleccionar", "Al activar esta funcionalidad se desactivan las demás para poder seleccionar marcas o moverte sin dibujar. Usando shift puedes seleccionar más de una marca.");
     }
     @FXML
     public void mostrarAyudaBorrar() {
-        mostrarAyuda("Borrar y limpiar", " ");
+        mostrarAyuda("Borrar y limpiar", "Con la goma borras las marcas previamente seleccionadas. Del botón ''X'' borras todas las marcas de la carta náutica.");
     }
     @FXML
     public void mostrarAyudaProblemas() {
-        mostrarAyuda("Problemas", " ");
+        mostrarAyuda("Problemas", "Los problemas salen a la izquierda, existe la opción de elegir un problema o de elegir uno aleatoriamente. Al pulsar se carga el problema y te da las 4 opciones, elige la correcta.");
     }
     private void mostrarAyuda(String titulo, String contenido) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -258,6 +262,12 @@ public class ProblemaController implements Initializable {
         dialogPane.getStyleClass().add(" ");
         
         alert.showAndWait();
+    }
+    
+    private double calcularAngulo(Point2D centro, Point2D punto) {
+        double dx = punto.getX() - centro.getX();
+        double dy = punto.getY() - centro.getY();
+        return Math.toDegrees(Math.atan2(dy, dx));
     }
     
     @FXML
@@ -537,7 +547,7 @@ public class ProblemaController implements Initializable {
         cartaPane.setCursor(Cursor.DEFAULT);
         //cartaPane.setOnMouseMoved(null);
     }
-    
+        
     @FXML
     private void activarModoRaton() {
         limpiar();
@@ -694,6 +704,9 @@ public class ProblemaController implements Initializable {
     private void limpiarCarta() {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setGraphic(null);
+        Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+        alertStage.getIcons().add(
+                new Image(getClass().getResourceAsStream("/resources/compas.png")));
         alerta.setTitle("Confirmación");
         alerta.setHeaderText("¿Estás seguro de que quieres limpiar la carta entera?");
         alerta.setContentText("Se eliminarán todo lo que hayas escrito hasta ahora.");
@@ -713,6 +726,16 @@ public class ProblemaController implements Initializable {
         user=u;
         //initData();
         randomData();
+    }
+    
+    @FXML
+    private void cambiarGrosor() {
+        if (marcasSeleccionadas != null && grosorButton.getValue() != null) {
+            int nuevoGrosor = grosorButton.getValue();
+            if (marcasSeleccionadas instanceof javafx.scene.shape.Shape) {
+                ((javafx.scene.shape.Shape) marcasSeleccionadas).setStrokeWidth(nuevoGrosor);
+            }
+        }
     }
     
     private void initData() {
@@ -789,6 +812,9 @@ public class ProblemaController implements Initializable {
         currentIndex++;
         if (currentIndex >= preguntasAleatorias.size()) {
             Alert fin = new Alert(Alert.AlertType.INFORMATION, "¡Has respondido todas las preguntas!");
+            Stage alertStage = (Stage) fin.getDialogPane().getScene().getWindow();
+            alertStage.getIcons().add(
+                new Image(getClass().getResourceAsStream("/resources/compas.png")));
             fin.setGraphic(null);
             DialogPane dialogPane = fin.getDialogPane();
             dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
@@ -863,6 +889,9 @@ public class ProblemaController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        for (int i = 1; i <= 300; i++) {
+            grosorButton.getItems().add(i);
+        }
          // Espera a que el nodo esté en escena para obtener el Stage
         rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
@@ -906,8 +935,8 @@ public class ProblemaController implements Initializable {
             if (newY >= 0 && newY <= altoPane - transportador.getHeight()) {
                 transportador.setLayoutY(newY);
             }
-        });
-    
+        });        
+        
         regla.setVisible(false); // Oculta al principio
         regla.setOnMousePressed(event -> {
                 offsetX = event.getX();
@@ -1103,6 +1132,9 @@ public class ProblemaController implements Initializable {
                     if (puntosCompas.size() == 2) {
                         distanciaCompas = puntosCompas.get(0).distance(puntosCompas.get(1));
                         Alert a = new Alert(Alert.AlertType.INFORMATION);
+                        Stage alertStage = (Stage) a.getDialogPane().getScene().getWindow();
+                        alertStage.getIcons().add(
+                            new Image(getClass().getResourceAsStream("/resources/compas.png")));
                         DialogPane dialogPane = a.getDialogPane();
                         dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
                         dialogPane.getStyleClass().add(" ");
@@ -1129,6 +1161,9 @@ public class ProblemaController implements Initializable {
 
                             if (destino.getX() < 0 || destino.getY() < 0 || destino.getX() > cartaPane.getWidth() || destino.getY() > cartaPane.getHeight()) {
                                 Alert fuera = new Alert(Alert.AlertType.ERROR);
+                                Stage alertStage = (Stage) fuera.getDialogPane().getScene().getWindow();
+                                alertStage.getIcons().add(
+                                        new Image(getClass().getResourceAsStream("/resources/compas.png")));
                                 DialogPane dialogPane = fuera.getDialogPane();
                                 dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
                                 dialogPane.getStyleClass().add(" ");
@@ -1154,6 +1189,9 @@ public class ProblemaController implements Initializable {
 
                         } catch (NumberFormatException ex) {
                             Alert error = new Alert(Alert.AlertType.ERROR);
+                            Stage alertStage = (Stage) error.getDialogPane().getScene().getWindow();
+                            alertStage.getIcons().add(
+                                new Image(getClass().getResourceAsStream("/resources/compas.png")));
                             DialogPane dialogPane = error.getDialogPane();
                             dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
                             dialogPane.getStyleClass().add(" ");
@@ -1353,6 +1391,9 @@ public class ProblemaController implements Initializable {
                         } catch (NumberFormatException ex) {
                             Alert alerta = new Alert(Alert.AlertType.ERROR, "Radio inválido. Introduce un número válido.");
                             alerta.setGraphic(null);
+                            Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                            alertStage.getIcons().add(
+                                new Image(getClass().getResourceAsStream("/resources/compas.png")));
                             DialogPane dialogPane = alerta.getDialogPane();
                             dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
                             dialogPane.getStyleClass().add(" ");
@@ -1419,6 +1460,9 @@ public class ProblemaController implements Initializable {
                     alerta.setTitle("Medición de distancia");
                     alerta.setHeaderText("Resultado");
                     alerta.setContentText("Distancia medida: " + String.format("%.2f", subdivisiones) + " subdivisiones.");
+                    Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                    alertStage.getIcons().add(
+                        new Image(getClass().getResourceAsStream("/resources/compas.png")));
                     alerta.showAndWait();
 
                     puntosMedicion.clear();
@@ -1459,57 +1503,7 @@ public class ProblemaController implements Initializable {
                     map_scrollpane.setVvalue(0.5);
                 });
             }
-        });
-        
-        /*transportador.setOnMousePressed(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                Point2D clicLocal = new Point2D(event.getX(), event.getY());
-                dragDelta.x = event.getX();
-                dragDelta.y = event.getY();
-                event.consume();
-            }
-        });
-
-        transportador.setOnMouseDragged(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                // Convertir la posición del puntero a coordenadas del padre del transportador
-                Point2D parentCoords = transportador.getParent().sceneToLocal(event.getSceneX(), event.getSceneY());
-
-                // Restar el delta para mantener el desplazamiento natural
-                transportador.setLayoutX(parentCoords.getX() - dragDelta.x);
-                transportador.setLayoutY(parentCoords.getY() - dragDelta.y);
-
-                event.consume();
-            }
-        });*/
-        
-        /*// Crear la imagen de la regla
-        regla = new ImageView();
-        Image imgRegla = new Image(getClass().getResourceAsStream("/resources/regla.png")); // asegúrate de que exista
-        regla.setImage(imgRegla);
-        regla.setFitWidth(1000);
-        regla.setFitHeight(200);
-        egla.setVisible(reglaActiva);
-        zoomGroup.getChildren().add(regla);
-
-        // Hacer que la regla se pueda arrastrar
-        regla.setOnMousePressed(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                dragDelta.x = event.getX();
-                dragDelta.y = event.getY();
-                event.consume();
-            }
-        });
-
-        regla.setOnMouseDragged(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                Point2D parentCoords = regla.getParent().sceneToLocal(event.getSceneX(), event.getSceneY());
-                regla.setLayoutX(parentCoords.getX() - dragDelta.x);
-                regla.setLayoutY(parentCoords.getY() - dragDelta.y);
-                event.consume();
-            }
-        });*/
-        
+        });   
     }
 
     @FXML
@@ -1524,6 +1518,9 @@ public class ProblemaController implements Initializable {
     private void about(ActionEvent event) {
         Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
         mensaje.setGraphic(null);
+        Stage alertStage = (Stage) mensaje.getDialogPane().getScene().getWindow();
+        alertStage.getIcons().add(
+                new Image(getClass().getResourceAsStream("/resources/compas.png")));
         DialogPane dialogPane = mensaje.getDialogPane();
         dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
         dialogPane.getStyleClass().add(" ");
@@ -1718,6 +1715,9 @@ public class ProblemaController implements Initializable {
         if (marcasSeleccionadas.isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.WARNING, "No hay ninguna marca seleccionada para eliminar.");
             alerta.setGraphic(null);
+            Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+            alertStage.getIcons().add(
+                new Image(getClass().getResourceAsStream("/resources/compas.png")));
             DialogPane dialogPane = alerta.getDialogPane();
             dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
             dialogPane.getStyleClass().add(" ");
@@ -1729,6 +1729,9 @@ public class ProblemaController implements Initializable {
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION, 
                 "¿Deseas eliminar las marcas seleccionadas?", ButtonType.YES, ButtonType.NO);
         confirmacion.setGraphic(null);
+        Stage alertStage = (Stage) confirmacion.getDialogPane().getScene().getWindow();
+        alertStage.getIcons().add(
+                new Image(getClass().getResourceAsStream("/resources/compas.png")));
         DialogPane dialogPane = confirmacion.getDialogPane();
         dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
         dialogPane.getStyleClass().add(" ");
@@ -1807,10 +1810,6 @@ public class ProblemaController implements Initializable {
         cartaPane.setCursor(compasActivo ? Cursor.CROSSHAIR : Cursor.DEFAULT);
     }
 
-    
-
-
-
     @FXML
     private void activarModoCompás(ActionEvent event) {
         limpiar();
@@ -1842,15 +1841,6 @@ public class ProblemaController implements Initializable {
             e.printStackTrace();
         } 
     }
-
-    @FXML
-    private void mostrarAyudaProblemas(ActionEvent event) {
-    }
-
-
-
-
-
     
     // Clase auxiliar para almacenar la diferencia al arrastrar
     private static class Delta {
