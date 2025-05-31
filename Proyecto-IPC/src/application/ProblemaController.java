@@ -81,6 +81,7 @@ import model.*;
 
 public class ProblemaController implements Initializable {
     
+    private boolean answerSelected = false;
     private Line lineaTemporalCompas = null;
     private boolean modoCompasAvanzado = false;
     private List<Point2D> puntosCompas = new ArrayList<>();
@@ -803,22 +804,189 @@ public class ProblemaController implements Initializable {
     }
 
     private void randomData() {
+        if (problemas == null || problemas.isEmpty()) {
+            System.err.println("Advertencia: La lista de problemas está vacía. Carga tus problemas antes de usar randomData().");
+            return;
+        }
+
         if (preguntasAleatorias == null || preguntasAleatorias.isEmpty()) {
             preguntasAleatorias = new ArrayList<>(problemas);
             Collections.shuffle(preguntasAleatorias);
-            currentIndex = -1;
+            currentIndex = -1; // Para que la primera llamada lo ponga en 0
         }
 
         currentIndex++;
         if (currentIndex >= preguntasAleatorias.size()) {
             Alert fin = new Alert(Alert.AlertType.INFORMATION, "¡Has respondido todas las preguntas!");
             Stage alertStage = (Stage) fin.getDialogPane().getScene().getWindow();
-            alertStage.getIcons().add(
-                new Image(getClass().getResourceAsStream("/resources/compas.png")));
+            alertStage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/compas.png")));
             fin.setGraphic(null);
             DialogPane dialogPane = fin.getDialogPane();
             dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
             dialogPane.getStyleClass().add(" ");
+            fin.showAndWait();
+            return;
+        }
+
+        Problem problemaActual = preguntasAleatorias.get(currentIndex);
+        List<Answer> respuestas = new ArrayList<>(problemaActual.getAnswers());
+        Collections.shuffle(respuestas);
+
+        map_listview.setItems(FXCollections.observableArrayList(List.of(problemaActual)));
+        
+        // --- Importante: La magia ocurre dentro de la ListCell ---
+        map_listview.setCellFactory(lv -> new ListCell<Problem>() {
+            // Variables de estado dentro de la celda para esta pregunta específica
+            private boolean answered = false;
+            private Button selectedButton = null; // Para recordar qué botón se seleccionó
+            private Button nextButton = null; // Referencia al botón Siguiente
+
+            @Override
+            protected void updateItem(Problem p, boolean empty) {
+                super.updateItem(p, empty);
+
+                if (empty || p == null) {
+                    setGraphic(null);
+                } else {
+                    VBox vbox = new VBox(10);
+                    vbox.setFillWidth(true);
+                    vbox.setMaxWidth(Double.MAX_VALUE);
+                    vbox.prefWidthProperty().bind(map_listview.widthProperty().subtract(20));
+
+                    Label pregunta = new Label(p.getText());
+                    pregunta.setWrapText(true);
+                    pregunta.setMaxWidth(Double.MAX_VALUE);
+                    pregunta.setStyle("-fx-font-weight: bold;");
+                    pregunta.prefWidthProperty().bind(vbox.prefWidthProperty());
+
+                    vbox.getChildren().add(pregunta); // Añadir la pregunta primero
+
+                    List<Button> botones = new ArrayList<>();
+
+                    for (Answer a : respuestas) {
+                        Button btn = new Button(a.getText());
+                        btn.setId("listButton");
+                        btn.setWrapText(true);
+                        btn.setMaxWidth(Double.MAX_VALUE);
+                        btn.prefWidthProperty().bind(vbox.prefWidthProperty());
+                        botones.add(btn); // Añadir a la lista de botones antes de configurar el setOnAction
+                        vbox.getChildren().add(btn); // Añadir a la VBox
+
+                        // --- Configurar el evento de clic ---
+                        btn.setOnAction(e -> {
+                            if (answered) {
+                                return; // Si ya se respondió, no hagas nada (evita clics duplicados)
+                            }
+                            answered = true; // Marca que esta pregunta ha sido respondida
+                            selectedButton = btn; // Guarda el botón que el usuario seleccionó
+
+                            // Deshabilitar todos los botones de respuesta
+                            botones.forEach(b -> b.setDisable(true));
+
+                            // Lógica para registrar la sesión y aplicar estilos
+                            if (user != null) {
+                                if (a.getValidity()) {
+                                    selectedButton.setStyle("-fx-background-color: lightgreen;");
+                                    user.addSession(1, 0); // 1 acierto, 0 fallos
+                                } else {
+                                    selectedButton.setStyle("-fx-background-color: red;");
+                                    user.addSession(0, 1); // 0 aciertos, 1 fallo
+
+                                    // Mostrar la respuesta correcta en verde
+                                    for (int i = 0; i < respuestas.size(); i++) {
+                                        if (respuestas.get(i).getValidity()) {
+                                            botones.get(i).setStyle("-fx-background-color: lightgreen;");
+                                        }
+                                    }
+                                }
+                            } else {
+                                System.err.println("Error: El objeto 'user' es nulo. No se pudo guardar la sesión.");
+                                if (a.getValidity()) {
+                                    selectedButton.setStyle("-fx-background-color: lightgreen;");
+                                } else {
+                                    selectedButton.setStyle("-fx-background-color: red;");
+                                    for (int i = 0; i < respuestas.size(); i++) {
+                                        if (respuestas.get(i).getValidity()) {
+                                            botones.get(i).setStyle("-fx-background-color: lightgreen;");
+                                        }
+                                    }
+                                }
+                            }
+
+                            // Añadir el botón "Siguiente"
+                            nextButton = new Button("Siguiente");
+                            nextButton.setMaxWidth(Double.MAX_VALUE);
+                            nextButton.prefWidthProperty().bind(vbox.prefWidthProperty());
+                            nextButton.setOnAction(ev -> randomData()); // Pasa a la siguiente pregunta
+                            vbox.getChildren().add(nextButton);
+                        });
+                    }
+
+                    // --- Renderizar el estado guardado al refrescar la celda ---
+                    if (answered) {
+                        // Si ya se respondió, aplica los estilos y el botón "Siguiente"
+                        // basándose en el estado guardado o recalculado.
+                        // Volvemos a aplicar los estilos si la celda se reutiliza o refresca
+                        for (int i = 0; i < respuestas.size(); i++) {
+                            Answer currentAnswer = respuestas.get(i);
+                            Button currentButton = botones.get(i);
+
+                            if (selectedButton != null && currentButton == selectedButton) {
+                                // Este es el botón que el usuario seleccionó originalmente
+                                if (currentAnswer.getValidity()) {
+                                    currentButton.setStyle("-fx-background-color: lightgreen;");
+                                } else {
+                                    currentButton.setStyle("-fx-background-color: red;");
+                                }
+                            } else if (currentAnswer.getValidity()) {
+                                // Este es el botón correcto (si no fue el seleccionado por el usuario)
+                                currentButton.setStyle("-fx-background-color: lightgreen;");
+                            }
+                            currentButton.setDisable(true); // Deshabilita todos los botones de respuesta
+                        }
+
+                        // Asegúrate de que el botón Siguiente esté presente
+                        if (nextButton == null) { // Si la celda se refresca, puede que el nextButton sea nulo
+                            nextButton = new Button("Siguiente");
+                            nextButton.setMaxWidth(Double.MAX_VALUE);
+                            nextButton.prefWidthProperty().bind(vbox.prefWidthProperty());
+                            nextButton.setOnAction(ev -> randomData());
+                        }
+                        // Solo añadir si no está ya en los hijos (para evitar duplicados al refrescar)
+                        if (!vbox.getChildren().contains(nextButton)) {
+                             vbox.getChildren().add(nextButton);
+                        }
+                    }
+
+                    setGraphic(vbox);
+                }
+            }
+        });
+        /*
+        if (problemas == null || problemas.isEmpty()) { // Asegúrate de que 'problemas' esté inicializado con tus preguntas
+            // Esto es un placeholder. Debes cargar tus problemas aquí desde alguna fuente (ej. base de datos, archivo).
+            // Por ejemplo: problemas = yourProblemDataLoader.loadProblems();
+            System.err.println("Advertencia: La lista de problemas está vacía. Carga tus problemas antes de usar randomData().");
+            return;
+        }
+
+        if (preguntasAleatorias == null || preguntasAleatorias.isEmpty()) {
+            preguntasAleatorias = new ArrayList<>(problemas);
+            Collections.shuffle(preguntasAleatorias);
+            currentIndex = -1; // Para que la primera llamada lo ponga en 0
+        }
+
+        currentIndex++;
+        if (currentIndex >= preguntasAleatorias.size()) {
+            Alert fin = new Alert(Alert.AlertType.INFORMATION, "¡Has respondido todas las preguntas!");
+            Stage alertStage = (Stage) fin.getDialogPane().getScene().getWindow();
+            // Asegúrate de que el path a compas.png es correcto
+            alertStage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/compas.png")));
+            fin.setGraphic(null);
+            DialogPane dialogPane = fin.getDialogPane();
+            // Asegúrate de que ThemeManager.getEstiloActual() devuelve un path válido
+            dialogPane.getStylesheets().add(getClass().getResource(ThemeManager.getEstiloActual()).toExternalForm());
+            dialogPane.getStyleClass().add(" "); // O si tienes una clase CSS para el diálogo, úsala
             fin.showAndWait();
             return;
         }
@@ -838,7 +1006,7 @@ public class ProblemaController implements Initializable {
                     VBox vbox = new VBox(10);
                     vbox.setFillWidth(true);
                     vbox.setMaxWidth(Double.MAX_VALUE);
-                    vbox.prefWidthProperty().bind(map_listview.widthProperty().subtract(20)); // <- Ajusta al ancho del ListView
+                    vbox.prefWidthProperty().bind(map_listview.widthProperty().subtract(20));
 
                     Label pregunta = new Label(p.getText());
                     pregunta.setWrapText(true);
@@ -850,25 +1018,46 @@ public class ProblemaController implements Initializable {
 
                     for (Answer a : respuestas) {
                         Button btn = new Button(a.getText());
-                        btn.setId("listButton");
+                        btn.setId("listButton"); // Para estilos CSS
                         btn.setWrapText(true);
                         btn.setMaxWidth(Double.MAX_VALUE);
                         btn.prefWidthProperty().bind(vbox.prefWidthProperty());
 
                         btn.setOnAction(e -> {
-                            botones.forEach(b -> b.setDisable(true));
+                            botones.forEach(b -> b.setDisable(true)); // Deshabilita todos los botones de respuesta
 
-                            if (a.getValidity()) {
-                                btn.setStyle("-fx-background-color: lightgreen;");
+                            // Lógica para registrar la sesión
+                            if (user != null) { // Asegúrate de que el usuario no sea nulo
+                                if (a.getValidity()) {
+                                    btn.setStyle("-fx-background-color: lightgreen;");
+                                    user.addSession(1, 0); // 1 acierto, 0 fallos
+                                } else {
+                                    btn.setStyle("-fx-background-color: red;");
+                                    user.addSession(0, 1); // 0 aciertos, 1 fallo
+
+                                    // Mostrar la respuesta correcta
+                                    for (int i = 0; i < respuestas.size(); i++) {
+                                        if (respuestas.get(i).getValidity()) {
+                                            botones.get(i).setStyle("-fx-background-color: lightgreen;");
+                                        }
+                                    }
+                                }
                             } else {
-                                btn.setStyle("-fx-background-color: red;");
-                                for (int i = 0; i < respuestas.size(); i++) {
-                                    if (respuestas.get(i).getValidity()) {
-                                        botones.get(i).setStyle("-fx-background-color: lightgreen;");
+                                System.err.println("Error: El objeto 'user' es nulo. No se pudo guardar la sesión.");
+                                if (a.getValidity()) {
+                                    btn.setStyle("-fx-background-color: lightgreen;");
+                                } else {
+                                    btn.setStyle("-fx-background-color: red;");
+                                    for (int i = 0; i < respuestas.size(); i++) {
+                                        if (respuestas.get(i).getValidity()) {
+                                            botones.get(i).setStyle("-fx-background-color: lightgreen;");
+                                        }
                                     }
                                 }
                             }
 
+
+                            // Botón "Siguiente"
                             Button siguiente = new Button("Siguiente");
                             siguiente.setMaxWidth(Double.MAX_VALUE);
                             siguiente.prefWidthProperty().bind(vbox.prefWidthProperty());
@@ -885,6 +1074,7 @@ public class ProblemaController implements Initializable {
                 }
             }
         });
+        */
     }
     
     @Override
