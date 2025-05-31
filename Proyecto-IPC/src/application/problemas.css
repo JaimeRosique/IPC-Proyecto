@@ -151,6 +151,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .combo-box {
+    -fx-max-width: 60;
+    -fx-max-height: 30;
+    -fx-min-width: 55;
+    -fx-min-height: 40;
     -fx-background-color: #b3d9f2 !important;
     -fx-background-radius: 6;
     -fx-padding: 6;
@@ -304,6 +308,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 /* === LISTVIEW === */
 .list-view {
     -fx-max-width: 400;
+    -fx-pref-width: 350;
     -fx-min-width: 250;
     -fx-min-height: 100;
     -fx-text-overrun: clip;
@@ -705,11 +710,15 @@ hyperlink {
 
 /* === COLOR PICKER === */
 .color-picker {
+    -fx-max-width: 60;
+    -fx-max-height: 30;
+    -fx-min-width: 55;
+    -fx-min-height: 40;
     -fx-background-color: #b3d9f2 !important;
     -fx-background-radius: 6;
     -fx-padding: 6;
     -fx-font-size: 13px;
-    -fx-text-fill: #003366 !important;
+    -fx-text-fill: transparent !important;
 }
 
 .color-picker:hover {

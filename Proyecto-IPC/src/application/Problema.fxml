@@ -47,7 +47,7 @@
             </MenuBar>
             <ToggleButton fx:id="toolBarButton" mnemonicParsing="false" text="Barra de &#10;herramientas" />
             <ToggleButton mnemonicParsing="false" onAction="#cambiarTema" prefHeight="18.0" prefWidth="130.0" text="Modo &#10;nocturno" />
-            <ToggleButton fx:id="problemaTool" mnemonicParsing="false" text="Tipo Problema" />
+            <ToggleButton fx:id="problemaTool" mnemonicParsing="false" text="Problema&#10;aleatorio" />
             <Region prefHeight="14.0" prefWidth="65.0" />
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="18.0" prefWidth="49.0" text="Zoom" />
             <Button mnemonicParsing="false" onAction="#zoomOut" text="-" />
@@ -114,7 +114,7 @@
                         </Button>
                         <Button fx:id="limpiarCartaButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#limpiarCarta" prefHeight="36.0" prefWidth="52.0" styleClass="limpiar carta" text="❌">
                            <StackPane.margin>
-                              <Insets top="600.0" />
+                              <Insets top="615.0" />
                            </StackPane.margin>
                         </Button>
                         <Button fx:id="puntoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarModoPunto" prefHeight="40.0" prefWidth="71.0" text="◑">
@@ -146,11 +146,6 @@
                               <Insets top="-490.0" />
                            </StackPane.margin>
                         </Button>
-                        <ColorPicker fx:id="coloresButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#activarModoPintar" prefHeight="40.0" prefWidth="71.0">
-                           <StackPane.margin>
-                              <Insets top="380.0" />
-                           </StackPane.margin>
-                        </ColorPicker>
                         <Button fx:id="transportadorButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activarTransportador" prefHeight="40.0" prefWidth="71.0">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -197,11 +192,16 @@
                               <Insets top="-600.0" />
                            </StackPane.margin>
                         </Button>
-                        <ComboBox fx:id="grosorButton" onAction="#cambiarGrosor" prefWidth="150.0">
+                        <ComboBox fx:id="grosorButton" onAction="#cambiarGrosor" prefHeight="42.0" prefWidth="71.0">
                            <StackPane.margin>
-                              <Insets top="480.0" />
+                              <Insets top="502.0" />
                            </StackPane.margin>
                         </ComboBox>
+                        <ColorPicker fx:id="coloresButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#activarModoPintar" prefHeight="42.0" prefWidth="71.0">
+                           <StackPane.margin>
+                              <Insets top="391.0" />
+                           </StackPane.margin>
+                        </ColorPicker>
                      </children>
                   </StackPane>
                </children>

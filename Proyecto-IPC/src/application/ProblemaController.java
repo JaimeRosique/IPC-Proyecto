@@ -245,7 +245,7 @@ public class ProblemaController implements Initializable {
     }
     @FXML
     public void mostrarAyudaProblemas() {
-        mostrarAyuda("Problemas", "Los problemas salen a la izquierda, existe la opción de elegir un problema o de elegir uno aleatoriamente. Al pulsar se carga el problema y te da las 4 opciones, elige la correcta.");
+        mostrarAyuda("Problemas", "Los problemas salen a la izquierda, existe la opción de elegir un problema(clicando en ese problema en la lista) o de elegir uno aleatoriamente. Al pulsar se carga el problema y te da las 4 opciones, al volver a pulsar vuelve a la lista de problemas; elige la correcta.");
     }
     private void mostrarAyuda(String titulo, String contenido) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

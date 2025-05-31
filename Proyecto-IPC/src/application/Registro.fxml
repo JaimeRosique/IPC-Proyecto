@@ -18,11 +18,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0"  xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RegistroController">
+<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@modoNocturno.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RegistroController">
    <children>
       <HBox alignment="CENTER" prefHeight="98.0" prefWidth="797.0" VBox.vgrow="SOMETIMES">
          <children>
-            <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="150.0" text="Registro" HBox.hgrow="SOMETIMES">
+            <Label id="titulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="150.0" text="Perfil" HBox.hgrow="SOMETIMES">
                <font>
                   <Font size="41.0" />
                </font></Label>
@@ -73,55 +73,79 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="CENTER" prefHeight="77.0" prefWidth="360.0">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="SOMETIMES">
+                              <VBox prefHeight="77.0" prefWidth="371.0">
                                  <children>
-                                    <Label text="Correo electronico" />
-                                    <TextField fx:id="email" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="manuel12@gmail.com" />
-                                    <Label fx:id="email_error" prefHeight="18.0" prefWidth="506.0" text="Correo no válido" textFill="RED" visible="false" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="SOMETIMES">
-                                 <children>
-                                    <Label text="Contraseña" />
-                                    <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane prefHeight="77.0" prefWidth="175.0">
                                        <children>
-                                          <PasswordField fx:id="pswrdField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
-                                          <TextField fx:id="pswrdTextField" />
-                                          <ImageView fx:id="eyeIcon2" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../resources/abrirojo.png" />
-                                             </image>
-                                          </ImageView>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Label text="Correo electronico" />
+                                                <TextField fx:id="email" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="manuel12@gmail.com" />
+                                                <Label fx:id="email_error" prefHeight="18.0" prefWidth="506.0" text="Correo no válido" textFill="RED" visible="false" />
+                                             </children>
+                                          </VBox>
                                        </children>
                                     </StackPane>
-                                    <Label fx:id="pswrd_error" prefHeight="18.0" prefWidth="490.0" text="Contraseña no válida" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="SOMETIMES">
+                              <VBox prefHeight="77.0" prefWidth="422.0">
                                  <children>
-                                    <Label text="Confirmar Contraseña *" />
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <PasswordField fx:id="pswrdCheckField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
-                                          <TextField fx:id="pswrdCheckTextField" StackPane.alignment="CENTER_RIGHT" />
-                                          <ImageView fx:id="eyeIcon3" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
-                                             <image>
-                                                <Image url="@../resources/abrirojo.png" />
-                                             </image>
-                                          </ImageView>
+                                          <VBox alignment="CENTER" prefHeight="77.0" prefWidth="194.0">
+                                             <children>
+                                                <Label text="Contraseña" />
+                                                <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                                   <children>
+                                                      <PasswordField fx:id="pswrdField" maxHeight="40.0" maxWidth="-Infinity" prefHeight="40.0" prefWidth="55.0" promptText="contraseña123" StackPane.alignment="CENTER" />
+                                                      <TextField fx:id="pswrdTextField" maxHeight="40.0" prefHeight="40.0" prefWidth="55.0" StackPane.alignment="CENTER" />
+                                                      <ImageView fx:id="eyeIcon2" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+                                                         <image>
+                                                            <Image url="@../resources/abrirojo.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </StackPane>
+                                                <Label fx:id="pswrd_error" prefHeight="18.0" prefWidth="490.0" text="Contraseña no válida" textFill="RED" visible="false" />
+                                             </children>
+                                          </VBox>
                                        </children>
                                     </StackPane>
-                                    <Label fx:id="pswrd_check_error" prefHeight="18.0" prefWidth="462.0" text="Las contraseñas no coinciden" textFill="RED" visible="false" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="77.0" prefWidth="480.0">
+                                 <children>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Label text="Confirmar Contraseña *" />
+                                                <StackPane prefHeight="150.0" prefWidth="200.0">
+                                                   <children>
+                                                      <PasswordField fx:id="pswrdCheckField" maxHeight="40.0" maxWidth="-Infinity" prefHeight="40.0" prefWidth="55.0" promptText="contraseña123" StackPane.alignment="CENTER" />
+                                                      <TextField fx:id="pswrdCheckTextField" maxHeight="40.0" minWidth="30.0" prefHeight="40.0" prefWidth="55.0" StackPane.alignment="CENTER" />
+                                                      <ImageView fx:id="eyeIcon3" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+                                                         <image>
+                                                            <Image url="@../resources/abrirojo.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </StackPane>
+                                                <Label fx:id="pswrd_check_error" prefHeight="18.0" prefWidth="462.0" text="Las contraseñas no coinciden" textFill="RED" visible="false" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </StackPane>
                                  </children>
                               </VBox>
                            </children>
