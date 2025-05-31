@@ -549,6 +549,7 @@ public class ProblemaController implements Initializable {
     
     @FXML
     private void activarModoPunto() {
+        /*
         limpiar();
         modoPuntosActivo = true;
         
@@ -576,6 +577,29 @@ public class ProblemaController implements Initializable {
                 false, false, false, false, false, false, null));
         });
         //cartaPane.setCursor(Cursor.CROSSHAIR);
+        */
+        limpiar(); // Call limpiar first to clear previous states and potential ghostPunto cleanup
+        modoPuntosActivo = true;
+        creandoPunto = true;
+
+        // Add ghostPunto to the pane ONLY when activating point mode, and ensure it's on top
+        if (!cartaPane.getChildren().contains(ghostPunto)) {
+            cartaPane.getChildren().add(ghostPunto);
+        }
+        ghostPunto.toFront(); // <--- Ensure it's always on top when added/activated
+        ghostPunto.setVisible(true); // Ensure it's visible when point mode is active
+
+        Platform.runLater(() -> {
+            cartaPane.requestFocus();
+            // Simulate a mouse move to position the ghostPunto immediately
+            // This is good for initial positioning but 'toFront()' is key for layering
+            cartaPane.fireEvent(new MouseEvent(MouseEvent.MOUSE_MOVED,
+                cartaPane.getWidth() / 2, cartaPane.getHeight() / 2,
+                cartaPane.getWidth() / 2, cartaPane.getHeight() / 2,
+                MouseButton.NONE, 0, false, false, false, false,
+                false, false, false, false, false, false, null));
+        });
+        cartaPane.setCursor(Cursor.CROSSHAIR);
     }
 
     @FXML
@@ -630,8 +654,25 @@ public class ProblemaController implements Initializable {
     
     @FXML
     private void activarModoGoma() {
+        /*
         limpiar();
         modoGomaActivo = true;
+        if (!marcasSeleccionadas.isEmpty()) {
+            for (Node n : new ArrayList<>(marcasSeleccionadas)) {
+                cartaPane.getChildren().remove(n);
+            }
+            marcasSeleccionadas.clear();
+        }
+        */
+        limpiar(); // This already handles many cleanup tasks, but we'll add more specific ghostPunto handling
+        modoGomaActivo = true;
+
+        // Immediately hide and remove ghostPunto if it exists and is visible
+        if (ghostPunto != null) {
+            cartaPane.getChildren().remove(ghostPunto);
+            ghostPunto = null; // Set to null to ensure it's re-created if point mode is activated again
+        }
+
         if (!marcasSeleccionadas.isEmpty()) {
             for (Node n : new ArrayList<>(marcasSeleccionadas)) {
                 cartaPane.getChildren().remove(n);
