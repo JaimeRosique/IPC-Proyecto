@@ -113,8 +113,8 @@
                                  </styleClass>
                               </MenuButton>
                               <Button fx:id="transportador" layoutX="574.0" layoutY="98.0" mnemonicParsing="false" styleClass="transportador" />
-                              <Button fx:id="regla" layoutX="574.0" layoutY="48.0" mnemonicParsing="false" styleClass="regla" />
-                              <Circle fx:id="rotadorButton" accessibleRole="BUTTON" centerY="10.0" fill="DODGERBLUE" layoutX="1074.0" layoutY="20.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Button fx:id="regla" layoutX="590.0" layoutY="381.0" mnemonicParsing="false" styleClass="regla" />
+                              <Circle fx:id="rotadorButton" accessibleRole="BUTTON" centerY="10.0" fill="DODGERBLUE" layoutX="1090.0" layoutY="396.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                            </children>
                         </Pane>
                      </content>

@@ -212,9 +212,6 @@ public class ProblemaController implements Initializable {
     private ComboBox<Integer> grosorButton;
     @FXML
     private Circle rotadorButton;
-    private Point2D centroRegla;
-    private double anguloInicial;
-    private boolean modoRotar = false;
 
     @FXML
     public void mostrarAyudaTransportador() {
@@ -274,11 +271,17 @@ public class ProblemaController implements Initializable {
         alert.showAndWait();
     }
     
-    private double calcularAngulo(Point2D centro, Point2D punto) {
-        double dx = punto.getX() - centro.getX();
-        double dy = punto.getY() - centro.getY();
-        return Math.toDegrees(Math.atan2(dy, dx));
-    }
+    private void actualizarPosicionBoton() {
+	Bounds bounds = regla.localToParent(regla.getBoundsInLocal());
+
+	double reglaX = bounds.getMinX();
+	double reglaY = bounds.getMinY();
+	double reglaWidth = bounds.getWidth();
+	double reglaHeight = bounds.getHeight();
+
+	rotadorButton.setLayoutX(reglaX + reglaWidth / 2);
+	rotadorButton.setLayoutY(reglaY + reglaHeight / 2);
+}
     
     @FXML
     private void cambiarTema() {
@@ -494,29 +497,6 @@ public class ProblemaController implements Initializable {
     }
     
     private void limpiar() {
-        /*
-        modoRatonActivo = false;
-        modoTextoActivo = false;
-        modoPuntosActivo = false;
-        modoLineaActivo = false;
-        modoArcoActivo = false;
-        modoGomaActivo = false;
-        modoPintarActivo = false;
-        centroArcos = null;
-        primerPunto = null;
-        
-        creandoPunto = false;
-        creandoLinea = false;
-        centroArco = null;
-        radioArco = 0;
-        
-        if (ghostPunto != null) {
-            cartaPane.getChildren().remove(ghostPunto);
-            ghostPunto = null;
-        }
-        
-        cartaPane.setCursor(Cursor.DEFAULT);
-        */
         modoRatonActivo = false;
         modoTextoActivo = false;
         modoPuntosActivo = false;
@@ -1126,6 +1106,7 @@ public class ProblemaController implements Initializable {
         });        
         
         regla.setVisible(false); // Oculta al principio
+        rotadorButton.setVisible(false); //Oculta al principio
         regla.setOnMousePressed(event -> {
                 offsetX = event.getX();
                 offsetY = event.getY();
@@ -1143,11 +1124,35 @@ public class ProblemaController implements Initializable {
 
             if (newX >= 0 && newX <= anchoPane - regla.getWidth()) {
                 regla.setLayoutX(newX);
-        }
+            }
             if (newY >= 0 && newY <= altoPane - regla.getHeight()) {
                 regla.setLayoutY(newY);
             }
-        });
+            actualizarPosicionBoton();
+    	});
+   	 
+    	rotadorButton.setOnMouseDragged(event -> {
+        	// Calcular ángulo de rotación
+        	double mouseX = event.getSceneX();
+        	double mouseY = event.getSceneY();
+
+        	Bounds boundsInScene = regla.localToScene(regla.getBoundsInLocal());
+        	double centerX = (boundsInScene.getMinX() + boundsInScene.getMaxX()) / 2;
+        	double centerY = (boundsInScene.getMinY() + boundsInScene.getMaxY()) / 2;
+
+        	double deltaX = mouseX - centerX;
+        	double deltaY = mouseY - centerY;
+        	double angle = Math.toDegrees(Math.atan2(deltaY, deltaX));
+
+        	// Aplicar rotación
+        	regla.getTransforms().clear();
+        	Rotate rotate = new Rotate(angle, regla.getBoundsInLocal().getWidth() / 2, regla.getBoundsInLocal().getHeight() / 2);
+        	regla.getTransforms().add(rotate);
+
+        	// ❗Evitar que el mapa de fondo se mueva
+        	event.consume();
+    	});
+
         
         Platform.runLater(() -> {
             Scene scene = rootPane.getScene();
