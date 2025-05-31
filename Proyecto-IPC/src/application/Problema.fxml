@@ -43,20 +43,6 @@
                         <MenuItem mnemonicParsing="false" onAction="#mostrarAyudaProblemas" text="Problemas" />
                     </items>
                   </Menu>
-                <Menu mnemonicParsing="false" text="Herramientas">
-                  <items>
-                        <MenuItem fx:id="punto" mnemonicParsing="false" onAction="#crearPunto" text="Crear punto" />
-                        <MenuItem mnemonicParsing="false" onAction="#crearLinea" text="Crear linea" />
-                        <MenuItem mnemonicParsing="false" onAction="#crearArco" text="Crear arco" />
-                        <MenuItem mnemonicParsing="false" onAction="#crearTexto" text="Crear texto" />
-                        <MenuItem mnemonicParsing="false" onAction="#cambiarColor" text="Cambiar color" />
-                        <MenuItem mnemonicParsing="false" onAction="#eliminarMarca" text="Eliminar selección" />
-                        <MenuItem mnemonicParsing="false" onAction="#limpiarCarta" text="Limpiar carta" />
-                        <MenuItem mnemonicParsing="false" onAction="#crearTransportador" text="Mostrar transportador" />
-                        <MenuItem mnemonicParsing="false" onAction="#crearRegla" text="Mostrar regla" />
-                        <MenuItem fx:id="compas" mnemonicParsing="false" onAction="#crearCompas" text="Utilizar compás" />
-                  </items>
-                </Menu>
               </menus>
             </MenuBar>
             <ToggleButton fx:id="toolBarButton" mnemonicParsing="false" text="Barra de &#10;herramientas" />

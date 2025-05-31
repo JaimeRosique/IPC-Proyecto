@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+import javafx.event.ActionEvent;
+import javafx.stage.Stage;
 
 public class EstadisticasController implements Initializable {
 
@@ -166,5 +168,11 @@ public class EstadisticasController implements Initializable {
             // currentRoot.applyCss();
             // currentRoot.layout();
         }
+    }
+
+    @FXML
+    private void cerrar(ActionEvent event) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        stage.close();
     }
 }
