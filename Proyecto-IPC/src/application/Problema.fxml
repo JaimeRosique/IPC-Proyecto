@@ -62,6 +62,7 @@
             </MenuBar>
             <ToggleButton fx:id="toolBarButton" mnemonicParsing="false" text="Barra de &#10;herramientas" />
             <ToggleButton mnemonicParsing="false" onAction="#cambiarTema" prefHeight="18.0" prefWidth="130.0" text="Modo &#10;nocturno" />
+            <ToggleButton fx:id="problemaTool" mnemonicParsing="false" text="Tipo Problema" />
             <Region prefHeight="14.0" prefWidth="65.0" />
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="18.0" prefWidth="49.0" text="Zoom" />
             <Button mnemonicParsing="false" onAction="#zoomOut" text="-" />
@@ -113,8 +114,8 @@
                                  </styleClass>
                               </MenuButton>
                               <Button fx:id="transportador" layoutX="574.0" layoutY="98.0" mnemonicParsing="false" styleClass="transportador" />
-                              <Button fx:id="regla" layoutX="574.0" layoutY="48.0" mnemonicParsing="false" styleClass="regla" />
-                              <Circle fx:id="rotadorButton" accessibleRole="BUTTON" centerY="10.0" fill="DODGERBLUE" layoutX="1074.0" layoutY="20.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Button fx:id="regla" layoutX="590.0" layoutY="381.0" mnemonicParsing="false" styleClass="regla" />
+                              <Circle fx:id="rotadorButton" accessibleRole="BUTTON" centerY="10.0" fill="DODGERBLUE" layoutX="1090.0" layoutY="396.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                            </children>
                         </Pane>
                      </content>
