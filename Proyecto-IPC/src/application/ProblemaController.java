@@ -82,6 +82,9 @@ import model.*;
 
 
 public class ProblemaController implements Initializable {
+
+    @FXML
+    private ToggleButton problemaTool;
     
     private static class ProblemState {
         boolean expanded = false;
@@ -1068,6 +1071,22 @@ public class ProblemaController implements Initializable {
                 stage.getIcons().add(icono);
             }
         });
+        
+        // Add action listener to problemaTool toggle button
+        problemaTool.setOnAction(event -> {
+            if (problemaTool.isSelected()) {
+                // If selected, switch to random data mode
+                //isRandomMode = true;
+                randomData();
+            } else {
+                // If unselected, switch back to initial data mode
+                //isRandomMode = false;
+                initData();
+            }
+        });
+
+        // Initialize with default mode (initData)
+        problemaTool.setSelected(false);
         
         // TODO
         //==========================================================
