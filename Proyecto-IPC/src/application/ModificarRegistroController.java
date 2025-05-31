@@ -21,6 +21,10 @@ import javafx.stage.FileChooser;
 import model.*;
 import java.time.LocalDate;
 import java.time.Period;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -28,19 +32,35 @@ import java.time.Period;
  * @author jrosi
  */
 public class ModificarRegistroController implements Initializable {
-
+    private boolean showingPasswordMain = false;
+        private boolean showingPasswordConfirm = false;
+        private final String ojocerrado = "/resources/abrirojo.png";
+        private final String ojoabierto = "/resources/cerrarojo.png";
     private String dest;
     private Image[] imgArray = new Image[12];
     private Navigation nav;
     private int i;
     private boolean modoModificar = false;
+    @FXML
+    private VBox rootPane;
+    @FXML
+    private PasswordField pswrdField;
+    @FXML
+    private TextField pswrdTextField;
+    @FXML
+    private ImageView eyeIcon2;
+    @FXML
+    private PasswordField pswrdCheckField;
+    @FXML
+    private TextField pswrdCheckTextField;
+    @FXML
+    private ImageView eyeIcon3;
 
         public void setModoModificar(boolean modificar) {
         this.modoModificar = modificar;
         }
     @FXML
     private TextField nickname;
-    @FXML
     private PasswordField pswrd;
     @FXML
     private DatePicker bdate;
@@ -52,7 +72,6 @@ public class ModificarRegistroController implements Initializable {
     private ImageView avatar_img;
     @FXML
     private ImageView avatar_der;
-    @FXML
     private PasswordField pswrd_check;
     @FXML
     private Label user_error;
@@ -65,11 +84,49 @@ public class ModificarRegistroController implements Initializable {
     @FXML
     private Label edad_error;
     
-    @FXML
     private User user;
     
     @Override
     public void initialize(URL url, ResourceBundle rb){
+        // Configuración inicial: mostrar solo PasswordField, ocultar TextField
+pswrdTextField.setVisible(false);
+pswrdField.setVisible(true);
+eyeIcon2.setImage(new Image(getClass().getResourceAsStream(ojocerrado)));
+
+pswrdTextField.managedProperty().bind(pswrdTextField.visibleProperty());
+pswrdField.managedProperty().bind(pswrdField.visibleProperty());
+
+pswrdTextField.textProperty().bindBidirectional(pswrdField.textProperty());
+
+// Para la confirmación de contraseña
+pswrdCheckTextField.setVisible(false);
+pswrdCheckField.setVisible(true);
+eyeIcon3.setImage(new Image(getClass().getResourceAsStream(ojocerrado)));
+
+pswrdCheckTextField.managedProperty().bind(pswrdCheckTextField.visibleProperty());
+pswrdCheckField.managedProperty().bind(pswrdCheckField.visibleProperty());
+
+pswrdCheckTextField.textProperty().bindBidirectional(pswrdCheckField.textProperty());
+        
+        rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+        if (newScene != null) {
+            // Asegurar clase root
+            if (!rootPane.getStyleClass().contains("root")) {
+                rootPane.getStyleClass().add("root");
+            }
+
+            // Aplicar el CSS activo
+            newScene.getStylesheets().clear();
+            newScene.getStylesheets().add(ThemeManager.getEstiloActual());
+        }
+    });
+        
+        
+        
+        
+        
+        
+        
         if (modoModificar) {
         nickname.setDisable(true);  // bloquea el campo para no poder cambiarlo
         }
@@ -136,55 +193,105 @@ public class ModificarRegistroController implements Initializable {
         });
         
         // Permitir todo tipo de letras numeros o simbolos en el campo de contraseña
-        pswrd.textProperty().addListener((observable, oldValue, newValue) -> {
+        pswrdField.textProperty().addListener((observable, oldValue, newValue) -> {
             
             checkPassWrd();
         });
         
         // Errores en pwd cuando se cambie de textField
-        pswrd.focusedProperty().addListener((observable, oldValue, newValue) -> {
+        pswrdField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue && checkPassWrd()) {
                 errPasswrd1();
             }
         });
         
         // Errores en pwd
-        pswrd.setOnKeyTyped(event -> errPasswrd1());
+        pswrdField.setOnKeyTyped(event -> errPasswrd1());
         
         // Permitir todo tipo de simbolos en el campo de confirmar contraseña
-        pswrd_check.textProperty().addListener((observable, oldValue, newValue) -> {
+        pswrdCheckField.textProperty().addListener((observable, oldValue, newValue) -> {
             
             eqPassWrd();
         });
         
         // Errores en pwd1 cuando se cambie de textField
-        pswrd_check.focusedProperty().addListener((observable, oldValue, newValue) -> {
+        pswrdCheckField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue && checkPassWrd()) {
                 errPasswrd1();
             }
         });
         
         // Errores en pwd1
-        pswrd_check.setOnKeyTyped(event -> errPasswrd1());
+        pswrdCheckField.setOnKeyTyped(event -> errPasswrd1());
         
     }
-    @FXML
-
-    
-    
-    
-    
-    
     public void cargarDatosUsuario(User user) {
         this.user = user;
     nickname.setText(user.getNickName());
     email.setText(user.getEmail());
-    pswrd.setText(user.getPassword());
+    pswrdField.setText(user.getPassword());
     bdate.setValue(user.getBirthdate());
     avatar_img.setImage(user.getAvatar());
     nickname.setDisable(true);
 
 }
+    @FXML
+    private void togglePasswordVisibilityMain() {
+        new Image(getClass().getResourceAsStream("/resources/cerrarojo.png"));
+    new Image(getClass().getResourceAsStream("/resources/abrirojo.png"));
+    showingPasswordMain = !showingPasswordMain;
+    if (showingPasswordMain) {
+        
+        pswrdTextField.setVisible(true);
+        pswrdField.setVisible(false);
+        eyeIcon2.setImage(new Image(getClass().getResourceAsStream(ojoabierto)));
+    } else {
+        pswrdTextField.setVisible(false);
+        pswrdField.setVisible(true);
+        eyeIcon2.setImage(new Image(getClass().getResourceAsStream(ojocerrado)));
+    }
+}
+    @FXML
+
+private void togglePasswordVisibilityConfirm() {
+    new Image(getClass().getResourceAsStream("/resources/cerrarojo.png"));
+    new Image(getClass().getResourceAsStream("/resources/abrirojo.png"));
+    
+    
+    showingPasswordConfirm = !showingPasswordConfirm;
+    if (showingPasswordConfirm) {
+        pswrdCheckTextField.setVisible(true);
+        pswrdCheckField.setVisible(false);
+        eyeIcon3.setImage(new Image(getClass().getResourceAsStream(ojoabierto)));
+    } else {
+        pswrdCheckTextField.setVisible(false);
+        pswrdCheckField.setVisible(true);
+        eyeIcon3.setImage(new Image(getClass().getResourceAsStream(ojocerrado)));
+    }
+}
+
+    @FXML
+    private void cambiarTema() {
+        Scene scene = rootPane.getScene();
+
+    if (scene != null) {
+        
+        ThemeManager.toggleTheme(scene);
+
+        
+        Parent originalRoot = scene.getRoot();
+
+        
+        scene.setRoot(new Group());
+
+            
+            scene.setRoot(originalRoot);
+
+            
+            originalRoot.applyCss();
+            originalRoot.layout();
+        }
+    }
     
     /*private boolean validarNickname() {
         String nick = nickname.getText();
@@ -274,7 +381,7 @@ public class ModificarRegistroController implements Initializable {
     
     // Mostrar errores en la contraseña
     private void errPasswrd1() {
-        String pwdText = pswrd.getText();
+        String pwdText = pswrdField.getText();
         boolean pwdValida = pwdText.length() >= 8 && pwdText.length() <= 20;
 
         if (!pwdValida) {
@@ -296,7 +403,7 @@ public class ModificarRegistroController implements Initializable {
     boolean hasNumber = false;
     boolean hasSymbol = false;
 
-    String password = pswrd.getText();
+    String password = pswrdField.getText();
 
     if (password.length() < 8 || password.length() > 20) {
         pswrd_error.setVisible(true);
@@ -333,7 +440,7 @@ public class ModificarRegistroController implements Initializable {
     
     // Método para comprobar que tanto la primera como la segunda contraseñas son iguales
     private boolean eqPassWrd() {
-        if (pswrd.getText().equals(pswrd_check.getText())) {
+        if (pswrdField.getText().equals(pswrdCheckField.getText())) {
             pswrd_check_error.setVisible(false);
             pswrd_check_error.setText("");
             return true;
@@ -381,8 +488,8 @@ public class ModificarRegistroController implements Initializable {
         //boolean validUser = !user_name.isEmpty();
         boolean validEmail = validarEmail();
         boolean nickNoUsado = true;
-        boolean pwd1Valida = pswrd.getText().length() >= 6;
-        boolean pwd2Valida = pswrd_check.getText().equals(pswrd.getText());
+        boolean pwd1Valida = pswrdField.getText().length() >= 6;
+        boolean pwd2Valida = pswrdCheckField.getText().equals(pswrd.getText());
         boolean edadValida = validarEdad();
             if (!mandado && !edadValida) {
             bdate.requestFocus();
@@ -396,13 +503,13 @@ public class ModificarRegistroController implements Initializable {
         
         //pswrdErrorImg.setVisible(pswrd.getText().isEmpty());
         pswrd_error.setVisible(true);
-        pswrd_error.setStyle(pswrd.getText().isEmpty() ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
-        if(!mandado && !pwd1Valida){pswrd.requestFocus(); mandado = true;}
+        pswrd_error.setStyle(pswrdField.getText().isEmpty() ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
+        if(!mandado && !pwd1Valida){pswrdField.requestFocus(); mandado = true;}
         
         //pswrd_check_ErrorImg.setVisible(!pswrd_check.getText().equals(pswrd.getText()));
         pswrd_check_error.setVisible(true);
-        pswrd_check_error.setStyle(pswrd_check.getText().equals(pswrd.getText()) ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
-        if(!mandado && !pwd2Valida){pswrd_check.requestFocus(); mandado = true;}
+        pswrd_check_error.setStyle(pswrdCheckField.getText().equals(pswrdField.getText()) ?  "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
+        if(!mandado && !pwd2Valida){pswrdCheckField.requestFocus(); mandado = true;}
         
         email_error.setVisible(true);
     email_error.setStyle(email.getText().isEmpty() ? "-fx-text-fill: #fc0000;" : "-fx-text-fill: #7c7c7c;");
@@ -422,8 +529,8 @@ public class ModificarRegistroController implements Initializable {
         nickname.clear();
         bdate.setValue(null);
         email.clear();
-        pswrd.clear();
-        pswrd_check.clear();
+        pswrdField.clear();
+        pswrdCheckField.clear();
 
         avatar_img.setImage(imgArray[0]);
 
@@ -483,7 +590,7 @@ public class ModificarRegistroController implements Initializable {
             user.setEmail(email.getText());
             System.out.println(">>> Email asignado: " + email.getText());
 
-            user.setPassword(pswrd.getText());
+            user.setPassword(pswrdField.getText());
             System.out.println(">>> Password asignado");
 
             user.setAvatar(avatar_img.getImage());
@@ -544,4 +651,5 @@ public class ModificarRegistroController implements Initializable {
             avatar_img.setImage(image);
         }
     }
+
 }

@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,10 +14,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@problemas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ModificarRegistroController">
+<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ModificarRegistroController">
    <children>
       <HBox alignment="CENTER" prefHeight="98.0" prefWidth="797.0" VBox.vgrow="SOMETIMES">
          <children>
@@ -24,6 +26,7 @@
                <font>
                   <Font size="41.0" />
                </font></Label>
+            <ToggleButton mnemonicParsing="false" onAction="#cambiarTema" text="Modo nocturno" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="546.0" prefWidth="800.0" VBox.vgrow="SOMETIMES">
@@ -85,7 +88,17 @@
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="SOMETIMES">
                                  <children>
                                     <Label text="Contraseña" />
-                                    <PasswordField fx:id="pswrd" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
+                                    <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <PasswordField fx:id="pswrdField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
+                                          <TextField fx:id="pswrdTextField" alignment="CENTER_RIGHT" />
+                                          <ImageView fx:id="eyeIcon2" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#togglePasswordVisibilityMain" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../resources/abrirojo.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </StackPane>
                                     <Label fx:id="pswrd_error" prefHeight="18.0" prefWidth="490.0" text="Contraseña no válida" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
@@ -96,7 +109,17 @@
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="SOMETIMES">
                                  <children>
                                     <Label text="Confirmar Contraseña *" />
-                                    <PasswordField fx:id="pswrd_check" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
+                                    <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <PasswordField fx:id="pswrdCheckField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="340.0" promptText="contraseña123" />
+                                          <TextField fx:id="pswrdCheckTextField" alignment="CENTER_RIGHT" />
+                                          <ImageView fx:id="eyeIcon3" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#togglePasswordVisibilityConfirm" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../resources/abrirojo.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </StackPane>
                                     <Label fx:id="pswrd_check_error" prefHeight="18.0" prefWidth="462.0" text="Las contraseñas no coinciden" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
