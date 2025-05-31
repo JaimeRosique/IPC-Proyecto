@@ -55,7 +55,6 @@
                         <MenuItem mnemonicParsing="false" onAction="#crearTransportador" text="Mostrar transportador" />
                         <MenuItem mnemonicParsing="false" onAction="#crearRegla" text="Mostrar regla" />
                         <MenuItem fx:id="compas" mnemonicParsing="false" onAction="#crearCompas" text="Utilizar compás" />
-                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
                   </items>
                 </Menu>
               </menus>

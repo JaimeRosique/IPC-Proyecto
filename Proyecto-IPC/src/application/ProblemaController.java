@@ -222,7 +222,7 @@ public class ProblemaController implements Initializable {
     }
     @FXML
     public void mostrarAyudaColores() {
-        mostrarAyuda("Colores y grosor", "Las marcas seleccionadas cambian de color o grosor desde los botones de seleccionar color o grosor. ");
+        mostrarAyuda("Colores y grosor", "Las marcas previamente seleccionadas cambian de color o grosor desde los botones de seleccionar color o grosor. ");
     }
     @FXML
     public void mostrarAyudaDibujar() {
