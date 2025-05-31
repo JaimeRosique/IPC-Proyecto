@@ -723,10 +723,20 @@ public class ProblemaController implements Initializable {
     
     @FXML
     private void cambiarGrosor() {
-        if (marcasSeleccionadas != null && grosorButton.getValue() != null) {
+         if (marcasSeleccionadas != null && grosorButton.getValue() != null) {
             int nuevoGrosor = grosorButton.getValue();
-            if (marcasSeleccionadas instanceof javafx.scene.shape.Shape) {
-                ((javafx.scene.shape.Shape) marcasSeleccionadas).setStrokeWidth(nuevoGrosor);
+            // This needs to iterate through marcasSeleccionadas and apply to each shape
+            for (Node nodo : marcasSeleccionadas) {
+                if (nodo instanceof Shape) {
+                    ((Shape) nodo).setStrokeWidth(nuevoGrosor);
+                } else if (nodo instanceof Group) {
+                    Group grupo = (Group) nodo;
+                    for (Node child : grupo.getChildrenUnmodifiable()) {
+                        if (child instanceof Shape) {
+                            ((Shape) child).setStrokeWidth(nuevoGrosor);
+                        }
+                    }
+                }
             }
         }
     }
